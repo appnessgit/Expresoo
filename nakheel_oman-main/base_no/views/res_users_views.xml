@@ -1,0 +1,23 @@
+<odoo>
+    <data>
+       <record id="res_user_form_view" model="ir.ui.view">
+        <field name="name">res.user.form.view</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='access_rights']/group[1]" position="after">
+                <group>
+                    <field name="department_id" readonly="1"/>
+                </group>
+            </xpath>
+        </field>   
+       </record>
+
+        <menuitem
+            id="menu_approvals"
+            sequence="10"
+            web_icon="fa fa-check,#FFFFFF,#259295"
+            name="Approvals"
+            />
+    </data>
+</odoo>

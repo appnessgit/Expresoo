@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_budget_amendment_accountant,access.budget.amendment.accountant,model_account_budget_amendment,account.group_account_user,1,1,1,1
+access_budget_amendment_ceo,access.budget.amendment.ceo,model_account_budget_amendment,base_no.group_ceo,1,1,0,0

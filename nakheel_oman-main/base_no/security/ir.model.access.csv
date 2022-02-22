@@ -1,0 +1,35 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_purchase_order_GM_Finance,purchase.order GM Finance,purchase.model_purchase_order,base_no.group_finance,1,1,0,0
+access_purchase_order_basic_purchase,purchase.order basic purchase,purchase.model_purchase_order,base_no.group_basic_purchase,1,1,0,0
+access_purchase_order_line_GM_Finance,purchase.order.line GM Finance,purchase.model_purchase_order_line,base_no.group_finance,1,1,0,0
+access_purchase_order_basic_purchase,purchase.order.line basic purchase,purchase.model_purchase_order_line,base_no.group_basic_purchase,1,1,0,0
+access_product_product_GM_Finance,product.product GM Finance,product.model_product_product,base_no.group_finance,1,0,0,0
+access_purchase_order_basic_purchase,product.product basic purchase,product.model_product_product,base_no.group_basic_purchase,1,0,0,0
+access_product_template_GM_Finance,product.template GM Finance,product.model_product_template,base_no.group_finance,1,0,0,0
+access_product_template_basic_purchase,product.template basic purchase,product.model_product_template,base_no.group_basic_purchase,1,0,0,0
+access_account_tax_basic_purchase,account.tax basic purchase,account.model_account_tax,base_no.group_basic_purchase,1,0,0,0
+access_res_partner_GM_Finance,res.partner GM Finance,purchase.model_res_partner,base_no.group_finance,1,0,0,0
+access_res_partner_basic_purchase,res.partner basic purchase,purchase.model_res_partner,base_no.group_basic_purchase,1,0,0,0
+access_account_journal_basic_purchase,account.journal basic purchase,account.model_account_journal,base_no.group_basic_purchase,1,0,0,0
+access_account_move_basic_purchase,account.move basic purchase,account.model_account_move,base_no.group_basic_purchase,1,0,0,0
+access_account_move_line_basic_purchase,account.move.line basic purchase,account.model_account_move_line,base_no.group_basic_purchase,1,0,0,0
+access_account_analytic_line_basic_purchase,account.analytic.line basic purchase,account.model_account_analytic_line,base_no.group_basic_purchase,1,0,0,0
+access_stock_location_GM_Finance,stock.location GM Finance,stock.model_stock_location,base_no.group_finance,1,0,0,0
+access_stock_location_basic_purchase,stock.location basic purchase,stock.model_stock_location,base_no.group_basic_purchase,1,0,0,0
+access_stock_warehouse_GM_Finance,stock.warehouse GM Finance,stock.model_stock_warehouse,base_no.group_finance,1,0,0,0
+access_stock_warehouse_basic_purchase,stock.warehouse basic purchase,stock.model_stock_warehouse,base_no.group_basic_purchase,1,0,0,0
+access_stock_picking_GM_Finance,stock.picking GM Finance,stock.model_stock_picking,base_no.group_finance,1,1,1,0
+access_stock_picking_basic_purchase,stock.picking basic purchase,stock.model_stock_picking,base_no.group_basic_purchase,1,1,1,0
+access_stock_move_GM_Finance,stock.move GM Finance,stock.model_stock_move,base_no.group_finance,1,1,1,0
+access_stock_move_basic_purchase,stock.move basic purchase,stock.model_stock_move,base_no.group_basic_purchase,1,1,1,0
+access_stock_warehouse_orderpoint_GM_Finance,stock.warehouse.orderpoint GM Finance,stock.model_stock_warehouse_orderpoint,base_no.group_finance,1,0,0,0
+access_stock_warehouse_orderpoint_basic_purchase,stock.warehouse.orderpoint basic purchase,stock.model_stock_warehouse_orderpoint,base_no.group_basic_purchase,1,0,0,0
+access_purchase_requisition_type_GM_Finance,Purchase.requisition.type GM Finance,purchase_requisition.model_purchase_requisition_type,base_no.group_finance,1,0,0,0
+access_purchase_requisition_type_basic_purchase,Purchase.requisition.type basic purchase,purchase_requisition.model_purchase_requisition_type,base_no.group_basic_purchase,1,0,0,0
+access_purchase_requisition_GM_Finance,Purchase.requisition GM Finance,purchase_requisition.model_purchase_requisition,base_no.group_finance,1,1,1,0
+access_purchase_requisition_basic_purchase,Purchase.requisition basic purchase,purchase_requisition.model_purchase_requisition,base_no.group_basic_purchase,1,1,1,0
+access_purchase_requisition_line_GM_Finance,Purchase.requisition.line GM Finance,purchase_requisition.model_purchase_requisition_line,base_no.group_finance,1,1,1,0
+access_purchase_requisition_line_basic_purchase,Purchase.requisition.line basic purchase,purchase_requisition.model_purchase_requisition_line,base_no.group_basic_purchase,1,1,1,0
+access_brach,access.res.branch,model_res_branch,base.group_user,1,1,1,1
+access_user_designation,access.hr.designation.user,model_hr_designation,base.group_user,1,0,0,0
+access_designation_admin,access.hr.designation.admin,model_hr_designation,base.group_erp_manager,1,1,1,1
