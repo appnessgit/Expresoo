@@ -1,0 +1,189 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <template id="report_purchase_request">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                   <t t-foreach="docs" t-as="o">
+                    <div class="page">
+                        <style>
+                            table.table-bordered{
+                                width: 100%
+                            }
+                            .table-bordered th, .table-bordered td {
+                                border: 1px solid
+                                #6e6e6e;
+                            }
+                            .table-bordered {
+                                width: 100%;
+                            }
+                            td {
+                                padding-left: 10px;
+                                padding-right: 10px;
+                                vertical-align: top;
+                            }
+                            td  strong{
+                                font-size: 14px;
+                            }
+                            td  span {
+                                font-size: 14px;
+                            }
+                            td  h5 {
+                                font-size: 14px;
+                                font-weight: 600;
+                                margin-bottom: 0;
+                            }
+                            td p, address{
+                                margin-bottom: 0;
+                                line-height: 1.1;
+                            }
+                            .table-bordered th, .table-bordered td {
+                                border: 1px solid
+                                #6e6e6e;
+                            }
+                            tr.padding > td {
+                                padding 0 5px;
+                            }
+                            .table-bordered {
+
+                                border: 0px solid
+
+                                #dee2e6;
+
+                            }
+                        </style>
+                        <br/>
+                        <table class="table-bordered">
+                            <tbody>
+                                <tr class="padding">
+                                    <td style="padding: 10px;">
+                                        <center>
+                                           <h4>Purchase Requisition For Materials/Services</h4>
+                                           <h4>طلب شراء مواد / خدمة</h4>
+                                        </center>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                       <br/>
+
+                        <table class="table-bordered" t-if="o.title">
+                            <tbody>
+                                <tr class="padding">
+                                    <td style="width: 20%" class="text-center">
+                                       <strong>Description</strong>
+                                    </td>
+                                    <td style="width: 80%;">
+                                        <span t-esc="o.title"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <br/>
+
+                        <table class="table-bordered" style="width:100%%; vertical-align: top;">
+                            <tbody>
+                                <tr class="padding">
+                                    <td style="width: 25%;"><b>MR. NO.: </b></td>
+                                    <td style="width: 25%;"><span t-esc="o.name"></span></td>
+                                    <td style="width: 25%;"><b>Department: </b></td>
+                                    <td style="width: 25%;"><span t-if="o.department_id" t-esc="o.department_id.name"></span></td>
+                                </tr>
+                                 <tr class="padding">
+                                    <td><b>Date: </b></td>
+                                     <td><span t-field="o.date_start"></span></td>
+                                     <td><b>Pre. By: </b></td>
+                                     <td><span t-esc="o.requested_by.name"></span></td>
+                                 </tr>
+                                 <tr class="padding">
+                                    <td><b>Estimated Cost: </b></td>
+                                     <td><span t-field="o.amount_total" widget="monetary" options="{'currency_field': 'currency_id'}"></span></td>
+
+                                 </tr>
+                            </tbody>
+                        </table>
+
+                        <t t-set="counter" t-value="0"/>
+                        <br/>
+                        <t t-if="o.line_ids">
+                        <table class="table table-bordered" style="margin-top: 20px;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 66px;"><strong>Sr No</strong></td>
+                                    <td><strong>Item Code</strong></td>
+                                    <td style="width: 35%;"><strong>Description</strong></td>
+                                    <td style="width: 70px;"><strong>Qty</strong></td>
+                                    <td groups="product.group_uom">
+                                        <strong>UoM</strong>
+                                    </td>
+                                    <td><strong>Estimated Rate</strong></td>
+                                    <td><strong>Total</strong></td>
+                                    <td><strong>Remarks</strong></td>
+                                </tr>
+                                <tr t-foreach="o.line_ids" t-as="l">
+                                    <t t-set="counter" t-value="counter + 1"/>
+                                    <td class="text-center"><span t-esc="counter"></span></td>
+                                    <td><span t-field="l.product_id.default_code"></span></td>
+                                    <td><span t-field="l.name"/></td>
+                                    <td><span t-field="l.product_qty"/></td>
+                                    <t>
+                                        <td class="text-center" groups="product.group_uom">
+                                            <span t-field="l.product_uom_id.category_id.name"/>
+                                        </td>
+                                    </t>
+                                    <td><span t-field="l.unit_price"/></td>
+                                    <td><span t-field="l.total"/></td>
+                                    <td><span t-field="l.remarks"/></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5"></td>
+                                    <td><span t-field="o.amount_total" widget="monetary" options="{'currency_field': 'currency_id'}"></span></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                            <table class="table-bordered">
+                                <tbody>
+                                    <tr class="padding">
+                                        <td><h6 t-if="o.description">Reason of this Request: </h6></td>
+                                    </tr>
+                                    <tr class="padding">
+                                        <td><p t-field="o.description"></p></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <br/>
+                            <t t-if="o.line_manager_user_id or o.stock_user_id or o.finance_user_id">
+                                <h5>Approvals:</h5>
+                                <table class="table table-bordered" style="width: 100%;">
+                                    <tr>
+                                        <td t-if="o.line_manager_user_id">
+                                            <p><strong>Line Manager</strong></p>
+                                            <p><span t-esc="o.line_manager_user_id.name"></span></p>
+                                        </td>
+
+                                        <!--<td t-if="o.stock_user_id">-->
+                                            <!--<p><strong>Store Manager</strong></p>-->
+                                            <!--<p><span t-esc="o.stock_user_id.name"></span></p>-->
+                                        <!--</td>-->
+
+                                        <!--<td t-if="o.finance_user_id">-->
+                                            <!--<p><strong>Finance Manager</strong></p>-->
+                                            <!--<p><span t-esc="o.finance_user_id.name"></span></p>-->
+                                        <!--</td>-->
+
+                                    </tr>
+                                </table>
+                            </t>
+                         </t>
+                    </div>
+                </t>
+                </t>
+            </t>
+
+        </template>
+    </data>
+</odoo>

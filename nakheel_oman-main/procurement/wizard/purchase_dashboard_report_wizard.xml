@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="purchase_dashboard_wizard_form" model="ir.ui.view">
+            <field name="name">purchase.dashboard.wizard.form</field>
+            <field name="model">purchase.dashboard.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Purchase Summary">
+                    <group>
+                            <group>
+                                <field name="date_from"/>
+                                <field name="data" widget="radio"/>
+                            </group>
+                            <group>
+                                <field name="date_to"/>
+                            </group>
+                        </group>
+                    <footer>
+                        <button name="print_report" type="object" icon="fa-eye" string="Preview" class="oe_highlight"/>
+                        <button name="print_report_xls" type="object" icon="fa-paperclip" string="Export" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window
+            id="purchase_dashboard_report_open_wizard"
+            name="Purchase Dashboard"
+            res_model="purchase.dashboard.wizard"
+            view_mode="form"
+            view_id="purchase_dashboard_wizard_form"
+            target="new"/>
+
+        <menuitem id="purchase.purchase_report" name="Reporting" parent="purchase.menu_purchase_root" sequence="99"/>
+
+        <menuitem id="purchase_report" name="Purchase Analysis" parent="purchase.purchase_report"
+        groups="purchase.group_purchase_manager" action="purchase.action_purchase_order_report_all"/>
+
+         <menuitem name="Purchase Summary"
+              id="purchase_dashboard_menu"
+              parent="purchase.purchase_report"
+              action="purchase_dashboard_report_open_wizard"
+        />
+    </data>
+</odoo>

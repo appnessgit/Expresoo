@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+       <record id="crossovered_budget_view_form_inherit" model="ir.ui.view">
+        <field name="name">crossovered.budget.view.form.inherit</field>
+        <field name="model">crossovered.budget</field>
+        <field name="mode">primary</field>
+        <field name="priority" eval="7" />
+        <field name="inherit_id" ref="budget.crossovered_budget_view_form_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='crossovered_budget_line']/tree/field[@name='remaining_amount']" position="after">
+                <field name="po_reserved" readonly="1" sum="PO Total"/>
+            </xpath>
+        </field>
+    </record>
+    </data>
+</odoo>

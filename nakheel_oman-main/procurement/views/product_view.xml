@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="product_category_form_view_inherit">
+            <field name="name">product.category.form.view</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='parent_id']" position="after">
+                    <field name="item_type" widget="radio"/>
+                </xpath>
+                <group name="first" position="after">
+                    <group string="Material Request">
+                        <field name="mr_use"/>
+                        <field name="mr_transfer" attrs="{'invisible': [('mr_use', '=', False)]}"/>
+                        <field name="mr_location_id" attrs="{'invisible': [('mr_use', '=', False)]}"/>
+                        <field name="mr_operation_type_id" domain="[('code', '=', 'internal')]" attrs="{'invisible': [('mr_use', '=', False)]}"/>
+                    </group>
+                </group>
+            </field>
+        </record>
+    </data>
+</odoo>

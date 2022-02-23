@@ -1,0 +1,23 @@
+<odoo>
+    <data>
+       <record id="view_users_form_inherit" model="ir.ui.view">
+        <field name="name">res.users.form.inherit</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='access_rights']" position="after">
+                <page string="Inventory">
+                    <group>
+                        <group>
+                            <field name="warehouse_ids" widget="many2many_tags" string="Allowed Warehouses"/>
+                        </group>
+                        <group>
+                            <field name="location_id" string="Default Location"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    </data>
+</odoo>

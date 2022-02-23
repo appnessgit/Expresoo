@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Material Requests -->
+    <record id="purchase_request_user" model="ir.rule">
+        <field name="name">Purchase Request: Creator Own Records</field>
+        <field name="model_id" ref="procurement.model_purchase_request"/>
+        <field name="domain_force">[('requested_by','=',user.id)]</field>
+        <field name="groups" eval="[(4, ref('procurement.group_purchase_request_user'))]"/>
+        <field name="perm_unlink" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+    </record>
+
+    <record id="purchase_request_managers" model="ir.rule">
+        <field name="name">Purchase Request: Managers</field>
+        <field name="model_id" ref="procurement.model_purchase_request"/>
+        <field name="domain_force">[(1,'=', 1)]</field>
+        <field name="groups" eval="[(4, ref('procurement.group_purchase_request_manager'))]"/>
+        <field name="perm_unlink" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+    </record>
+
+    <!-- Store Owner -->
+
+
+    <!-- Picking Types-->
+    <record id="stock_warehouse_owners_picking_type" model="ir.rule">
+        <field name="name">Picking Type: Store Owner</field>
+        <field name="model_id" ref="stock.model_stock_picking_type"/>
+        <field name="domain_force">[('warehouse_id','in', user.warehouse_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('stock.group_stock_user'))]"/>
+        <field name="perm_unlink" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+    </record>
+
+    <record id="stock_warehouse_all_picking_type" model="ir.rule">
+        <field name="name">Picking Type: All Warehouses</field>
+        <field name="model_id" ref="stock.model_stock_picking_type"/>
+        <field name="domain_force">[(1,'=', 1)]</field>
+        <field name="groups" eval="[(4, ref('stock.group_stock_manager'))]"/>
+        <field name="perm_unlink" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+    </record>
+
+    <!-- Pickings-->
+    <record id="stock_warehouse_owners_picking" model="ir.rule">
+        <field name="name">Picking: Store Owner</field>
+        <field name="model_id" ref="stock.model_stock_picking"/>
+        <field name="domain_force">[('picking_type_id.warehouse_id','in', user.warehouse_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('stock.group_stock_user'))]"/>
+        <field name="perm_unlink" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+    </record>
+
+    <record id="stock_warehouse_all_picking" model="ir.rule">
+        <field name="name">Picking: All Warehouses</field>
+        <field name="model_id" ref="stock.model_stock_picking"/>
+        <field name="domain_force">[(1,'=', 1)]</field>
+        <field name="groups" eval="[(4, ref('stock.group_stock_manager'))]"/>
+        <field name="perm_unlink" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+    </record>
+
+    <!-- Quants-->
+    <record id="stock_warehouse_owners_quant" model="ir.rule">
+        <field name="name">Quants: Store Owner</field>
+        <field name="model_id" ref="stock.model_stock_quant"/>
+        <field name="domain_force">[('location_id','=', user.warehouse_ids.mapped('lot_stock_id').ids)]</field>
+        <field name="groups" eval="[(4, ref('stock.group_stock_user'))]"/>
+        <field name="perm_unlink" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+    </record>
+
+    <record id="stock_warehouse_all_quant" model="ir.rule">
+        <field name="name">Quants: All Warehouses</field>
+        <field name="model_id" ref="stock.model_stock_quant"/>
+        <field name="domain_force">[(1,'=', 1)]</field>
+        <field name="groups" eval="[(4, ref('stock.group_stock_manager'))]"/>
+        <field name="perm_unlink" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+    </record>
+</odoo>

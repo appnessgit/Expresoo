@@ -1,0 +1,45 @@
+<odoo>
+    <data>
+        <report
+            id="action_report_purchase_requisitions"
+            model="purchase.request"
+            string="Material Request"
+            report_type="qweb-pdf"
+            name="procurement.report_purchase_request"
+            file="procurement.report_purchase_request"
+            print_report_name="'Material Request - %s' % (object.name)"
+        />
+
+        <report
+            id="purchase_xlsx"
+            model="purchase.order"
+            string="Print to XLSX"
+            report_type="xlsx"
+            file="procurement.purchase_report_xlsx"
+            name="procurement.purchase_report_xlsx"
+            attachment_use="False"
+            menu="False"
+        />
+
+        <report
+            id="purchase_pdf"
+            model="purchase.order"
+            string="Purchase Dashboard"
+            report_type="qweb-html"
+            file="procurement.purchase_report_document"
+            name="procurement.purchase_report_document"
+            attachment_use="False"
+            menu="False"
+        />
+
+        <report
+            string="Purchase Agreement"
+            id="purchase_requisition.action_report_purchase_requisitions"
+            model="purchase.requisition"
+            report_type="qweb-pdf"
+            name="procurement.report_purchaserequisitions"
+            file="procurement.report.report_purchaserequisitions"
+            print_report_name="'Purchase Agreement - %s' % (object.name)"
+        />
+    </data>
+</odoo>

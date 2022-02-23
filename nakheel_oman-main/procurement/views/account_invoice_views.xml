@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--Extending existing form view for Quantity per Warehouse field-->
+<!--    <record id="view_invoice_supplier_purchase_form_inherit_warehouse_quantity" model="ir.ui.view">-->
+<!--        <field name="name">account.invoice.supplier.purchase.inherit.grn</field>-->
+<!--        <field name="model">account.move</field>-->
+<!--        <field name="inherit_id" ref="account.view_move_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//field[@name='reference']" position="after">-->
+<!--                  <field name="picking_ids" options="{'no_create': 1}"-->
+<!--                         domain="[('partner_id', '=', partner_id), ('invoiced', '=', False),('return_picking', '=', False) , ('purchase_id', '!=', False), ('state', '=', 'done')]"-->
+<!--                         widget="many2many_tags" attrs="{'readonly': [('state', '!=', 'draft')]}"/>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//field[@name='vendor_bill_purchase_id']" position="attributes">-->
+<!--                  <attribute name="domain">[('partner_id','child_of',[partner_id]), ('purchase_order_id', '!=', False)]</attribute>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    <record id="invoice_supplier_form_inherit" model="ir.ui.view">-->
+<!--            <field name="name">account.invoice.supplier.form.inherit.custom</field>-->
+<!--            <field name="model">account.invoice</field>-->
+<!--            <field name="inherit_id" ref="account.invoice_supplier_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='quantity']" position="after">-->
+<!--                    <field name="stock_move_id" invisible="1"/>-->
+<!--                    <field name="type" invisible="1"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--    <record id="purchase.view_invoice_supplier_purchase_form" model="ir.ui.view">-->
+<!--        <field name="name">account.invoice.supplier.purchase</field>-->
+<!--        <field name="model">account.invoice</field>-->
+<!--        <field name="inherit_id" ref="account.invoice_supplier_form"/>-->
+<!--        <field name="groups_id" eval="[(3,ref('purchase.group_purchase_user'))]"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <field name="vendor_bill_id" position="after">-->
+<!--                <field name="vendor_bill_purchase_id" attrs="{'invisible': ['|', '|', ('state','not in',['draft']), ('state', '=', 'purchase'), ('type', '=', 'in_refund')]}"-->
+<!--                    class="oe_edit_only" domain="[('partner_id','child_of',[partner_id])]"-->
+<!--                    placeholder="Select a purchase order or an old bill"-->
+<!--                    options="{'no_create': True, 'no_open': True}"/>-->
+<!--                <field name="purchase_id" class="oe_edit_only"-->
+<!--                    invisible="1" context="{'show_total_amount': True}"/>-->
+<!--            </field>-->
+<!--            <field name="vendor_bill_id" position="attributes">-->
+<!--                <attribute name="attrs">{'invisible': ['|', ('type', '=', 'in_invoice'), ('state', 'not in', ['draft'])]}</attribute>-->
+<!--            </field>-->
+<!--            <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='company_id']" position="after">-->
+<!--                <field name="purchase_line_id" invisible="1" readonly="0"/>-->
+<!--                <field name="purchase_id" invisible="1" readonly="0"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+</odoo>

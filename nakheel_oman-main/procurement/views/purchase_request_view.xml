@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_purchase_request_form" model="ir.ui.view">
+            <field name="name">purchase.request.form</field>
+            <field name="model">purchase.request</field>
+            <field name="arch" type="xml">
+                <form string="Material Request">
+                    <header>
+<!--                    Set to Draft-->
+                        <button name="button_draft"
+                                states="cancel,reject"
+                                string="Set as Draft"
+                                type="object"
+                                groups="procurement.group_purchase_request_user"
+                                />
+
+<!--                    Focal Point-->
+                        <button name="button_to_approve" states="draft"
+                                string="Submit" type="object"
+                                groups="procurement.group_purchase_request_user"
+                                class="oe_highlight"/>
+
+                        <button name="button_cancel" states="draft"
+                                string="Cancel" type="object"
+                                groups="procurement.group_purchase_request_user"
+                                class=""/>
+
+<!--                    Line Manager-->
+                        <button name="button_leader_approved"
+                                string="Approve"
+                                type="object"
+                                states="line_approve"
+                                groups="procurement.group_purchase_request_manager"
+                                class="oe_highlight"
+                                />
+                        <button name="action_reject"
+                                string="Reject"
+                                states="line_approve"
+                                groups="procurement.group_purchase_request_manager"
+                                type="object"
+                        />
+
+<!--                    Procurement-->
+                        <button string="New Quotation" name="make_purchase_quotation" type="object" class="oe_highlight"
+                            attrs="{'invisible': ['|',('state', '!=', 'done'), ('purchase_method', '=', 'deliver')]}"
+                            groups="purchase.group_purchase_user"
+                        />
+                         <button string="New Purchase Agreements" name="make_purchase_requisition" type="object" class="oe_highlight"
+                            groups="purchase.group_purchase_user"
+                             attrs="{'invisible': ['|',('state', '!=', 'done'), ('purchase_method', '=', 'deliver')]}"
+                        />
+
+                        <button string="Set as Closed" name="button_close" type="object"
+                            groups="purchase.group_purchase_user"
+                             attrs="{'invisible': ['|',('state', '!=', 'done'), ('purchase_method', '=', 'deliver')]}"
+                        />
+
+                        <button name="button_cancel" states="done,close"
+                                string="Cancel" type="object"
+                                groups="purchase.group_purchase_user"
+                                confirm="You are about to cancel this request and its related records. Please confirm!"
+                                class=""/>
+
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,done"
+                               statusbar_colors='{"manager_approved":"blue"}'/>
+
+
+                    </header>
+                    <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button type="object"
+                            name="action_view_picking"
+                            class="oe_stat_button"
+                            icon="fa-truck" attrs="{'invisible':['|',('item_type','=','service'),('picking_count','=',0)]}">
+                            <field name="picking_count"  string="Shipment" widget="statinfo"/>
+                        </button>
+
+                        <button type="object"
+                            name="action_view_service"
+                            groups="purchase.group_purchase_user,procurement.group_purchase_request_user"
+                            class="oe_stat_button"
+                            icon="fa-truck" attrs="{'invisible':['|',('item_type','!=','service'),('service_count','=',0)]}">
+                            <field name="service_count"  string="Service" widget="statinfo"/>
+                        </button>
+
+                        <button type="object"
+                            name="action_view_purchase_order"
+                            class="oe_stat_button"
+                            groups="purchase.group_purchase_user"
+                            icon="fa-shopping-cart"
+                            attrs="{'invisible': ['|',('purchase_count', '=', 0), ('purchase_method', '=', 'deliver')]}"
+                                >
+                            <field name="purchase_count"  string="Purchase" widget="statinfo"/>
+                        </button>
+                        <button type="object"
+                            name="action_view_purchase_agreement"
+                            class="oe_stat_button"
+                            attrs="{'invisible': ['|',('agreement_count', '=', 0), ('purchase_method', '=', 'deliver')]}"
+                            groups="purchase.group_purchase_user"
+                            icon="fa-list">
+                            <field name="agreement_count"  string="Tender" widget="statinfo"/>
+                        </button>
+
+                    </div>
+
+                        <field name="is_editable" invisible="1"/>
+                        <div class="oe_edit_only">
+                            <label for="name" class="oe_inline"/>
+                        </div>
+                        <h1>
+                            <!--<field name="name" class="oe_inline" attrs="{'readonly': [('is_editable','=', False)]}"/>-->
+                            <field name="name" readonly="1"/>
+                            <!--<label for="space" name="Space" string="-"/>-->
+                        </h1>
+                        <div class="oe_edit_only">
+                            <label for="title" class="oe_inline"/>
+                        </div>
+                        <h1>
+                            <field name="title" attrs="{'readonly': [('state','not in', ('draft'))]}"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="requested_by" readonly="1" options="{'no_create': 1, 'no_open': 1}" attrs="{'readonly': [('state','not in', ('draft'))]}"/>
+                                <field name="department_id" readonly="1" options="{'no_create': 1, 'no_open': 1}" attrs="{'readonly': [('state','not in', ('draft'))]}"/>
+<!--                                <field name="edit_analytic_account" invisible="1"/>-->
+                                <field name="analytic_account_id" invisible="1" options="{'no_create': 1, 'no_open': 1}"/>
+                                <field name="purchase_method" invisible="1" attrs="{'readonly': [('state','not in', ('draft'))]}"/>
+                                <field name="currency_id" invisible="1" attrs="{'readonly': [('state','not in', ('draft'))]}"/>
+                            </group>
+                            <group>
+                                <field name="item_type" widget="radio" attrs="{'readonly': [('state','not in', ('draft'))]}" />
+                                <field name="categ_id" options="{'no_create': 1, 'no_open': 1}" required="1" domain="[('mr_use', '=', True), ('item_type', '=', item_type)]"/>
+                                <field name="date_start"
+                                   attrs="{'readonly': [('state','not in', ('draft'))]}"/>
+                                <field name="schedule_date"
+                                   attrs="{'readonly': [('state','not in', ('draft'))]}"/>
+                                <field name="priority"
+                                   attrs="{'readonly': [('state','not in', ('draft'))]}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Products">
+                                <field name="line_ids" context="{'default_item_type': item_type, 'default_categ_id': categ_id}" attrs="{'readonly': [('state','not in', ('draft'))]}">
+                                    <tree decoration-muted="cancelled == True" editable="bottom">
+                                        <field name="item_type" invisible="1"/>
+                                        <field name="product_id" options="{'no_create': 1, 'no_open': 1}" domain="[('item_type', '=', item_type), ('categ_id', 'in', child_categ_ids)]"/>
+                                        <field name="categ_id" invisible="1"/>
+                                        <field name="child_categ_ids" invisible="1" widget="many2many_tags"/>
+                                        <field name="name"/>
+                                        <field name="product_qty"/>
+                                        <field name="qty_available" force_save="1" readonly="1"/>
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="unit_price"/>
+                                        <field name="qty_deliver" invisible="1"/>
+                                        <field name="qty_purchase" invisible="1"/>
+                                        <field name="purchase_delivered" invisible="1"/>
+
+                                        <field name="product_uom_id" groups="product.group_uom"/>
+                                        <field name="date_required" invisible="1"/>
+                                        <field name="cancelled" invisible="1"/>
+                                        <field name="is_editable" invisible="1"/>
+                                        <field name="total"/>
+                                        <field name="remarks"/>
+                                    </tree>
+                                    <form>
+                                        <sheet>
+                                            <group>
+                                                <group>
+                                                    
+
+                                                    <field name="product_id"/>
+
+                                                    <field name="name"/>
+                                                    <field name="product_qty"/>
+                                                    <field name="qty_available"/>
+                                                    <field name="currency_id" invisible="1"/>
+                                                    <field name="unit_price"/>
+                                                    <field name="qty_deliver" invisible="1"/>
+                                                    <field name="qty_purchase" invisible="1"/>
+                                                    <field name="purchase_delivered" invisible="1"/>
+
+                                                    <field name="product_uom_id" groups="product.group_uom"/>
+                                                    <field name="date_required" invisible="1"/>
+                                                    <field name="cancelled" invisible="1"/>
+                                                    <field name="is_editable" invisible="1"/>
+                                                    <field name="total"/>
+                                                    <field name="remarks"/>
+
+                                                </group>
+                                            </group>
+                                            <notebook>
+                                            </notebook>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+                            <page string="Reasons">
+                                <field name="description" attrs="{'readonly': [('state','not in', ('draft'))]}"/>
+                            </page>
+
+                            <page string="Other Information">
+                                <group>
+                                    <group>
+                                         <field name="create_date" readonly="1"/>
+                                    </group>
+                                    <group>
+                                         <field name="create_uid" readonly="1"/>
+                                    </group>
+                                </group>
+
+                            </page>
+                        </notebook>
+                        <group class="oe_subtotal_footer oe_right">
+                            <field name="amount_total" nolabel="0" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="amount_total_purchase" groups="account.group_account_manager" nolabel="0" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+<!--                            <field name="amount_budget_reserved" groups="account.group_account_manager" nolabel="0" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>-->
+                        </group>
+                    </sheet>
+
+                    <div class="oe_chatter">
+                      <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                      <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_purchase_request_tree">
+            <field name="name">purchase.request.tree</field>
+            <field name="model">purchase.request</field>
+            <field name="arch" type="xml">
+                <tree decoration-bf="message_needaction==True"
+                      decoration-info="state in ('draft','to_approve')"
+                      decoration-muted="state in ('reject')"
+                      string="Material Request">
+                    <field name="message_needaction" invisible="1"/>
+                    <field name="name"/>
+                    <field name="item_type"/>
+                    <field name="date_start"/>
+                    <field name="requested_by"/>
+                    <field name="priority"/>
+                    <field name="state"/>
+                </tree>
+          </field>
+        </record>
+
+        <record model="ir.ui.view" id="purchase_request_pivot">
+            <field name="name">purchase.request.pivot</field>
+            <field name="model">purchase.request</field>
+            <field name="arch" type="xml">
+                <pivot string="Material Request" display_quantity="True">
+                    <field name="requested_by" type="row"/>
+                    <field name="amount_total" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="purchase_request_graph">
+            <field name="name">purchase.request.graph</field>
+            <field name="model">purchase.request</field>
+            <field name="arch" type="xml">
+                <graph string="Material Request">
+                    <field name="requested_by"/>
+                    <field name="amount_total" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_purchase_request_kanban">
+            <field name="name">purchase.request.kanban</field>
+            <field name="model">purchase.request</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="name"/>
+                    <field name="requested_by"/>
+                    <field name="amount_total"/>
+                    <field name="state"/>
+                    <field name="date_start"/>
+                    <field name="currency_id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="o_kanban_record_top mb16">
+                                    <div class="o_kanban_record_headings mt4">
+                                        <strong class="o_kanban_record_title"><span><t t-esc="record.requested_by.value"/></span></strong>
+                                    </div>
+                                    <strong><field name="amount_total" widget="monetary"/></strong>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <span><t t-esc="record.name.value"/> <t t-esc="record.date_start.value and record.date_start.value.split(' ')[0] or False"/></span>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <field name="state" widget="label_selection"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+          </field>
+        </record>
+
+        <record id="view_purchase_request_search" model="ir.ui.view">
+            <field name="name">purchase.request.list.select</field>
+            <field name="model">purchase.request</field>
+            <field name="arch" type="xml">
+                <search string="Search Material Request">
+                    <field name="name" string="Material Request"/>
+                    <separator/>
+                    <field name="state"/>
+                    <field name="assigned_to"/>
+                    <field name="requested_by" />
+                    <filter name="unassigned" string="Unassigned"
+                            domain="[('assigned_to','=', False)]"
+                            help="Unassigned Request"/>
+                    <filter name="state_draft" string="Draft"
+                            domain="[('state','=','draft')]"
+                            help="Request is to be approved"/>
+                    <filter name="state_to_approve" string="To Approve"
+                            domain="[('state','=','to_approve')]"
+                            help="Request is to be approved"/>
+                    <filter name="state_approved" string="Manager Approved"
+                            domain="[('state','=','leader_approved')]"
+                            help="Request is approved by Manager"/>
+                    <filter name="state_approved" string="Manager Approved"
+                            domain="[('state','=','manager_approved')]"
+                            help="Request is approved"/>
+                    <filter name="state_rejected" string="Rejected"
+                            domain="[('state','=','reject')]"
+                            help="Request is rejected"/>
+                    <filter name="state_done" string="Done"
+                            domain="[('state','=','done')]"
+                            help="Request is done"/>
+                    <filter string="Unread Messages"
+                            name="message_needaction"
+                            domain="[('message_needaction','=',True)]"/>
+                    <filter string="Assigned to me"
+                            name="assigned_to_me"
+                            domain="[('assigned_to','=',uid)]"/>
+                    <filter domain="[('requested_by','=', uid)]" name="my_request"
+                            help="My requests"/>
+
+                    <filter domain="[('state','in', ['line_approve','store_approve','finance_approve'])]" name="to_approve"
+                            help="To Approve"/>
+                    <filter name="group_state" string="Status" context="{'group_by':'state'}"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Requested by" icon="terp-personal" name="request_by"
+                                domain="[]"
+                                context="{'group_by':'requested_by'}"/>
+                        <filter string="Assigned to" icon="terp-personal" name ="assigned_by"
+                                domain="[]"
+                                context="{'group_by':'assigned_to'}"/>
+                        <filter string="Start Date" name="start_date" icon="terp-go-month" domain="[]" context="{'group_by':'date_start'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="purchase_request_calendar">
+            <field name="name">purchase.request.calendar</field>
+            <field name="model">purchase.request</field>
+            <field name="priority" eval="2"/>
+            <field name="arch" type="xml">
+                <calendar string="Calendar View" date_start="date_start" color="requested_by">
+                    <field name="name"/>
+                    <field name="amount_total" widget="monetary"/>
+                    <field name="requested_by"/>
+                </calendar>
+            </field>
+        </record>
+    My Requests
+        <record model="ir.actions.act_window" id="purchase_request_form_action">
+            <field name="name">My Requests</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.request</field>
+
+            <field name="view_mode">tree,kanban,pivot,graph,calendar,activity,form</field>
+            <field name="context">{"search_default_requested_by": uid}</field>
+            <field name="search_view_id" ref="view_purchase_request_search"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to start a new Material request process.
+              </p><p>
+                A Material request is an instruction to Purchasing to procure
+                a certain quantity of materials services, so that they are
+                available at a certain point in time.
+              </p>
+            </field>
+        </record>
+
+<!--    To Approve-->
+        <record model="ir.actions.act_window" id="purchase_request_form_approve_action">
+            <field name="name">Material Requests</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.request</field>
+
+            <field name="view_mode">tree,form</field>
+            <field name="context">{"search_default_to_approve":1, 'search_default_group_state': 1}</field>
+            <field name="search_view_id" ref="view_purchase_request_search"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to start a new Material request process.
+              </p><p>
+                A Material request is an instruction to Purchasing to procure
+                a certain quantity of materials services, so that they are
+                available at a certain point in time.
+              </p>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="purchase_request_form_all_action">
+            <field name="name">Material Requests</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.request</field>
+
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_purchase_request_search"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to start a new Material request process.
+              </p><p>
+                A Material request is an instruction to Purchasing to procure
+                a certain quantity of materials services, so that they are
+                available at a certain point in time.
+              </p>
+            </field>
+        </record>
+
+            <menuitem
+                id="menu_purchase_request_main"
+                sequence="10"
+                web_icon="fa fa-database,#FFFFFF,#333"
+                name="Material Requests"
+                groups="group_purchase_request_user,group_purchase_request_manager,account.group_account_manager"
+            />
+
+            <menuitem
+                id="menu_purchase_request_my_requests"
+                sequence="0"
+                parent="menu_purchase_request_main"
+                action="purchase_request_form_action"
+                groups="group_purchase_request_user"
+            />
+
+            <menuitem
+                id="menu_purchase_request_approve_requests"
+                sequence="0"
+                parent="base_no.menu_approvals"
+                action="purchase_request_form_approve_action"
+                groups="group_purchase_request_manager,account.group_account_manager"
+            />
+
+             <menuitem
+                id="menu_purchase_request_buyers"
+                sequence="10"
+                parent="purchase.menu_procurement_management"
+                action="purchase_request_form_all_action"
+                groups="purchase.group_purchase_user"
+            />
+
+<!--        <act_window-->
+<!--            context="{'search_default_product_id': [active_id], 'default_product_id': active_id}"-->
+<!--            id="action_purchase_request_line_product_tree"-->
+<!--            name="Material Requests"-->
+<!--            res_model="purchase.request.line"-->
+<!--            src_model="product.product"-->
+<!--            groups="base.group_user"/>-->
+
+         <record id="purchase_requisition_form_inherit" model="ir.ui.view">
+            <field name="name">purchase.requisition.form.inherit</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='vendor_id']" position="after">
+                    <field name="request_id"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

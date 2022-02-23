@@ -1,0 +1,32 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_purchase_request_user,purchase.request.user,model_purchase_request,group_purchase_request_user,1,1,1,1
+access_purchase_request_line_user,purchase.request.line.user,model_purchase_request_line,group_purchase_request_user,1,1,1,1
+access_purchase_request_buyer,purchase.request.buyer,model_purchase_request,purchase.group_purchase_user,1,1,0,0
+access_purchase_request_line_buyer,purchase.request.line.buyer,model_purchase_request_line,purchase.group_purchase_user,1,1,0,0
+access_purchase_request_line,purchase.request.line,model_purchase_request,group_purchase_request_manager,1,1,0,0
+access_purchase_request_line_line,purchase.request.line.line.manager,model_purchase_request_line,group_purchase_request_manager,1,1,0,0
+access_purchase_request_stock,purchase.request.stock,model_purchase_request,,1,1,0,0
+access_purchase_request_line_stock,purchase.request.line.stock,model_purchase_request_line,,1,1,0,0
+access_purchase_request_finance,purchase.request.finance,model_purchase_request,account.group_account_manager,1,1,0,0
+access_purchase_request_line_finance,purchase.request.line.finance,model_purchase_request_line,account.group_account_manager,1,1,0,0
+access_hr_department_purchase_request_user,hr.department.purchase.request.user,hr.model_hr_department,procurement.group_purchase_request_user,1,1,1,0
+access_service_request_user,purchase.service.user,model_service_requisition,purchase.group_purchase_user,1,1,1,1
+access_service_request_user_all,purchase.service.user.all,model_service_requisition,,1,0,0,0
+access_service_request_user_focal_point,purchase.service.user.focal.point,model_service_requisition,procurement.group_purchase_request_user,1,1,1,0
+access_service_request_line_focal_point,purchase.service.line.focal.point,model_service_requisition_line,procurement.group_purchase_request_user,1,1,1,0
+access_service_request_line_user,purchase.service.line.user,model_service_requisition_line,purchase.group_purchase_user,1,1,1,1
+access_purchase_order_focal_point,access.purchase.focal.point,purchase.model_purchase_order,procurement.group_purchase_request_user,1,1,0,0
+access_purchase_order_line_focal_point,access.purchase.order.line.focal_point,purchase.model_purchase_order_line,procurement.group_purchase_request_user,1,1,0,0
+access_purchase_order_approvaers,access.purchase.order.approvaers,purchase.model_purchase_order,base_no.group_basic_purchase,1,1,0,0
+access_purchase_order_line_approvaers,access.purchase.order.line.approvaers,purchase.model_purchase_order_line,base_no.group_basic_purchase,0,1,1,0
+access_purchase_requisition_approvaers,access.purchase.requisition.approvaers,purchase_requisition.model_purchase_requisition,base_no.group_basic_purchase,1,1,0,0
+access_purchase_requisition_line_approvaers,access.purchase.requisition.line.approvaers,purchase_requisition.model_purchase_requisition_line,base_no.group_basic_purchase,0,1,1,0
+access_stock_focal_point_,access.stock.focal.point,stock.model_stock_picking,group_purchase_request_user,1,0,0,0
+access_purchase_focal_point_,access.purchase.focal.point,purchase.model_purchase_order,group_purchase_request_user,1,0,0,0
+access_stock_purchase_line_focal_point_,access.purchase.line.focal.point,purchase.model_purchase_order_line,group_purchase_request_user,1,0,0,0
+access_purchase_req_focal_point_,access.purchase.req.focal.point,purchase_requisition.model_purchase_requisition,group_purchase_request_user,1,0,0,0
+access_stock_move_req_focal_point_,access.stock.move.focal.point,stock.model_stock_move,group_purchase_request_user,1,0,0,0
+access_stock_picking_accountant,access.stock.picking.accountant,stock.model_stock_picking,account.group_account_user,1,1,1,0
+access_backorder_service_wizard,backorder model,model_service_backorder_confirmation,,1,1,1,1
+access_po_rejection_wizardwizard,PO Rejection Wizard,model_purchase_order_rejection_wizard,,1,1,1,1
+access_pr_rejection_wizardwizard,PR Rejection Wizard,model_purchase_requisition_rejection_wizard,,1,1,1,1

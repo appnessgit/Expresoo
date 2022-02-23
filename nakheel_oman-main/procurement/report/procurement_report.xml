@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+<!--        <template id="purchase_report_document">-->
+<!--            <t t-call="web.html_container">-->
+<!--                    <t>-->
+<!--                        <div class="page">-->
+<!--                            <style>-->
+<!--                                .container {-->
+<!--                                    max-width: unset;-->
+<!--                                }-->
+<!--                                td {-->
+<!--                                    min-width: 120px;-->
+<!--                                }-->
+<!--                                .btn.btn-primary.o_report_print {-->
+<!--                                    display: none;-->
+<!--                                }-->
+<!--                            </style>-->
+<!--                            <div class="">-->
+<!--&lt;!&ndash;                            <h4 class="text-center" style="padding: 23px;">Purchase Summary</h4>&ndash;&gt;-->
+<!--                            <table class="o_list_view table table-sm table-hover table-striped o_list_view_ungrouped">-->
+<!--                                <tbody>-->
+<!--                                    <tr style="font-weight: bold;">-->
+<!--                                        <td>MR Num</td>-->
+<!--                                        <td>MR Req. By</td>-->
+<!--                                        <td>MR Estimated Amount</td>-->
+<!--                                        <td>Product Category</td>-->
+<!--                                        <td>Proc. Officer</td>-->
+<!--                                        <td>MR Priority</td>-->
+<!--                                        <td>MR Created</td>-->
+<!--                                        <td>Inventory Checked</td>-->
+<!--                                        <td>LM Approval</td>-->
+<!--                                        <td>RFQ Created</td>-->
+<!--                                        <td>PO Created</td>-->
+<!--                                        <td>PO</td>-->
+<!--                                        <td>Supplier</td>-->
+<!--                                        <td>PO Date</td>-->
+<!--                                        <td>PO Title</td>-->
+<!--                                        <td>PO Amount</td>-->
+<!--                                        <td>Receiving Date</td>-->
+<!--                                        <td>Status</td>-->
+<!--                                    </tr>-->
+<!--                                    <t t-foreach="orders" t-as="order_id">-->
+<!--                                        <t t-set="order" t-value="request.env['purchase.order'].browse(order_id)"/>-->
+<!--                                        <tr>-->
+
+<!--                                            <td><span t-esc="order.request_id.name if order.request_id else '-'"></span></td>-->
+<!--                                            <td><span t-esc=" order.request_id.requested_by.name if order.request_id else '-'"></span></td>-->
+<!--                                            <td><span t-esc="order.request_id.amount_total_purchase if order.request_id else 0.0" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: order.company_id.currency_id}"></span></td>-->
+<!--                                            <td><span t-esc="order.request_id.categ_id.display_name if order.request_id else '-'"></span></td>-->
+<!--                                            <td><span t-esc="order.user_id.name"></span></td>-->
+<!--                                            <td><span t-esc="dict(order.request_id._fields['priority'].selection).get(order.request_id.priority) if order.request_id else '-'"></span></td>-->
+<!--                                            <td><span t-esc="str(order.request_id.create_date)[:10] if order.request_id else '-'"></span></td>-->
+<!--                                            <td><span t-esc="str(order.request_id.inventory_check_date)[:10] if order.request_id and order.request_id.inventory_check_date else '-'"></span></td>-->
+<!--                                            <td><span t-esc="str(order.request_id.lm_approval_date)[:10] if order.request_id and order.request_id.lm_approval_date else '-'"></span></td>-->
+<!--                                            <td><span t-esc="str(order.create_date)[:10]"></span></td>-->
+<!--                                            <td><span t-esc="str(order.date_approve)[:10]"></span></td>-->
+<!--                                            <td><span t-esc="order.name"></span></td>-->
+<!--                                            <td><span t-esc="order.partner_id.name"></span></td>-->
+<!--                                            <td><span t-esc="str(order.date_order)[:10]"></span></td>-->
+<!--                                            <td><span t-esc="order.po_title"></span></td>-->
+<!--                                            <td><span t-esc="order.amount_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: order.currency_id}"></span></td>-->
+<!--                                            <td><span t-esc="str(order.date_planned)[:10]"></span></td>-->
+<!--                                            <td><span t-esc="dict(order._fields['delivery_status'].selection).get(order.delivery_status)"></span></td>-->
+<!--                                        </tr>-->
+<!--                                    </t>-->
+<!--                                </tbody>-->
+<!--                            </table>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </t>-->
+<!--                </t>-->
+<!--        </template>-->
+
+    </data>
+</odoo>

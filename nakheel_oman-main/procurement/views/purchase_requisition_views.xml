@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="purchase_requisition_form_inherit" model="ir.ui.view">
+            <field name="name">purchase.requisition.form.inherit</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="replace">
+                    <field name="approval_required" invisible="1"/>
+                    <header attrs="{'invisible': [('approval_required', '=', False)]}">
+                        <button name="action_submit" type="object" string="Submit" states="draft" class="btn btn-primary"/>
+
+                        <button name="%(purchase_requisition.action_purchase_requisition_to_so)d" type="action" string="New Quotation" attrs="{'invisible': [('state', '!=', 'open')]}" groups="purchase.group_purchase_manager,purchase.group_purchase_user"/>
+                        <button name="purchase_requisition.action_purchase_requisition_to_so" type="action" string="New Quotation" class="btn-primary" attrs="{'invisible': [('state', 'not in', ('in_progress', 'ongoing'))]}" groups="purchase.group_purchase_manager,purchase.group_purchase_user"/>
+                        <button name="action_in_progress" states="draft" string="Confirm" type="object" class="btn-primary" invisible="1"/>
+                        <button name="action_open" states="in_progress" string="Validate" type="object" class="btn-primary"/>
+                        <button name="action_done" states="open,ongoing" string="Close" type="object" class="btn-primary"/>
+                        <button name="action_draft" states="cancel, reject" string="Reset to Draft" type="object"
+                                groups="purchase.group_purchase_manager,purchase.group_purchase_user" />
+                        <button name="action_cancel" states="draft,in_progress" string="Cancel" type="object"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,in_progress,open,done" attrs="{'invisible': [('is_quantity_copy', '=', 'none')]}"/>
+                        <field name="state_blanket_order" widget="statusbar" statusbar_visible="draft,ongoing,done" attrs="{'invisible': [('is_quantity_copy', '!=', 'none')]}"/>
+                        <!--PRM-->
+                        <button name="action_prm_approval" type="object" string="Approve" states="prm" class="btn btn-primary" groups="purchase.group_purchase_manager"/>
+                        <button name="%(procurement.purchase_requisition_reject_action)d" type="action" string="Reject" states="prm" groups="purchase.group_purchase_manager"/>
+                        <!--Finance-->
+                        <button name="action_finance_approval" groups="base_no.group_finance" type="object" string="Approve" states="finance" class="btn btn-primary" />
+                        <button name="%(procurement.purchase_requisition_reject_action)d" groups="base_no.group_finance" type="action" string="Reject" states="finance" />
+                        <!--CEO-->
+                        <button name="action_ceo_approval" groups="base_no.group_ceo" type="object" string="Approve" states="ceo" class="btn btn-primary" />
+                        <button name="%(procurement.purchase_requisition_reject_action)d" groups="base_no.group_ceo" type="action" string="Reject" states="ceo"/>
+
+                        <button name="make_purchase_requisition" type="object" class="btn-primary" string="New Blanket Order" attrs="{'invisible': ['|',('state', 'in', ['draft','prm','tc','itc','mtc','bod']),('exclusive','!=','exclusive')]}"/>
+
+                        <button name="action_draft" string="Set to Draft" type="object" states="reject"/>
+
+                    </header>
+
+                    <header attrs="{'invisible': [('approval_required', '=', True)]}">
+                        <button name="%(purchase_requisition.action_purchase_requisition_to_so)d" type="action" string="New Quotation" attrs="{'invisible': [('state', '!=', 'open')]}"/>
+                        <button name="%(purchase_requisition.action_purchase_requisition_to_so)d" type="action" string="New Quotation" class="btn-primary" attrs="{'invisible': [('state', 'not in', ('in_progress', 'ongoing'))]}"/>
+                        <button name="action_in_progress" states="draft" string="Confirm" type="object" class="btn-primary"/>
+                        <button name="action_open" states="in_progress" string="Validate" type="object" class="btn-primary"/>
+                        <button name="action_done" states="open,ongoing" string="Close" type="object" class="btn-primary"/>
+                        <button name="action_draft" states="cancel" string="Reset to Draft" type="object"/>
+                        <button name="action_cancel" states="draft,in_progress,ongoing" string="Cancel" type="object"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,in_progress,open,done" attrs="{'invisible': [('is_quantity_copy', '=', 'none')]}"/>
+                        <field name="state_blanket_order" widget="statusbar" statusbar_visible="draft,ongoing,done" attrs="{'invisible': [('is_quantity_copy', '!=', 'none')]}"/>
+                    </header>
+                </xpath>
+
+                  <xpath expr="//sheet/div/button[@name='%(purchase_requisition.action_purchase_requisition_list)d']" position="replace">
+                        <button name="%(purchase_requisition.action_purchase_requisition_list)d" type="action" class="oe_stat_button" icon="fa-list-alt" attrs="{'invisible': [('state', 'in', ['draft','prm','tc','itc','mtc','bod'])]}">
+                            <field name="order_count" widget="statinfo" string="RFQs/Orders"/>
+                        </button>
+
+                      <button name="action_blanket_order_list" type="object" class="oe_stat_button" icon="fa-list-alt" attrs="{'invisible': ['|',('state', 'in', ['draft','prm','tc','itc','mtc','bod']),('exclusive','!=','exclusive')]}">
+                            <field name="blanket_order_count" widget="statinfo" string="Blanket orders"/>
+                            <field name="exclusive" invisible="1"/>
+                        </button>
+
+                 </xpath>
+
+                <xpath expr="//sheet/div[@class='float-left']" position="inside">
+                    <div class="oe_edit_only">
+                            <label for="title" class="oe_inline"/>
+                        </div>
+                        <h1>
+                            <field name="title" attrs="{'readonly': [('state','not in', ('draft'))]}"/>
+                        </h1>
+                </xpath>
+
+                <xpath expr="//field[@name='date_end']" position="attributes">
+                    <attribute name="groups">base.group_no_one</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='date_end']" position="after">
+                    <field name="period" attrs="{'readonly': [('state','not in', ('draft'))]}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="request_ids" domain="[('state', '=', 'done')]" widget="many2many_tags" attrs="{'readonly': [('state','not in', ('draft'))]}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='vendor_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state','not in', ('draft'))], 'required': [('is_quantity_copy', '=', 'none')]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='currency_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state','not in', ('draft'))]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='line_ids']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state','not in', ('draft'))]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='origin']" position="before">
+                    <field name="item_type" attrs="{'readonly': [('state','not in', ('draft'))]}"/>
+                </xpath>
+
+                <xpath expr="//sheet" position="inside">
+                        <group class="oe_subtotal_footer oe_right">
+                            <field name="amount_total" nolabel="0" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field':'currency_id'}"/>
+                        </group>
+                  </xpath>
+                <xpath expr="//field[@name='currency_id']" position="before">
+                    <field name="amount" attrs="{'readonly': [('state','not in', ('draft'))], 'invisible': [('is_quantity_copy', '!=', 'none')]}"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="purchase_requisition_type_form_inherit" model="ir.ui.view">
+            <field name="name">purchase.requisition.type.form.inherit</field>
+            <field name="model">purchase.requisition.type</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_type_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='exclusive']" position="after">
+                    <field name="approval_required"/>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>
