@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="report_hr_end_service" model="ir.actions.report">
+		<field name="name">EOS Report</field>
+		<field name="model">hr.end.service</field>
+		<field name="report_type">qweb-pdf</field>
+		<field name="report_name">hr_eos_custody.report_hr_end_service_view</field>
+		<field name="report_file">hr_eos_custody.report_hr_end_service</field>
+		<field name="binding_model_id" ref="model_hr_end_service"></field>
+		<field name="binding_type">report</field>
+
+	</record>
+	<template id="report_hr_end_service_view">
+		<t t-call="web.html_container">
+			<t t-foreach="docs" t-as="doc">
+				<!-- <t t-call="web.external_layout"> -->
+					<!-- <div class="page"> -->
+						<div class="article">
+							<div class="header">
+								<div class = "text-center">
+									<table class="table-bordered" style="width: 100%; hight:300px">
+										<colgroup>
+											<col style="width: 251px"/>
+											<col style="width: 170px"/>
+										</colgroup>
+										<thead>
+											<tr>
+												<div>
+													<th rowspan="5" style="width: 30%;"><img t-if="docs.company_id.logo" t-att-src="image_data_uri(docs.company_id.logo)" style="max-height: 45px; " alt="logo"/>
+													</th>
+													<th>
+														<tr>
+															<div>
+																<td>EMPLOYEE SERVICE PROCIDURE</td>
+															</div>
+														</tr>
+														<tr>
+															<div>
+																<td>HUMAN RESOURCES QUALITY PROCEDIURE</td>
+															</div>
+														</tr>
+													</th>
+													
+												</div>
+												
+											</tr>
+											
+										</thead>
+									</table>
+								</div>
+							</div>
+						<center>
+							<h1>
+							Clearence Form
+							</h1>
+						</center>
+						<table align="left" border="0" cellpadding="1" cellspacing="1 " style="font-size:10px; width:100%; page-break-after: always " class="table table-borderless ">
+							<h5 class="text-left" style="font-size:10px;   font-weight:bold;  font-family: 'EB Garamond';  color: #ec1c24;"><![CDATA[&nbsp;]]><![CDATA[&nbsp;]]></h5>
+							<tbody border="0" cellpadding="0" cellspacing="0" style="font-size:15px; width:100%; font-family: 'EB Garamond'; ">
+								<h2>
+									<td>
+										<strong>*Employee Informations</strong>
+									</td>
+									
+								</h2>
+								<br/>
+								<br/>
+								<tr colspan="0">
+									<td>
+										<strong>Date</strong>
+									</td>
+									<td>
+										<span t-field="doc.date"/>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<strong>Name of employeed person</strong>
+									</td>
+									<td>
+										<span t-field="doc.employee_id"/>
+									</td>
+								</tr>
+								
+								<br/>
+								<br/>
+								<tr>
+									<td>
+										<strong>Department</strong>
+									</td>
+									<td>
+										<span t-field="doc.employee_id.department_id.name"/>
+									</td>
+								</tr>
+								<br/><tr>
+									<td>
+										<strong>Position</strong>
+									</td>
+									<td>
+										<span t-field="doc.employee_id.job_id.name"/>
+									</td>
+								</tr>
+								<br/>
+								<br/>
+								<tr>
+									<td>
+										<strong>Date of Employment</strong>
+									</td>
+									<td>
+										<span t-field="doc.join_date"/>
+									</td>
+								
+								
+									<td>
+										<strong>Date of service termination</strong>
+									</td>
+									<td>
+										<span t-field="doc.end_date"/>
+									</td>
+								</tr>
+								<br/>
+								<br/>
+								
+							</tbody>
+						
+						</table>
+
+
+
+					</div>
+			</t>
+		</t>
+	</template>
+
+</odoo>

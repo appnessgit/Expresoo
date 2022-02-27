@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="Employee_appraisal_view_form" model="ir.ui.view">
+        <field name="name">Employee Appraisal Form</field>
+        <field name="model">employee.appraisal</field>
+        <field name="arch" type="xml">
+            <form string="Employee Appraisal">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,waiting,second_approval,done"/>
+                    <button string="Submit" type="object" name="first_approval" attrs="{'invisible': [('state', '!=', 'waiting')]}"></button>
+                    <button string="Submit" type="object" name="second_approval" attrs="{'invisible': [('state', '!=', 'second_approval')]}"></button>
+                    <button string="Submit" type="object" name="first_submit" attrs="{'invisible': [('state', '!=', 'draft')]}"></button>
+
+                    <button string="Reject" type="object" name="first_approval_reject" attrs="{'invisible': [('state', '!=', 'waiting')]}"></button>
+                    <button string="Reject" type="object" name="second_approval_reject" attrs="{'invisible': [('state', '!=', 'second_approval')]}"></button>
+
+                </header>
+                <sheet>
+                    <group name="group_top">
+                        <group name="group_left">
+                            <field name="employee_id" />
+                            <field name="date_from" />
+                            <field name="date_to" />
+                        </group>
+                        <group name="group_right">
+                            <field name="rate" />
+                            <field name="notes" />
+
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="employee_appraisal_view_tree" model="ir.ui.view">
+        <field name="name">employee.appraisal.view.tree</field>
+        <field name="model">employee.appraisal</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="employee_id" />
+                <field name="date_from" />
+                <field name="date_to" />
+                <field name="rate" />
+
+            </tree>
+        </field>
+    </record>
+
+</odoo>

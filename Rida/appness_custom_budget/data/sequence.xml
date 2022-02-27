@@ -1,0 +1,22 @@
+<odoo>
+    <data noupdate="1">
+
+        <record id="sequence_account_budget_amendment_reallocation" model="ir.sequence">
+            <field name="name">Budget Reallocation Number sequence</field>
+            <field name="code">account.budget.reallocation</field>
+            <field name="active">TRUE</field>
+            <field name="prefix">RE</field>
+            <field name="padding">6</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <record id="sequence_account_budget_amendment_addition" model="ir.sequence">
+            <field name="name">Budget Addition Number sequence</field>
+            <field name="code">account.budget.add</field>
+            <field name="active">TRUE</field>
+            <field name="prefix">AD</field>
+            <field name="padding">6</field>
+            <field name="number_increment">1</field>
+        </record>
+    </data>
+</odoo>

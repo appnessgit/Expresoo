@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_salary_advance_portal_user,access.hr.salary.advance.portal.user,hr_salary_advance.model_salary_advance,base.group_portal,1,1,1,1

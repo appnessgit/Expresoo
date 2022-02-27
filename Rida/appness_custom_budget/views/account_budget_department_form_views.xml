@@ -1,0 +1,145 @@
+<odoo>
+    <data>
+        <record id="view_account_budget_department_form" model="ir.ui.view">
+			<field name="name">view.account.budget.department.form</field>
+			<field name="model">account.budget.department.form</field>
+			<field name="arch" type="xml">
+               <form string="Budget Amendment">
+                   <header>
+                      <!--  Business Development Attachements -->
+                       <button string="Submit" groups="appness_custom_budget.group_bd" name="action_submit_to_user" type="object" states="draft" class="oe_highlight"/>
+                        <!-- Department User -->
+                       <button string="Submit" groups="appness_custom_budget.group_budget_department_user" name="action_submit_to_section_head" type="object" states="department_user" class="oe_highlight"/>
+                       <!-- Section Head -->
+                       <button string="Submit" groups="appness_custom_budget.group_budget_department_section_head" name="action_submit_to_manager" type="object" states="section_head" class="oe_highlight"/>
+                       <!-- Department Manager -->
+                       <button string="Approve" groups="appness_custom_budget.group_budget_department_manager" name="action_approve" type="object" states="department_manager" class="oe_highlight"/>
+                       
+                       <!-- Business Development -->
+                       <button string="Approve" groups="appness_custom_budget.group_bd" name="action_bd_approve" type="object" states="bd" class="oe_highlight"/>
+
+                       <button string="Reject" groups="appness_custom_budget.group_bd,appness_custom_budget.group_budget_department_manager" name="action_reject" type="object" states="bd,department_manager"/>
+
+
+                       <!--  -->
+                       <button string="Actualization Request" groups="appness_custom_budget.group_bd" name="action_submit_cont" type="object" states="approve" class="oe_highlight"/>
+                       <!-- BD -->
+                       <button string="Approve" groups="appness_custom_budget.group_bd" name="action_approve_cont" type="object" states="bd_cont" class="oe_highlight"/>
+                       <button string="Reject" groups="appness_custom_budget.group_bd" name="action_reject_cont" type="object" states="bd_cont"/>
+                       <!-- Manage Director -->
+                       <button string="Approve" groups="appness_custom_budget.group_md" name="action_md_approve" type="object" states="md_cont" class="oe_highlight"/>
+                       <button string="Reject" groups="appness_custom_budget.group_md" name="action_md_reject_cont" type="object" states="md_cont"/>
+                       <!-- Board of Directors-->
+                       <button string="Approve" groups="appness_custom_budget.group_budget_bod" name="action_bod_approve" type="object" states="bod_cont" class="oe_highlight"/>
+                       <button string="Reject" groups="appness_custom_budget.group_budget_bod" name="action_bod_reject_cont" type="object" states="bod_cont"/>
+                       <!-- Acutalize Contingent Budget-->
+                       <button string="Acutalize" groups="appness_custom_budget.group_bd" name="action_bd_acutalize_cont" type="object" states="acutalize_cont" class="oe_highlight"/>
+
+                       <field name="state" widget="statusbar" statusbar_visible="draft,approve"/>
+                   </header>
+
+                   <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                       <group>
+                          <group>
+                              <field name="department_id" string="Section" readonly="1"/>
+                              <field name="user_id" string="User" readonly="1"/>
+                              <field name="business_unit_id" readonly="1" invisible="1"/>
+                          </group>
+                          <group>
+                              <field name="general_budget_id" groups="analytic.group_analytic_accounting" readonly="1" invisible="1"/>
+                              <field name="analytic_account_id" groups="analytic.group_analytic_accounting" readonly="1"/>
+                              <field name="budget_id"/>
+                          </group>
+                       </group>
+                       <notebook>
+                           <page string="Budget Lines">
+                               <field name="line_ids" context="{'default_analytic_account_id': analytic_account_id}">
+                                <tree editable="bottom">
+                                    <field name="general_budget_id" readonly="1" force_save="1"/>
+                                    <field name="business_unit_id"/>
+                                    <field name="cont" invisible="1"/>
+                                    <field name="type" invisible="1"/>
+                                    <field name="analytic_account_id" invisible="1" readonly="1" force_save="1"/>
+                                    <field name="date_from"/>
+                                    <field name="date_to"/>
+                                    <field name="variable_amount" attrs="{'readonly': ['|','|',('expense_type', '!=', 'opex'),('cont','=',True),('type','=','profit')]}"/>
+                                    <field name="fixed_amount" attrs="{'readonly': ['|','|',('expense_type', '!=', 'opex'),('cont','=',True),('type','=','profit')]}"/>
+                                    <field name="pre_planned_amount" attrs="{'readonly': ['|',('expense_type', '=', 'opex'),('cont','=',True)]}" invisible="1"/>
+                                    <field name="planned_amount" force_save="1" attrs="{'readonly': ['|',('expense_type', '=', 'opex'),('cont','=',True)]}"/>
+                                    <field name="cont_amount"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="expense_type" invisible="1"/>
+                                </tree>
+                               </field>
+                           </page>
+                            <page string="Comments">
+                              <group>
+                                <field name="bd_comment" placeholder="Type your comment.." attrs="{'readonly': [('state', '!=', 'bd')]}"/>
+                                 <field name="sectiom_head_comment" placeholder="Type your comment.." attrs="{'readonly': [('state', '!=', 'section_head')]}"/>
+                                <field name="dep_manager_comment" placeholder="Type your comment.." attrs="{'readonly': [('state', '!=', 'department_manager')]}"/>
+                              </group>
+                                               
+                           </page>
+                       </notebook>
+                   </sheet>
+                   <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+
+               </form>
+            </field>
+        </record>
+
+
+        <!-- Tree -->
+
+        <record id="account_budget_department_tree" model="ir.ui.view">
+			<field name="name">account.appness_custom_budget.department.tree</field>
+			<field name="model">account.budget.department.form</field>
+			<field name="arch" type="xml">
+               <tree>
+                   <field name="name"/>
+                   <field name="department_id"/>
+                   <field name="state"/>
+               </tree>
+            </field>
+        </record>
+
+        <!--Filter-->
+        <record id="account_budget_department_search" model="ir.ui.view">
+        <field name="name">account.appness_custom_budget.department.search</field>
+        <field name="model">account.budget.department.form</field>
+        <field name="arch" type="xml">
+            <search string="Budget Form">
+                <field name="name"/>
+                <field name="department_id"/>
+                <field name="analytic_account_id"/>
+                <field name="general_budget_id"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_department" string="Department" domain="[]" context="{'group_by':'department_id'}"/>
+                </group>
+            </search>
+
+        </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_budget_department_form" model="ir.actions.act_window">
+			<field name="name">Budget Department Form</field>
+			<field name="res_model">account.budget.department.form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+        <menuitem action="action_budget_department_form"  web_icon="fa fa-file,#FFFFFF,#5675a1" id="menu_budget_form_dept"
+              sequence="80"/>
+
+    </data>
+</odoo>

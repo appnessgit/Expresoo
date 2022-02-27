@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="job_band_form" model="ir.ui.view">
+        <field name="name">job.band.form</field>
+        <field name="model">job.band</field>
+        <field name="arch" type="xml">
+            <form string="Job Band">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="Job Band"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="Sequence" />
+                    </group>
+
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="job_band_tree" model="ir.ui.view">
+        <field name="name">job.band.tree</field>
+        <field name="model">job.band</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="Sequence" />
+
+            </tree>
+        </field>
+    </record>
+    <record id="job_band_action" model="ir.actions.act_window">
+        <field name="name">Job Band</field>
+        <field name="res_model">job.band</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menu -->
+
+    <menuitem name="Job Band" id="job_band" sequence="8" parent="hr.menu_human_resources_configuration" action="job_band_action" groups="hr.group_hr_manager,hr.group_hr_manager"/>
+
+
+
+    <record id="hr_employee_inherit_job_band" model="ir.ui.view">
+        <field name="name">hr.employee.inherit.band</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="band_id"/>
+                </xpath>
+            </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="hr_loan_extent_form">
+            <field name="name">hr.loan.form</field>
+            <field name="model">hr.loan</field>
+            <field name="inherit_id" ref="hr_loan_base.view_hr_loan_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='job_id']" position="after">
+                 <field name="start_date"/>
+                 <field name="expiry_date"/>
+               </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

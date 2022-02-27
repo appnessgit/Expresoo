@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="employee_resignation_tree" model="ir.ui.view">
+            <field name="name">hr.resignation.tree</field>
+            <field name="model">hr.resignation</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <tree string="Employee Resignation">
+                    <field name="emp_code" optional="show"/>
+                    <field name="employee_id" optional="show"/>
+                    <field name="department_id" optional="show"/>
+                    <field name="employee_contract" optional="show"/>
+                    <field name="joined_date" readonly="1" optional="show"/>
+                    <field name="request_date" optional="show"/>
+                    <field name="expected_revealing_date" optional="show"/>
+                    <field name="approved_revealing_date" optional="show"/>
+                    <field name="resignation_type" optional="show"/>
+                    <field name="state" optional="show"/>
+                </tree>
+            </field>
+        </record>
+        <record id="employee_resignation_form" model="ir.ui.view">
+            <field name="name">hr.resignation.form</field>
+            <field name="model">hr.resignation</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <form string="Employee Resignation">
+                    <header>
+                        <button string="Submit" type="object" name="submit_resignation" states='draft' class="oe_highlight"/>
+                        <button string="Cancel" type="object" name="cancel_resignation" states='draft'/>
+                        <button string="Confirm" type="object" name="approve_resignation" groups="hr.group_hr_manager"  states='submit' class="oe_highlight"/>
+                        <button string="Create EOS Request" type="object" groups="hr.group_hr_user" name="create_eos_req" states='approved,' class="oe_highlight"/>
+                        <button string="Reject" type="object" groups="hr.group_hr_manager" name="reject_resignation" states='submit'/>
+                        <button string="Set to Draft" type="object" groups="hr.group_hr_manager" name="reset_to_draft" states='approved,cancel'/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,approved"/>
+                    </header>
+                    <sheet>
+                        <div name="button_box" class="oe_button_box">
+                            <button name="employee_eos_button"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-archive" groups="hr.group_hr_user">
+                                <field name="eos_count" widget="statinfo" string="End of Service"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Employee Details">
+                                <field name="employee_id" attrs="{'readonly': [('state','=','approved')]}"/>
+                                <field name="emp_code" />
+                                <field name="department_id"/>
+                                <field name="employee_contract" attrs="{'readonly': [('state','=','approved')]}"/>
+                            </group>
+                            <group string="Dates">
+                                <field name="joined_date"/>
+                                <field name="request_date"/>
+                                <field name="expected_revealing_date" attrs="{'readonly': [('state','=','approved')]}"/>
+                                <field name="approved_revealing_date"
+                                        groups="hr.group_hr_user" attrs="{'readonly': [('state','=','approved')]}"/>
+                            </group>
+                            <group string="Resignation Details">
+                                <field name="resignation_type" string="Type" groups="hr.group_hr_user" attrs="{'readonly': [('state','=','approved')]}"/>
+                                <field name="reason" attrs="{'readonly': [('state','=','approved')]}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="view_employee_resignation">
+            <field name="name">Employee Resignation</field>
+            <field name="res_model">hr.resignation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Employee Resignation Form
+                </p>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="view_employee_resignation_approved">
+            <field name="name">Resignation Approved</field>
+            <field name="res_model">hr.resignation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state', 'in', ('submit', 'approve','cancel'))]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Resignations Approved Or need to approved
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="employee_resignation" name="Resignation"
+                  parent="hr.menu_hr_root"
+                  groups="hr.group_hr_user"
+                  sequence="94"/>
+
+
+        <menuitem id="employee_resignation_request" parent="employee_resignation" name="Resignation Request"
+                  action="view_employee_resignation" groups="hr.group_hr_user" sequence="1"/>
+
+        <menuitem id="employee_resignation_approved" parent="employee_resignation" name="Resignation Approved"
+                  action="view_employee_resignation_approved" groups="hr.group_hr_manager" sequence="1"/>
+    </data>
+</odoo>
+
+

@@ -1,0 +1,20 @@
+<odoo>
+    <data>
+        <!-- <record id="certificate_service_report" model="ir.actions.report">
+            <field name="name">Certificate service</field>
+            <field name="model">hr.end.service</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">hr_eos_custody.certificate_service_report_view</field>
+            <field name="report_file">hr_eos_custody.certificate_service_report_view</field>
+        </record> -->
+
+        <report
+        id="print_eos_request_ar"
+        model="hr.end.service"
+        string="Certificate service - Arabic"
+        report_type="qweb-pdf"
+        name="hr_eos_custody.certificate_service_report_view_ar"
+        file="hr_eos_custody.certificate_service_report_view_ar"
+    />
+    </data>
+</odoo>

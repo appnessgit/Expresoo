@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="hr_displine_report_violation_wizard" model="ir.ui.view">
+            <field name="name">hr.displine.report.violation.wizard</field>
+            <field name="model">hr.displine.report.violation.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Violation report">
+                    <group>
+                        <group>
+                            <field name="date_from" required="1"/>
+                        </group>
+                        <group>
+                            <field name="date_to" required="1"/>
+                        </group>
+                    </group>
+
+                    <group>
+
+                        <group>
+                            <field name="violation_id"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="print_report" string="Print" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+		<record id="hr_displine_report_violation_action" model="ir.actions.act_window">
+			<field name="name">Displine report</field>
+			<field name="res_model">hr.displine.report.violation.wizard</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+
+
+    </data>
+</odoo>

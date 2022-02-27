@@ -1,0 +1,16 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_end_of_service_employee,End.of.service.employee,model_hr_end_service,base.group_user,1,0,0,0
+access_end_of_service_officer,End.of.service.officer,model_hr_end_service,hr.group_hr_user,1,1,1,1
+access_hr_eos_type_employee,hr.eos.type.employee,model_hr_eos_type,base.group_user,1,0,0,0
+access_hr_eos_type_officer,hr.eos.type.officer,model_hr_eos_type,hr.group_hr_user,1,1,1,1
+access_hr_contract_user,hr.contract.user,hr_contract.model_hr_contract,base.group_user,1,0,0,0
+access_hr_eos_other_allowance_employee,hr.eos.other.allowance.employee,model_hr_eos_other_allowance,hr.group_hr_user,1,0,0,0
+access_hr_eos_other_allowance_manager,hr.eos.other.allowance.manager,model_hr_eos_other_allowance,hr.group_hr_manager,1,1,1,1
+access_hr_eos_other_deduction_employee,hr.eos.other.deduction.employee,model_hr_eos_other_deduction,hr.group_hr_user,1,0,0,0
+access_hr_eos_other_deduction_manager,hr.eos.other.deduction.manager,model_hr_eos_other_deduction,hr.group_hr_manager,1,1,1,1
+access_hr_gratuity_configuration_user_id,Access.hr.gratuity.configuration.user,model_hr_gratuity_configuration,hr.group_hr_user,1,1,0,0
+access_hr_gratuity_configuration_manager_id,Access.hr.gratuity.configuration.manager,model_hr_gratuity_configuration,hr.group_hr_manager,1,1,1,1
+access_hr_gratuity_configuration_line_user_id,Access.hr.gratuity.configuration.line.user,model_hr_gratuity_configuration_line,hr.group_hr_user,1,0,0,0
+access_hr_gratuity_configuration_line_manager_id,Access.hr.gratuity.configuration.line.manager,model_hr_gratuity_configuration_line,hr.group_hr_manager,1,1,1,1
+access_hr_benefit_line_user_id,Access.hr.benefit.line.user,model_hr_benefit_line,hr.group_hr_user,1,0,1,1
+access_hr_benefit_line_manager_id,Access.hr.benefit.line.manager,model_hr_benefit_line,hr.group_hr_manager,1,0,1,1

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <!-- Leaves  -->
+    <record model="ir.ui.view" id="hr_leave_type_form_inherit">
+      <field name="name">hr.leave.type.form.inherit</field>
+      <field name="model">hr.leave.type</field>
+      <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='request_unit']" position="after">
+        </xpath>
+        <!-- <group name="description" position="after"> -->
+          <group name="leave_validation" position="after">
+            
+          <group name="sick_leave" string="Sick Leaves">
+            <field name="sick_rule"/>
+            <field name="weekend_sick" attrs="{'invisible': [('sick_rule', '!=', True)]}"/>
+            <field name="minimum_allowed" attrs="{'invisible': [('sick_rule', '!=', True)]}"/>
+            <field name="sick_rule_ids" nolabel="1" attrs="{'invisible': [('sick_rule', '!=', True)]}">
+              <tree editable="bottom">
+                <field name="range_from"/>
+                <field name="range_to"/>
+                <field name="percentage"/>
+              </tree>
+            </field>
+          </group>
+        </group>
+      </field>
+    </record>
+
+    <!--  Payroll -->
+    <record model="ir.ui.view" id="hr_payslip_form_inherit">
+      <field name="name">hr.payslip.form.inherit</field>
+      <field name="model">hr.payslip</field>
+      <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+      <field name="arch" type="xml">
+        <!-- <xpath expr="//field[@name='name']" position="after"> -->
+          <xpath expr="//field[@name='wage_type']" position="after">
+          <field name="sick_leave_deduction" readonly="1"/>
+        </xpath>
+      </field>
+    </record>
+
+  </data>
+</odoo>

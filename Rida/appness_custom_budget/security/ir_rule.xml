@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="department_manager_budget_lines" model="ir.rule">
+            <field name="name">Budget Lines (Department Manager)</field>
+            <field name="model_id" ref="account_budget.model_crossovered_budget_lines"/>
+            <field name="domain_force">[('user_id','=',user.id)]</field>
+            <field name="groups" eval="[(4, ref('appness_custom_budget.group_budget_department_manager'))]"/>
+        </record>
+
+        <record id="department_manager_budget_department_form" model="ir.rule">
+            <field name="name">Department Form(Department Manager)</field>
+            <field name="model_id" ref="appness_custom_budget.model_account_budget_department_form"/>
+            <field name="domain_force">['|',('department_id.manager_id','=',user.employee_id.id),('department_id.parent_id.manager_id','=',user.employee_id.id)]</field>
+            <field name="groups" eval="[(4, ref('appness_custom_budget.group_budget_department_manager'))]"/>
+        </record>
+
+        <record id="department_manager_section_budget_department_form" model="ir.rule">
+            <field name="name">Department Form(Department section head/Manager)</field>
+            <field name="model_id" ref="appness_custom_budget.model_account_budget_department_form"/>
+            <field name="domain_force">[('department_id.section_head','=',user.employee_id.id)]</field>
+            <field name="groups" eval="[(4,ref('appness_custom_budget.group_budget_department_section_head'))]"/>
+        </record>
+
+        <record id="department_user_budget_department_form" model="ir.rule">
+            <field name="name">Department Form(Department User)</field>
+            <field name="model_id" ref="appness_custom_budget.model_account_budget_department_form"/>
+            <field name="domain_force">[('manager_id','=',user.employee_id.parent_id.id)]</field>
+            <field name="groups" eval="[(4, ref('appness_custom_budget.group_budget_department_user'))]"/>
+        </record>
+        <record id="all_budget_department_form" model="ir.rule">
+            <field name="name">Department Form(All)</field>
+            <field name="model_id" ref="appness_custom_budget.model_account_budget_department_form"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('appness_custom_budget.group_bd')),(4, ref('appness_custom_budget.group_md')),(4, ref('appness_custom_budget.group_budget_bod'))]"/>
+        </record>
+
+
+        <record id="department_manager_budget_lines" model="ir.rule">
+            <field name="name">Budget Lines (Accountant)</field>
+            <field name="model_id" ref="account_budget.model_crossovered_budget_lines"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('account.group_account_user'))]"/>
+        </record>
+
+        <record id="department_manager_budget_amendment" model="ir.rule">
+            <field name="name">Budget Amendments (Department Manager)</field>
+            <field name="model_id" ref="model_account_budget_amendment"/>
+            <field name="domain_force">[('create_uid','=',user.id)]</field>
+            <field name="groups" eval="[(4, ref('appness_custom_budget.group_budget_department_manager'))]"/>
+        </record>
+
+    </data>
+</odoo>

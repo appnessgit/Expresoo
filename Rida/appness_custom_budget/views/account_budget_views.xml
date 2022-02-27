@@ -1,0 +1,194 @@
+<odoo>
+    <data>
+       <record id="crossovered_budget_view_form_inherit" model="ir.ui.view">
+        <field name="name">crossovered.budget.view.form.inherit</field>
+        <field name="model">crossovered.budget</field>
+        <field name="mode">primary</field>
+        <field name="priority" eval="8" />
+        <field name="inherit_id" ref="account_budget.crossovered_budget_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//header" position="replace">
+
+                <header>
+                    <!-- Business Development -->
+                    <button name="action_create_budgt_forms" states="draft" class="oe_highlight" groups="appness_custom_budget.group_bd" string="Generate Dept. Forms" type="object"/>
+
+                    <button name="action_bd_submit" states="department" class="oe_highlight" groups="appness_custom_budget.group_bd" string="Submit" type="object"/>
+
+                    <button name="action_bd_approve" states="bd" class="oe_highlight" groups="appness_custom_budget.group_bd" string="Confirm" type="object"/>
+
+                    <!-- Managing Director -->
+                    <button name="action_md_approve" states="md" class="oe_highlight" groups="appness_custom_budget.group_md" string="Confirm" type="object"/>
+
+                    <!-- 2nd Business Development Approve -->
+                    <button name="action_bd_2_approve" states="bd_2nd" class="oe_highlight" groups="appness_custom_budget.group_bd" string="Submit" type="object"/>
+
+                    <!-- Managing Commitee -->
+                    <button name="action_mc_approve" states="mc" class="oe_highlight" groups="appness_custom_budget.group_budget_mc" string="Confirm" type="object"/>
+
+                    <!-- 3rd Business Development Approve -->
+                    <button name="action_bd_3_approve" states="bd_3rd" class="oe_highlight" groups="appness_custom_budget.group_bd" string="Submit" type="object"/>
+
+                    <!-- Board of Directors -->
+                    <button name="action_bod_approve" states="bod" class="oe_highlight" groups="appness_custom_budget.group_budget_bod" string="Confirm" type="object"/>
+
+                    <button name="action_bd_3rd_validate" states="confirm" class="oe_highlight" groups="appness_custom_budget.group_bd" string="Validate" type="object"/>
+
+
+                    <button string="Reject" name="action_reject" states="bd,md,mc,bod" type="object"/>
+                    <button string="Reset to Draft" name="action_draft" states="reject,bd,md,bd_2nd,mc,bd_3rd,bod,confirm,validate" type="object"/>
+                    
+                    <field name="state" widget="statusbar" statusbar_visible="draft,validate"/>
+                </header>
+                
+            </xpath>
+            <xpath expr="//div[@class='oe_title']" position="before">
+                <div class="oe_button_box" name="expense_button_box">
+                        <button name="action_view_amendments"
+                                type="object"
+                                class="oe_stat_button"
+                                string="Amendments"
+                                icon="fa-pencil">
+                        </button>
+
+                        <button name="action_view_departments_forms"
+                                type="object"
+                                class="oe_stat_button"
+                                string="Dept. Forms"
+                                icon="fa-file">
+                        </button>
+                </div>
+            </xpath>
+            
+            <xpath expr="//field[@name='user_id']" position="after">
+                 <field name="planned_amount" attrs="{'readonly':[('state','!=','draft')]}" invisible="1"/>
+                 <field name="allocated_amount" invisible="1"/>
+                 <field name="remaining_amount" invisible="1"/>
+                 <field name="currency_id" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//page" position="after">
+                 <page string="Comments">
+                    <group>
+                        <field name="md_comment" placeholder="Type your comment.." attrs="{'readonly': [('state', '!=', 'md')]}"/>
+                        <field name="bod_comment" placeholder="Type your comment.." attrs="{'readonly': [('state', '!=', 'bod')]}"/>
+                    </group>
+                </page>
+            </xpath>
+
+
+            <xpath expr="//field[@name='user_id']" position="before">
+                <field name="type" widget="radio" attrs="{'readonly':[('state','!=','draft')]}"/>
+
+                <field name="expense_type" widget="radio" attrs="{'invisible':[('type','!=','expense')]}" nolable="1"/>
+                <field name="total_remaining_amount" invisible="1"/>
+                <field name="safe_margin"/>
+            </xpath>
+
+            <xpath expr="//field[@name='crossovered_budget_line']/tree/field[@name='general_budget_id']" position="replace">
+                <field name="name" invisible="1"/>
+                <field name="type" invisible="1"/>
+                <field name="expense_type" invisible="1"/>
+                <!-- <field name="cont" invisible="1"/> -->
+                <field name="categ_id" invisible="1"/>
+                <field name="account_id" invisible="1"/>
+                <field name="general_budget_id"/>
+                <field name="department_id"/>
+                <field name="allow_over_budget" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='crossovered_budget_line']/tree/button[@name='action_open_budget_entries']" position="before">
+                <button type="object" groups="account.group_account_manager" name="action_stop_exceeding" string="Lock" attrs="{'invisible': [('allow_over_budget','=',False)]}" icon="fa-unlock"/>
+                <button type="object" groups="account.group_account_manager" name="action_allow_exceeding" string="Unlock" attrs="{'invisible': [('allow_over_budget','=',True)]}" icon="fa-lock"/>
+            </xpath>
+
+            <xpath expr="//field[@name='crossovered_budget_line']/tree/field[@name='practical_amount']" position="after">
+                <field name="remaining_amount" invisible="0" string="Remaining" sum="remaining"/>
+            </xpath>
+
+            <xpath expr="//field[@name='crossovered_budget_line']/tree/field[@name='paid_date']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='crossovered_budget_line']/tree/field[@name='date_from']" position="attributes">
+                <attribute name="string">Start</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='crossovered_budget_line']/tree/field[@name='date_to']" position="attributes">
+                <attribute name="string">End</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='crossovered_budget_line']/tree/field[@name='planned_amount']" position="attributes">
+                <attribute name="attrs">{'readonly': [('expense_type', '=', 'opex')]}</attribute>
+                 <attribute name="force_save">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='crossovered_budget_line']/tree/field[@name='planned_amount']" position="before">
+                <field name="initial_planned_amount" string="Initially Planned" readonly="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='crossovered_budget_line']/tree/field[@name='planned_amount']" position="after">
+                <field name="cont_amount"/>
+                <field name="cont_amount_active" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='crossovered_budget_line']/tree/field[@name='planned_amount']" position="before">
+                <field name="variable_amount" attrs="{'readonly': [('expense_type', '=', 'capx')]}"/>
+                <field name="fixed_amount" attrs="{'readonly': [('expense_type', '=', 'capx')]}"/>
+                <field name="pre_planned_amount"  invisible="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='crossovered_budget_line']/tree/field[@name='practical_amount']" position="attributes">
+                <attribute name="string">Practical</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='crossovered_budget_line']/tree/field[@name='theoritical_amount']" position="attributes">
+                <attribute name="string">Theoretical</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='crossovered_budget_line']" position="attributes">
+                <attribute name="attrs">{'readonly': [('state','not in', ('bd','bd_2nd'))]}</attribute>
+                 <attribute name="force_save">1</attribute>
+            </xpath>
+
+        </field>   
+       </record>
+
+        <record id="view_crossovered_budget_line_tree" model="ir.ui.view">
+            <field name="name">view.crossovered.budget.line.tree</field>
+            <field name="model">crossovered.budget.lines</field>
+            <field name="mode">primary</field>
+            <field name="priority" eval="8" />
+            <field name="inherit_id" ref="account_budget.view_crossovered_budget_line_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='general_budget_id']" position="replace">
+                    <field name="name"/>
+                    <field name="general_budget_id"/>
+                    <!-- <field name="department_id"/> -->
+                </xpath>
+
+
+            </field>
+       </record>
+
+        <record id="account_budget.view_crossovered_budget_line_search" model="ir.ui.view">
+        <field name="name">account.budget.line.search</field>
+        <field name="model">crossovered.budget.lines</field>
+        <field name="arch" type="xml">
+            <search string="Budget Lines">
+                <field name="analytic_account_id"/>
+                <field name="analytic_account_id"/>
+                <field name="name"/>
+                <filter name="filter_not_cancelled" string="Not Cancelled" domain="[('crossovered_budget_state','!=','cancel')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_crossevered_budgdet_id" string="Budgets" domain="[]" context="{'group_by':'crossovered_budget_id'}"/>
+                </group>
+            </search>
+
+        </field>
+    </record>
+
+    </data>
+</odoo>

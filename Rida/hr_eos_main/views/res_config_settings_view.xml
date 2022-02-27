@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.eos</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="70"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="End Of Service" string="End Of Service" data-key="hr_eos_main" groups="hr.group_hr_manager">
+                    <h2>End Of Service</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="module_hr_eos_accounting"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="module_hr_eos_accounting"/>
+                                <div class="text-muted">
+                                    Link End of Service with Accounting To Create Journal Entries
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="module_hr_eos_custody"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="module_hr_eos_custody"/>
+                                <div class="text-muted">
+                                    Link End of Service with Employees Custodies
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="module_hr_eos_custody_accounting"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="module_hr_eos_custody_accounting"/>
+                                <div class="text-muted">
+                                    Link Employee Custodies with Accounting
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="module_hr_eos_loan"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="module_hr_eos_loan"/>
+                                <div class="text-muted">
+                                    Link End of Service with Employees Loans
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="module_hr_eos_loan_accounting"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="module_hr_eos_loan_accounting"/>
+                                <div class="text-muted">
+                                    Link Employees Loans with Accounting
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="eos_config_settings_action" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'hr_eos_main'}</field>
+    </record>
+
+    <menuitem id="hr_menu_configuration"
+        name="Settings"
+        parent="menu_hr_eos_config"
+        sequence="0"
+        action="eos_config_settings_action"
+        groups="base.group_system"/>
+</odoo>

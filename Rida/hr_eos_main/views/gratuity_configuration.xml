@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="gratuity_configuration_tree_view" model="ir.ui.view">
+			<field name="name">hr.gratuity.configuration.tree.view</field>
+			<field name="model">hr.gratuity.configuration</field>
+			<field name="arch" type="xml">
+				<tree string="Gratuity Duration">
+					<field name="name"/>
+					<field name="gratuity_start_date"/>
+					<field name="gratuity_end_date"/>
+				</tree>
+			</field>
+		</record>
+		<record id="gratuity_configuration_form_view" model="ir.ui.view">
+			<field name="name">hr.gratuity.configuration.form.view</field>
+			<field name="model">hr.gratuity.configuration</field>
+			<field name="arch" type="xml">
+				<form string="Gratuity Duration">
+					<sheet>
+						<field name="active" invisible="1"/>
+						<widget name="web_ribbon" text="Archived" bg_color="bg-danger"
+								attrs="{'invisible': [('active', '=', True)]}"/>
+						<div class="oe_title">
+							<label for="name" class="oe_edit_only"/>
+							<h1>
+								<field name="name"/>
+							</h1>
+						</div>
+
+						<group string="Validity Details">
+							<group>
+								<field name="gratuity_start_date" class="oe_inline"/>
+							</group>
+							<group>
+								<field name="gratuity_end_date" class="oe_inline"/>
+							</group>
+						</group>
+
+						<notebook>
+							<page name="configuration_rules" string="Rules">
+								<field name="gratuity_configuration_line">
+									<tree string="Gratuity Configuration">
+										<field name="name"/>
+										<field name="from_year"/>
+										<field name="to_year"/>
+										<!-- <field name="employee_daily_wage_days"/>
+										<field name="employee_working_days"/> -->
+										<field name="percentage"/>
+									</tree>
+								</field>
+							</page>
+						</notebook>
+
+					</sheet>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread"/>
+					</div>
+				</form>
+			</field>
+		</record>
+
+		<record id="hr_gratuity_configuration_filter_view" model="ir.ui.view">
+			<field name="name">hr.gratuity.configuration.search</field>
+			<field name="model">hr.gratuity.configuration</field>
+			<field name="arch" type="xml">
+				<search string="Archived Gratuity Configuration">
+					<filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+					<separator/>
+				</search>
+			</field>
+		</record>
+
+		<record id="action_employee_gratuity" model="ir.actions.act_window">
+			<field name="name">Gratuity Settlement</field>
+			<field name="res_model">hr.gratuity.configuration</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem
+			name="Gratuity Settlement"
+			parent="menu_hr_eos_config"
+			id="menu_hr_gratuity"
+			action="action_employee_gratuity"
+			sequence="3" 
+			groups="hr.group_hr_user"
+		/>
+
+
+		<!-- Gratuity Configuration Line  -->
+
+		<record id="gratuity_configuration_line_tree_view" model="ir.ui.view">
+			<field name="name">hr.gratuity.configuration.line.tree.view</field>
+			<field name="model">hr.gratuity.configuration.line</field>
+			<field name="arch" type="xml">
+				<tree string="Gratuity Duration">
+					<field name="name"/>
+					<field name="from_year"/>
+					<field name="to_year"/>
+					<field name="percentage"/>
+				</tree>
+			</field>
+		</record>
+		
+		<record id="gratuity_configuration_line_form_view" model="ir.ui.view">
+			<field name="name">hr.gratuity.configuration.line.form.view</field>
+			<field name="model">hr.gratuity.configuration.line</field>
+			<field name="arch" type="xml">
+				<form string="Gratuity Duration">
+					<sheet>
+						<field name="active" invisible="1"/>
+						<!-- <field name="yr_from_flag" invisible="1"/>
+						<field name="yr_to_flag" invisible="1"/> -->
+						<widget name="web_ribbon" text="Archived" bg_color="bg-danger"
+								attrs="{'invisible': [('active', '=', True)]}"/>
+						<div class="oe_title">
+							<label for="name" class="oe_edit_only"/>
+							<h1>
+								<field name="name"/>
+							</h1>
+						</div>
+						<group name="duration_details" string="Duration Configuration">
+							<group>
+								<field name="from_year"/>
+							</group>
+							<group>
+								<field name="to_year" />
+							</group>
+							<group>
+								<field name="percentage"/>
+							</group>
+						</group>
+						<!-- <group string="Computations Details">
+							<group>
+								<field name="employee_working_days"/>
+								<field name="company_id" groups="base.group_multi_company"/>
+							</group>
+							<group>
+								<field name="employee_daily_wage_days"/>
+							</group>
+						</group> -->
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+
+	</data>
+</odoo>

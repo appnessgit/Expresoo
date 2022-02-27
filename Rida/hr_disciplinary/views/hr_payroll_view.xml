@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="hr_disc_payslip_form_view" model="ir.ui.view">
+			<field name="name">hr.discp.payslip.inherit.form</field>
+			<field name="model">hr.payslip</field>
+			<field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//page[3]" position="after">
+					<page string="Discpline">
+						<field name="sanction_ids">
+							<tree string="Penatlties" editable="bottom" delete='false' create='false'>
+								<field name="state" readonly="1" />
+								<field name="sanction_id" readonly="1" />
+								<field name="date" attrs="{'readonly': [('state','=', 'confirm')]}"/>
+								<!-- <field name="percentage" attrs="{'readonly': [('state','=', 'confirm')]}" /> -->
+								<field name="num" attrs="{'readonly': [('state','=', 'confirm')]}" />
+							    <field name="amount"  attrs="{'readonly': [('state','=', 'confirm')]}" />
+								<field name="deducted" string="deduction" attrs="{'readonly': [('state','=', 'confirm')]}"/>
+						   </tree>
+						 </field>
+						 <group class="oe_subtotal_footer oe_right">
+							<field name="sanction_total"/>
+							
+						</group>
+					</page>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>

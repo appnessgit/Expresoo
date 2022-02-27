@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="appraisal_menu" name="Appraisal" sequence="10" web_icon="employee_appraisal,static/description/icon.png"/>
+    <!-- appraisal_menu action window -->
+    <record id="employee_appraisal_menu_action" model="ir.actions.act_window">
+        <field name="name">Employee Appraisal</field>
+        <field name="res_model">employee.appraisal</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- This Menu Item is for the appraisal model -->
+    <menuitem id="employee_appraisal_menu" name="Employee Appraisal" parent="appraisal_menu" action="employee_appraisal_menu_action" sequence="4"/>
+
+
+    <!-- Action -->
+    <record id="action_hr_eos" model="ir.actions.act_window">
+        <field name="name">End Of Service</field>
+        <field name="res_model">hr.end.service</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- <menuitem name="End Of Service"
+            parent="appraisal_menu"
+            action='action_hr_eos'
+            id="menu_hr_eos"
+            sequence="20"/> -->
+
+
+
+
+</odoo>

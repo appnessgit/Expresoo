@@ -1,0 +1,59 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data >
+        <!--  Internal User rule -->
+        <record id="internal_user_hr_expense_sheet_rule" model="ir.rule">
+            <field name="name">Internal User hr expense sheet Rule</field>
+            <field name="model_id" ref="model_hr_expense_sheet"/>
+            <field name="domain_force">['|',('employee_id.user_id', '=', 'user_id'),('employee_id.line_manager_id', '=', 'user_id ')]</field>
+            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+            <field name="perm_unlink" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_create" eval="1"/>
+        </record>
+
+        <!--  HR officer  rule -->
+        <record id="hr_officer_hr_expense_sheet_rule" model="ir.rule">
+            <field name="name">HR officer hr expense sheet Rule</field>
+            <field name="model_id" ref="model_hr_expense_sheet"/>
+            <field name="groups" eval="[(4, ref('hr.group_hr_user'))]"/>
+            <field name="perm_unlink" eval="0"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_create" eval="0"/>
+        </record>
+        <!--  CCSO rule -->
+        <record id="CCSO_hr_expense_sheet_rule" model="ir.rule">
+            <field name="name">CCSO hr expense sheet Rule</field>
+            <field name="model_id" ref="model_hr_expense_sheet"/>
+            <field name="groups" eval="[(4, ref('base_rida.rida_group_CCSO'))]"/>
+            <field name="perm_unlink" eval="0"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_create" eval="0"/>
+        </record>
+        <!--  HR Manager rule -->
+        <record id="hr_manager_hr_expense_sheet_rule" model="ir.rule">
+            <field name="name">HR Manager hr expense sheet Rule</field>
+            <field name="model_id" ref="model_hr_expense_sheet"/>
+            <field name="groups" eval="[(4, ref('hr.group_hr_manager'))]"/>
+            <field name="perm_unlink" eval="0"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_create" eval="0"/>
+        </record>
+        <!--  Accountant  rule -->
+        <record id="accountant_hr_expense_sheet_rule" model="ir.rule">
+            <field name="name">Accountant hr expense sheet Rule</field>
+            <field name="model_id" ref="model_hr_expense_sheet"/>
+            <field name="groups" eval="[(4, ref('account.group_account_user'))]"/>
+            <field name="perm_unlink" eval="0"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_create" eval="0"/>
+        </record>
+    </data>
+
+
+</odoo>

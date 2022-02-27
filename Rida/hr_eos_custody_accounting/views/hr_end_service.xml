@@ -1,0 +1,23 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_hr_eos_custody_form2">
+            <field name="name">hr.end.service.form</field>
+            <field name="model">hr.end.service</field>
+            <field name="inherit_id" ref="hr_eos_custody.view_hr_eos_custody_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='custody_ids']" position="replace">
+                    <field name="custody_ids" colspan="4" nolabel="1" attrs="{'readonly':[('state','in',('confirm','post'))]}">
+                        <tree string="Custodies" editable="bottom">
+                            <field name="name" readonly="1"/>
+                            <field name="date" readonly="1"/>
+                            <field name="state"/>
+                            <field name="clear_date"/> 
+                            <field name="account_id"/>
+                            <field name="amount"/>
+                        </tree>
+                    </field>    
+                </xpath>
+            </field>
+        </record>        
+    </data>
+</odoo>

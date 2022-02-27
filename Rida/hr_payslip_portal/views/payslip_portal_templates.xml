@@ -1,0 +1,137 @@
+<odoo>
+    <data>
+        <template id="portal_my_home_menu_payslip" name="Portal layout : payslip menu entries" inherit_id="portal.portal_breadcrumbs" priority="25">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+          <li t-if="page_name == 'payslip' or payslip" t-attf-class="breadcrumb-item #{'active ' if not payslip else ''}">
+            <a t-if="payslip or payslip_name" t-attf-href="/my/payslip?{{ keep_query() }}">Payslips</a>
+            <t t-else="">Payslips</t>
+          </li>
+          <li t-if="payslip" class="breadcrumb-item active">
+            <t t-esc="payslip.name"/>
+          </li>
+        </xpath>
+      </template>
+
+        <template id="portal_my_home_payslips" name="Portal My Home : payslip entry" inherit_id="portal.portal_my_home" priority="25">
+            <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+                <t t-if="employee_id" t-call="portal.portal_docs_entry">
+                    <t t-set="title">Payslips</t>
+                    <t t-set="url" t-value="'/my/payslip'"/>
+                    <t t-set="count" t-value="payslip_count"/>
+                </t>
+            </xpath>
+        </template>
+
+        <template id="portal_my_home_payslips_icon" name="Portal Tray : payslip entry" inherit_id="hr_portal.dashboard_icons" priority="25">
+            <xpath expr="//div[@id='icons']" position="inside">
+                <div class="col-sm-2 col-md-2">
+                  <div class="circle-tile ">
+                    <a href="/my/payslip"><div class="circle-tile-heading dark-blue" style="background: #cc6e8a"><i class="fa fa-money fa-fw fa-2x"></i></div></a>
+                    <div class="circle-tile-content dark-blue" style="background: #cc6e8a">
+                      <div class="circle-tile-description text-faded"> Payslips</div>
+                      <div class="circle-tile-number text-faded "><span t-esc="request.env['hr.payslip'].search_count([('state', '=', 'done'),('employee_id', '=', request.env.user.employee_ids[0].id)])"></span></div>
+                      <a class="circle-tile-footer" href="/my/payslip">Show <i class="fa fa-chevron-circle-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+            </xpath>
+        </template>
+
+<!--    Payslips List-->
+        <template id="portal_my_payslips" name="Portal: My Payslips">
+        <t t-call="portal.portal_layout">
+          <t t-call="portal.portal_searchbar">
+            <t t-set="title">Payslips</t>
+          </t>
+           <t t-if="employee_id" >
+               <div class="row">
+                <div class="col-lg-12">
+                  <div t-if="error_message" class="alert alert-danger" role="alert">
+                      <t t-foreach="error_message" t-as="err"><t t-esc="err"/><br /></t>
+                  </div>
+                </div>
+            </div>
+               <style>
+                   .action-button {
+                        padding: 0 5px;
+                    }
+               </style>
+               <t t-if="payslips" t-call="portal.portal_table">
+                <thead>
+                  <tr class="active">
+                      <th>Payslip Name</th>
+                      <th>Reference</th>
+                      <th>Date From</th>
+                      <th>Date To</th>
+                      <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <t t-foreach="payslips" t-as="payslip">
+                    <tr>
+                        <td><a t-attf-href="/my/payslip/#{payslip.id}" class="action-button"><span t-field="payslip.name"/></a></td>
+                        <td><span t-field="payslip.number"/></td>
+                        <td><span t-field="payslip.date_from"/></td>
+                        <td><span t-field="payslip.date_to"/></td>
+                        <td><span class="badge badge-info" t-field="payslip.state"/></td>
+                    </tr>
+                  </t>
+                </tbody>
+          </t>
+           </t>
+        </t>
+        </template>
+
+    <!--Payslip Details-->
+    <template id="portal_my_payslip" name="Payslip Portal Template" inherit_id="portal.portal_sidebar" primary="True">
+        <xpath expr="//div[hasclass('o_portal_sidebar')]" position="inside">
+
+            <div class="row mt16 o_portal_invoice_sidebar">
+                <!-- Sidebar -->
+                <t t-call="portal.portal_record_sidebar">
+                    <t t-set="classes" t-value="'col-12 col-lg flex-lg-grow-0 d-print-none'"/>
+                    <t t-set="title">
+                        <h6 class="mb-0">
+                            <b t-field="payslip.name"></b>
+                        </h6>
+                    </t>
+
+                    <t t-set="entries">
+                        <ul class="list-group list-group-flush flex-wrap flex-row flex-lg-column">
+                            <li class="list-group-item flex-grow-1">
+                                <div class="o_download_pdf btn-toolbar flex-sm-nowrap">
+                                    <a class="btn btn-secondary btn-block o_download_btn" t-att-href="'/my/payslip/' + str(payslip.id) + '?report_type=pdf&amp;download=' + str(True)" title="Download"><i class="fa fa-download"/> Download</a>
+                                    <div class="btn-group  flex-grow-1 mr-1 mb-1">
+                                    </div>
+                                    <div class="btn-group flex-grow-1 mb-1">
+                                        <a class="btn btn-secondary btn-block o_print_btn o_portal_payslip_print" t-att-href="'/my/payslip/' + str(payslip.id) + '?report_type=pdf'" id="print_invoice_report" title="Print" target="_blank"><i class="fa fa-print"/> Print</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </t>
+                </t>
+
+                <!-- Page Content -->
+                <div id="payslip_content" class="o_portal_page_content col-12 col-lg d-flex flex-column align-items-end">
+                    <div class="o_portal_page_size" style="width: 100%;">
+                        <div class="o_portal_html_view shadow">
+                            <div class="o_portal_html_loader text-center">
+                                <i class="fa fa-circle-o-notch fa-spin fa-2x fa-fw text-black-50"></i>
+                            </div>
+                            <iframe id="invoice_html" class="mt8 mb8" width="100%" height="929" frameborder="0" scrolling="no" t-att-src="'/my/payslip/' + str(payslip.id) + '?report_type=html'"/>
+
+                        </div>
+                        <div id="hr_payslip_communication" class="mt-4">
+                            <h2>Communication</h2>
+                            <t t-call="portal.message_thread">
+                                <t t-set="object" t-value="payslip"/>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+    </data>
+</odoo>

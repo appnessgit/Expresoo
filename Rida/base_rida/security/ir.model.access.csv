@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_base_rida_user,base_rida.base_rida,model_hr_employee,base.group_user,1,1,1,1
+access_base_rida_officer,base_rida.base_rida,model_hr_employee,hr.group_hr_user,1,1,1,1
+access_base_rida_manager,base_rida.base_rida,model_hr_employee,hr.group_hr_manager,1,1,1,1
+access_base_rida_accountant,base_rida.base_rida,model_hr_employee,account.group_account_user,1,1,0,0
+access_base_rida_supervisor,base_rida.base_rida,model_hr_employee,rida_group_supervisor,1,1,1,1
+access_base_rida_director,base_rida.base_rida,model_hr_employee,rida_group_dirctor,1,1,1,1
+access_base_rida_c_level,base_rida.base_rida,model_hr_employee,rida_group_c_level,1,1,1,1
+access_base_rida_ceo,base_rida.base_rida,model_hr_employee,rida_group_ceo,1,1,1,1
+access_base_rida_line_manager,base_rida.base_rida,model_hr_employee,rida_group_line_manager,1,1,1,1
+access_base_rida_business_partner,base_rida.base_rida,model_hr_employee,rida_group_business_partner,1,1,0,0
+access_base_rida_hr_directory,base_rida.base_rida,model_hr_employee,rida_group_hr_director,1,1,1,1
+access_base_rida_ccso,base_rida.base_rida,model_hr_employee,rida_group_CCSO,1,1,0,0
+access_base_rida_coo,base_rida.base_rida,model_hr_employee,rida_group_coo,1,1,0,0

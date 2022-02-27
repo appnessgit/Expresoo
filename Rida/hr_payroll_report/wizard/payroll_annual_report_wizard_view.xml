@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="report_wizard_payroll_annual_view_form" model="ir.ui.view">
+            <field name="name">report_payroll_wizard_view_form.form</field>
+            <field name="model">wizard.payroll.annual.report</field>
+            <field name="arch" type="xml">
+                <form string="Payroll period">
+                    <group>
+                        <group>
+                            <field name="report_type" widget="radio" />
+                            <field name="applied_for" widget="radio"/>
+                            <!-- <field name="bank_report"/> -->
+                            <!-- <field name="bank_date_1" attrs="{'invisible':[('bank_report','=',False)]}"/> -->
+                            <!-- <field name="bank_date_2" attrs="{'invisible':[('bank_report','=',False)]}"/> -->
+                        </group>
+                        <group>
+                            <field name="batch1_id" string="Batch" required="1"/>
+                            <field name="batch2_id" string="Batch to Compare" attrs="{'invisible':[('report_type','=','rule')],'required':[('report_type','in',('compare', 'total', 'emp_variance'))]}"/>
+                            <field name="report_id" string="Report" attrs="{'invisible':[('report_type','=','compare')]}" />
+                            <field name="rule_ids" string="Salary Rules" attrs="{'invisible':[('report_type','=','compare')]}" widget="many2many_tags"/>
+                            <field name="paper_format" invisible="0" string="Format" attrs="{'invisible':[('report_type','=','compare')]}"/>
+                        </group>
+                            <field name="department_ids" attrs="{'invisible':[('applied_for','!=','department')]}" widget="many2one_tags"/>
+                            <field name="employee_ids" attrs="{'invisible':[('applied_for','!=','employee')]}" widget="many2one_tags"/>
+                        </group>
+                    <footer>
+                        <button name="print_report" type="object" string="Print" class="oe_highlight"/>
+                        <button name="print_report_xls" type="object" class="oe_highlight" string="Export"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window
+            id="payroll_annual_report_open_wizard"
+            name="Payroll Reports"
+            res_model="wizard.payroll.annual.report"
+            view_mode="form"
+            view_id="report_wizard_payroll_annual_view_form"
+            target="new"/>
+
+         <menuitem
+              id="payroll_annual_report_sub_menu"
+              name="Payroll Details Report"
+              action="payroll_annual_report_open_wizard"
+              parent="hr_payroll.menu_hr_payroll_report"
+        />
+    </data>
+</odoo>

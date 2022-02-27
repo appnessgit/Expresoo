@@ -1,0 +1,317 @@
+<odoo>
+    <data>
+        <template id="frontend_layout_self_service" inherit_id="portal.frontend_layout" name="Main Frontend Layout: Self Service">
+            <xpath expr="//header/nav/div[@class='container']" position="before">
+                <t t-if="request.env.user.employee_ids">
+                    <a href="#" class="trayToggle"><i class="fa fa-th"/></a>
+                </t>
+            </xpath>
+            <xpath expr="//div[@id='wrapwrap']" position="before">
+                <t t-if="request.env.user.employee_ids">
+                    <t t-call="hr_portal.dashboard_icons"/>
+                </t>
+            </xpath>
+        </template>
+
+        <template id="portal.portal_breadcrumbs" name="Portal Breadcrumbs">
+            <ol t-if="page_name != 'home'" class="o_portal_submenu breadcrumb mb-0 py-2 flex-grow-1">
+                <li class="breadcrumb-item"><a href="/my/home" aria-label="Home" title="Home"><i class="fa fa-home"/></a></li>
+                <li t-if="page_name == 'my_details'" class="breadcrumb-item">Your Details</li>
+            </ol>
+        </template>
+
+        <!-- <template id="portal.my_account_link" name="Link to frontend portal" inherit_id="portal.frontend_layout">
+            <xpath expr="//a[@id='o_logout']" position="before">
+                <a href="/my/home" role="menuitem" class="dropdown-item">My Account</a>
+            </xpath>
+        </template> -->
+
+
+        <template id="portal_my_home_menu_dashboard" name="Portal layout : dashboard menu entries" inherit_id="portal.portal_breadcrumbs" priority="25">
+            <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+              <li t-if="page_name == 'dashboard'" t-attf-class="breadcrumb-item #{'active ' if not purchase_order else ''}">
+                <t>Employee Profile</t>
+              </li>
+            </xpath>
+      </template>
+        
+         <template id="dashboard_icons" name="Dashboard Icons">
+            <div id="iconTray" style="display: none; background: url(/hr_portal/static/src/img/home-menu-bg-overlay.svg), linear-gradient(to right bottom, rgb(7, 63, 121), rgb(119, 166, 214));
+                background-color: rgba(0, 0, 0, 0);
+                background-size: auto, auto;
+            background-size: cover; overflow: auto;">
+
+                    <style>
+                        .text-faded {
+                            color: #fff;
+                        }
+                    </style>
+                <a id="closeIconTray" href="#"><i class="fa fa-chevron-left"/></a>
+                <div class="scrollable">
+                    <div class="container">
+                        <div class="row mt-4" id="icons">
+                            <div class="col-sm-2 col-md-2">
+                              <div class="circle-tile ">
+                                <a href="/my/dashboard"><div class="circle-tile-heading dark-blue" style="background: #248f92"><i class="fa fa-users fa-fw fa-2x"></i></div></a>
+                                <div class="circle-tile-content dark-blue" style="background: #248f92">
+                                  <div class="circle-tile-description text-faded"> My</div>
+                                  <div class="circle-tile-number text-faded ">Profile</div>
+                                  <a class="circle-tile-footer" href="/my/dashboard">More Info <i class="fa fa-chevron-circle-right"></i></a>
+                                </div>
+                              </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                  </div>
+        </template>
+<!--    Dashboard-->
+        <template id="portal_my_dashboard" name="Dashboard">
+            <t t-call="portal.portal_layout">
+                <style>
+                    .employee{
+                        padding: 20px;
+                    }
+                    .employee img{
+                        width: 100px;
+                    }
+                    .row{
+                        margin-right: 0;
+                        margin-left: 0;
+                    }
+                </style>
+            <div class="o_portal container mt-3">
+                <div class="row justify-content-between mt-4 bg-white employee">
+                    <div class="col-md-6">
+                        <h3 style="padding: 15px 0px 0px 0px;"><span t-esc="employee_id.name"></span></h3>
+                        <t t-foreach="employee_id.category_ids" t-as="category">
+                            <span class="badge" t-field="category.name" style="border: 1px solid; border-radius: 20px;"></span>
+                        </t>
+                    </div>
+                    <div class="col-md-6">
+                        <span t-field="employee_id.image_1920" style="float: right" width="100" t-options="{'widget': 'image'}"
+                              role="img" t-att-aria-label="'Image of %s' % res_company.name" title="employee_id.name"/>
+                    </div>
+                    <br/>
+                    <div class="col-md-12">
+                        <br/>
+                        <br/>
+                        
+                        <ul class="nav nav-tabs">
+                          <li><a id="home-toggle" class="active" data-toggle="tab" href="#home">Work Information</a></li>
+                          <li><a data-toggle="tab" href="#personal">Personal Information</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div id="home" class="tab-pane fade in active">
+                              <div class="row">
+                                  <div class="col-md-6">
+                                      <h5>Contact Information</h5>
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Work Address</td>
+                                                    <td><div t-field="employee_id.address_id" t-options='{"widget": "contact", "fields": ["email", "phone", "address", "name"]}'/></td>
+                                                </tr>
+                                                 <tr>
+                                                    <td>Work Location</td>
+                                                    <td><span t-field="employee_id.work_location"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Work Email</td>
+                                                    <td><span t-field="employee_id.work_email"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Work Mobile</td>
+                                                    <td><span t-field="employee_id.mobile_phone"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Work Phone</td>
+                                                    <td><span t-field="employee_id.work_phone"></span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                  </div>
+
+                                  <div class="col-md-6">
+                                      <h5>Position</h5>
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Department</td>
+                                                    <td><span t-field="employee_id.department_id"></span></td>
+                                                </tr>
+                                                 <tr>
+                                                    <td>Job Title</td>
+                                                    <td><span t-field="employee_id.job_id"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Department Manager</td>
+                                                    <td><span t-field="employee_id.parent_id"></span></td>
+                                                </tr>
+                                                <tr t-if="employee_id.contract_id">
+                                                    <td>Joining Date</td>
+                                                    <td><span t-field="employee_id.contract_id.date_start"></span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                  </div>
+                            </div>
+                          </div>
+                          <div id="personal" class="tab-pane fade">
+                            <div class="row">
+                                  <div class="col-md-6">
+                                      <h5>Citizenship &amp; Other Information</h5>
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Nationality</td>
+                                                    <td><div t-field="employee_id.country_id"/></td>
+                                                </tr>
+                                                 <tr>
+                                                    <td>Identification No</td>
+                                                    <td><span t-field="employee_id.identification_id"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Passport No</td>
+                                                    <td><span t-field="employee_id.passport_id"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Bank Account Number</td>
+                                                    <td><span t-field="employee_id.bank_account_id"></span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                      <br/>
+                                      <br/>
+                                      <h5>Status</h5>
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Gender</td>
+                                                    <td><div t-field="employee_id.gender"/></td>
+                                                </tr>
+                                                 <tr>
+                                                    <td>Marital Status</td>
+                                                    <td><span t-field="employee_id.marital"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Number of Children</td>
+                                                    <td><span t-field="employee_id.children"></span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                      <br/>
+                                      <br/>
+                                      <h5>Work Permit</h5>
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Visa No</td>
+                                                    <td><div t-field="employee_id.visa_no"/></td>
+                                                </tr>
+                                                 <tr>
+                                                    <td>Permit No</td>
+                                                    <td><span t-field="employee_id.permit_no"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Visa Expire Date</td>
+                                                    <td><span t-field="employee_id.visa_expire" t-options='{"widget": "date"}'></span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                  </div>
+
+                                  <div class="col-md-6">
+                                      <h5>Contact Information</h5>
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Private Address</td>
+                                                    <td><div t-field="employee_id.address_home_id" t-options='{"widget": "contact", "fields": ["email", "phone", "address", "name"]}'/></td>
+                                                </tr>
+                                                 <tr>
+                                                    <td>Emergency Contact</td>
+                                                    <td><span t-field="employee_id.emergency_contact"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Emergency Phone</td>
+                                                    <td><span t-field="employee_id.emergency_phone"></span></td>
+                                                </tr>
+                                                 <tr>
+                                                    <td>Km home-work</td>
+                                                    <td><span t-field="employee_id.km_home_work"></span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                      <br/>
+                                      <br/>
+                                       <h5>Birth</h5>
+                                      <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Date of Birth</td>
+                                                    <td><div t-field="employee_id.birthday" t-options='{"widget": "date"}'/></td>
+                                                </tr>
+                                                 <tr>
+                                                    <td>Place of Birth</td>
+                                                    <td><span t-field="employee_id.place_of_birth"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Country of Birth</td>
+                                                    <td><span t-field="employee_id.country_of_birth"></span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                      <br/>
+                                      <br/>
+                                       <h5>Education</h5>
+                                      <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Certificate Level</td>
+                                                    <td><div t-field="employee_id.certificate"/></td>
+                                                </tr>
+                                                 <tr>
+                                                    <td>Field of Study</td>
+                                                    <td><span t-field="employee_id.study_field"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>School</td>
+                                                    <td><span t-field="employee_id.study_school"></span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                  </div>
+                            </div>
+                          </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <!-- chatter -->
+                        <div id="hr_employee_communication" class="mt-4">
+                            <h2>Communication</h2>
+                            <style>
+                                .o_portal_chatter_attachment_btn.btn.btn-secondary {
+                                    display: none;
+                                }
+                            </style>
+                            <t t-call="portal.message_thread">
+                                <t t-set="object" t-value="employee_id"/>
+                            </t>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </t>
+        </template>
+
+    </data>
+</odoo>

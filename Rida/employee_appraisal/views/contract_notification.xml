@@ -1,0 +1,28 @@
+<odoo>
+    <data>
+        <record id="ir_cron_contract_check_all_employee" model="ir.cron">
+            <field name="name">Contract Evaluation</field>
+            <field name="model_id" ref="employee_appraisal.model_hr_contract"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_check_evaluate_employee()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+        </record>
+    </data>
+
+    <data>
+        <record id="ir_cron_contract_check_employee_expiration_period" model="ir.cron">
+            <field name="name">Contract Expiration Period</field>
+            <field name="model_id" ref="employee_appraisal.model_hr_contract"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_employee_expiration_period()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+        </record>
+    </data>
+    
+</odoo>

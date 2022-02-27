@@ -1,0 +1,73 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="module_base_rida_category" model="ir.module.category">
+        <field name="name">Base Rida</field>
+    </record>
+    <!-- General HR settings category -->
+    <record id="module_base_hr_category" model="ir.module.category">
+        <field name="name">General HR Settings</field>
+    </record>
+
+    <!-- Rida Supply Chain Manager Group -->
+    <record id="rida_group_supply_chain_manager" model="res.groups">
+        <field name="name">Supply Chain Manager</field>
+        <field name="category_id" ref="module_base_rida_category"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+    <!-- Rida Line Manager Group -->
+    <record id="rida_group_line_manager" model="res.groups">
+        <field name="name">Line Manager</field>
+        <field name="category_id" ref="module_base_hr_category"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!-- Rida Business Partner Group -->
+    <record id="rida_group_business_partner" model="res.groups">
+        <field name="name">Business Partner</field>
+        <field name="category_id" ref="module_base_hr_category"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+    <!-- Rida HR Director Group -->
+    <record id="rida_group_hr_director" model="res.groups">
+        <field name="name">HR Director</field>
+        <field name="category_id" ref="module_base_rida_category"/>
+        <field name="implied_ids" eval="[(4, ref('base.user_admin'))]"/>
+    </record>
+    <!-- Rida CCSO Group -->
+    <record id="rida_group_CCSO" model="res.groups">
+        <field name="name">CCSO</field>
+        <field name="category_id" ref="module_base_rida_category"/>
+        <field name="implied_ids" eval="[(4, ref('rida_group_hr_director'))]"/>
+    </record>
+
+    <!-- Rida Supervisor Group -->
+    <record id="rida_group_supervisor" model="res.groups">
+        <field name="name">Supervisor</field>
+        <field name="category_id" ref="module_base_rida_category"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+    <!-- Rida Dirctor Group -->
+    <record id="rida_group_dirctor" model="res.groups">
+        <field name="name">Dirctor</field>
+        <field name="category_id" ref="module_base_rida_category"/>
+        <field name="implied_ids" eval="[(4, ref('rida_group_supervisor'))]"/>
+    </record>
+
+    <!-- Rida COO Group -->
+    <record id="rida_group_coo" model="res.groups">
+        <field name="name">COO Cheif Officer</field>
+        <field name="category_id" ref="module_base_rida_category"/>
+        <field name="implied_ids" eval="[(4, ref('rida_group_supervisor'))]"/>
+    </record>
+    <record id="rida_group_c_level" model="res.groups">
+        <field name="name">C Level</field>
+        <field name="category_id" ref="module_base_rida_category"/>
+        <field name="implied_ids" eval="[(4, ref('rida_group_dirctor'))]"/>
+    </record>
+    <record id="rida_group_ceo" model="res.groups">
+        <field name="name">CEO</field>
+        <field name="category_id" ref="module_base_rida_category"/>
+        <field name="implied_ids" eval="[(4, ref('rida_group_c_level'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root')),(4, ref('base.user_admin'))]"/>
+    </record>
+</odoo>

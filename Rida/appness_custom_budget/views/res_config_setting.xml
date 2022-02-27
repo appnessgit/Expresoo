@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+         <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.amendment</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="85"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('settings')]" position="inside">
+                    <div class="app_settings_block" data-string="Limit Settings" string="Budget" data-key="budget" groups="appness_custom_budget.group_bd,base.group_system">
+                        
+                  		 <h2>Request Amount Limit</h2>
+                        <br/>
+                        <div class="col-12 o_setting_box">
+                            <div class="text-muted" style="padding-left: 56px;">
+                                If the requested amount by department exceeded the limit <b>(determined by Business Development Dep.)</b> <br/>
+                                The request will be needed MD approval in the Levels of Approvals.
+                            </div>
+                        </div>
+                        <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <b>Limit of Requested Amount</b>
+                                <div class="text-muted"></div>
+                                <div class="mt16">
+                                    <field name="amount_limit" class="oe_inline" force_save="1"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_amendment_configuration" model="ir.actions.act_window">
+            <field name="name">Settings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'module' : 'budget'}</field>
+        </record>
+
+
+         <menuitem parent="menu_budget_amendment_dept_mgr" name="Configration" id="menu_budget_amendment_dept_config"
+              sequence="120"/>
+
+        
+
+        <menuitem parent="menu_budget_amendment_dept_config"
+          action="action_amendment_configuration" name="Settings" id="menu_budget_amendment_dept_setting"
+              sequence="120"/>
+
+    
+    </data>
+</odoo>

@@ -1,0 +1,15 @@
+<odoo>
+    <data noupdate="1">
+        <record id="discipline_management_access"  model="ir.module.category">
+          <field name="name">Disciplinary Management</field>
+          <field name="description">User access level for this module</field>
+          <field name="sequence">7</field>
+        </record>
+        <record id="discipline_group_manager" model="res.groups">
+          <field name="name">Manager</field>
+          <field name="category_id" ref="hr_disciplinary.discipline_management_access"/>
+          <!--<field name="users" eval="[(4, ref('base.user_root'))]"/>
+          <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>-->
+        </record>
+    </data>
+</odoo>

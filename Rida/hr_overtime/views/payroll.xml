@@ -1,0 +1,15 @@
+<openerp>
+    <data>
+        <record id="hr_payslips_form_inherited" model="ir.ui.view">
+          <field name="name">hr.payslips.form.inherited</field>
+          <field name="model">hr.payslip</field>
+          <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+                <field name="arch" type="xml">
+              <field name="credit_note" position="after">
+                  <!-- <field name="manual_overtime"/> -->
+                  <field name="overtime"/>
+              </field>
+            </field>
+      </record>
+    </data>
+</openerp>

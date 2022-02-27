@@ -1,0 +1,10 @@
+<odoo>
+     <report
+        id="action_employee_promotion_letter"
+        model="employee.promotion"
+        string="Promotion Letter"
+        report_type="qweb-pdf"
+        name="hr_employee_promotion.report_employee_promotion"
+        file="hr_employee_promotion.report_employee_promotion"
+    />
+</odoo>

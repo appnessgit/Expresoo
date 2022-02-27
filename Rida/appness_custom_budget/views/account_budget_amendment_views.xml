@@ -1,0 +1,221 @@
+<odoo>
+    <data>
+        <record id="view_budget_amend" model="ir.ui.view">
+			<field name="name">view.budget.amend</field>
+			<field name="model">account.budget.amendment</field>
+			<field name="arch" type="xml">
+               <form string="Budget Amendment">
+                   <header>
+                                        <!-- Draft Submit -->
+                       <button string="Submit" name="action_submit" groups="appness_custom_budget.group_budget_department_user" type="object" states="draft" class="oe_highlight"/>
+
+                                          <!-- Business Development -->
+                       <button string="Confirm" name="action_bd_confirm" groups="appness_custom_budget.group_bd,base.group_system" type="object" states="bd" class="oe_highlight"/>
+                       <button string="Reject" name="action_bd_reject" groups="appness_custom_budget.group_bd,base.group_system" type="object" states="bd" class="oe_highlight"/>
+
+                                          <!-- Managing Director -->
+                       <button string="Confirm" name="action_md_confirm" groups="appness_custom_budget.group_md,base.group_system" type="object" states="m_director" class="oe_highlight"/>
+                       <button string="Reject" name="action_md_reject" groups="appness_custom_budget.group_md,base.group_system" type="object" states="m_director" class="oe_highlight"/>
+
+
+                                              <!-- Board of Dirocters  -->
+                       <button string="Confirm" name="action_bod_confirm" groups="appness_custom_budget.group_budget_bod,base.group_system" type="object" states="b_director" class="oe_highlight"/>
+                       <button string="Reject" name="action_bod_reject" groups="appness_custom_budget.group_budget_bod,base.group_system" type="object" states="b_director" class="oe_highlight"/>
+                       
+
+                       <button string="Validate" name="action_approve" groups="appness_custom_budget.group_bd,base.group_system" type="object" states="approve" class="oe_highlight"/>
+
+                       <button string="Cancel" name="action_cancel" groups="appness_custom_budget.group_bd" type="object" states="draft"/>
+
+                       <button string="Set to Draft" name="action_draft" groups="appness_custom_budget.group_department_manager,account.group_account_user,base.group_system" type="object" states="cancel"/>
+
+                       <field name="state" widget="statusbar" statusbar_visible="draft,validate"/>
+
+                   </header>
+                   <sheet>
+
+                      <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                      </div>
+            
+                       <div>
+                        <group>
+                           <group>
+                               <field name="type" invisible="1" groups="account.group_account_manager" widget="radio" attrs="{'readonly': [('state', '!=','draft')]}"/>
+                               <field name="date" required="1" attrs="{'readonly': [('state', '!=','draft')]}"/>
+                               <field name="user_section_id" invisible="1"/>
+                               <field name="notes" required="0" attrs="{'readonly': [('state', '=','validate')]}"/>
+                               <field name="md_approve" invisible="1"/>
+                           </group>
+
+                           <group>
+                               <field name="currency_id" />
+                               <field name="amount" attrs="{'readonly': [('state', '!=','draft')]}"/>
+                             </group>
+                           </group>
+                           </div>
+
+                           <div>
+                              <!--  <field name="budget_line_from" options="{'no_open': True, 'no_create': True}" attrs="{'readonly': [('state', 'not in',['draft','bd'])],'invisible': [('state', '=','draft'),('type', '=','add')]}"/> -->
+                               <field name="budget_lines_from" options="{'no_open': True, 'no_create': True}" attrs="{'readonly': [('state', 'not in',['draft','bd'])],'invisible': [('state', '=','draft'),('type', '=','add')]}">
+                                  <tree create="1" editable="bottom" delete="1">
+                                    <field name="budget_line_from"/>
+                                    <field name="planned_amount"/>
+                                    <field name="remaining_amount"/>
+                                    <field name="reallocted_amount"/>
+                                  </tree>
+                               </field>
+
+<!--  -->
+                               <!--  -->
+                               <group>
+                                  <field name="total_subtract"/>
+                               </group>
+                              </div>
+                              <div>
+                                <span></span>
+                              </div>
+                            <group>
+
+                              <!-- <div> -->
+                              <group>
+                               <field name="budget_line_to" options="{'no_open': True, 'no_create': True}" attrs="{'readonly': [('state', 'not in',['draft','bd'])]}"/>
+                             </group>
+                              <group>
+                               <field name="remaining_amount" force_save="1" readonly="1" attrs="{'readonly': [('state', '!=','draft')]}"/>
+                             </group>
+                               <ul class="text-muted oe_edit_only" attrs="{'invisible': [('type', '!=', 'add')]}">
+                                    <li>
+                                        <strong>Expense Budgets: </strong> <br/> Addition: Negative values <br/> Subtraction: Positive values
+                                    </li>
+                                    <li>
+                                        <strong>Revenue Budgets: </strong> <br/> Addition: Positive values <br/> Subtraction: Negative values
+                                    </li>
+                                </ul>
+                              <!-- </div> -->
+                           </group>
+                      <notebook>
+                         <!--  <page string="From">
+                              <field name="budget_lines_from" mode="tree">
+                                <tree create="1" editable="bottom" delete="1">
+                                  <field name="budget_line_from"/>
+                                  <field name="planned_amount"/>
+                                  <field name="remaining_amount"/>
+                                  <field name="reallocted_amount"/>
+                                </tree>
+                              </field>
+                              <field name="total_subtract"/>
+                          </page> -->
+                          <page string="Comments">
+                              <group>
+                                  <field name="bd_comment" placeholder="Type your comment.." attrs="{'readonly': [('state', '!=', 'md')]}"/>
+                                  <field name="md_comment" placeholder="Type your comment.." attrs="{'readonly': [('state', '!=', 'm_director')]}"/>
+                                  <field name="bod_comment" placeholder="Type your comment.." attrs="{'readonly': [('state', '!=', 'b_director')]}"/>
+                              </group>
+                          </page>
+                      </notebook>
+                   </sheet>
+                   <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+
+               </form>
+            </field>
+        </record>
+
+        <!-- Tree -->
+
+        <record id="account_budget_amendment_tree" model="ir.ui.view">
+			<field name="name">account_budget_amendment_tree.tree</field>
+			<field name="model">account.budget.amendment</field>
+			<field name="arch" type="xml">
+               <tree string="Budget Amendments">
+                   <field name="name"/>
+                   <field name="date"/>
+                   <field name="amount"/>
+                   <field name="currency_id" invisible="1"/>
+                   <field name="state"/>
+               </tree>
+            </field>
+        </record>
+
+<!--        Filter-->
+        <record id="view_crossovered_budget_amend_search" model="ir.ui.view">
+        <field name="name">account.budget.amend.search</field>
+        <field name="model">account.budget.amendment</field>
+        <field name="arch" type="xml">
+            <search string="Budget Amendments">
+                <field name="name"/>
+                <field name="budget_line_from"/>
+                <field name="budget_line_to"/>
+<!--                <filter name="filter_not_cancelled" string="Not Cancelled" domain="[('crossovered_budget_state','!=','cancel')]"/>-->
+                <group expand="0" string="Group By">
+                    <filter name="group_type" string="Amendment Type" domain="[]" context="{'group_by':'type'}"/>
+                </group>
+            </search>
+
+        </field>
+    </record>
+
+        <!-- Action -->
+    <record id="action_budget_amendment" model="ir.actions.act_window">
+			<field name="name">Budget Amendments</field>
+			<field name="res_model">account.budget.amendment</field>
+      <field name="search_view_id" ref="view_crossovered_budget_amend_search"/>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+    <record id="action_budget_amendment_dept_mger_allo" model="ir.actions.act_window">
+			<field name="name">Budget Reallocation</field>
+      <field name="context">{'default_type':'swap'}</field>
+      <field name="domain">[('type','=','swap')]</field>
+			<field name="res_model">account.budget.amendment</field>
+      <field name="search_view_id" ref="view_crossovered_budget_amend_search"/>
+			<field name="view_mode">tree,form</field>
+		</record>
+    <record id="action_budget_amendment_dept_mger_addi" model="ir.actions.act_window">
+      <field name="name">Budget Addition</field>
+      <field name="context">{'default_type':'add'}</field>
+      <field name="domain">[('type','=','add')]</field>
+      <field name="res_model">account.budget.amendment</field>
+      <field name="search_view_id" ref="view_crossovered_budget_amend_search"/>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+<!--    Menus-->
+        <menuitem id="menu_budget_main" name="Budgets"
+              parent="account.menu_finance_entries_management" groups="appness_custom_budget.group_accounting_dep_manager,appness_custom_budget.group_budget_mc,appness_custom_budget.group_budget_bod,appness_custom_budget.group_bd,appness_custom_budget.group_md,base.group_system" sequence="60"/>
+
+        <menuitem parent="menu_budget_main"
+              id="account_budget.menu_act_crossovered_budget_view"
+              name="Budgets"
+              action="account_budget.act_crossovered_budget_view" sequence="0"
+              />
+
+      
+
+        <menuitem action="action_budget_amendment" id="menu_budget_amendment"
+              parent="menu_budget_main" sequence="1"/>
+
+        <menuitem action="action_budget_amendment_dept_mger_allo" web_icon="fa fa-retweet,#FFFFFF,#5665a1" id="menu_budget_amendment_dept_mgr"
+              sequence="80"/>
+
+
+        <menuitem action="action_budget_amendment_dept_mger_allo" parent="menu_budget_amendment_dept_mgr" name="Budget Reallocation" id="menu_budget_amendment_dept_reallocation" sequence="80"/>
+
+
+        <menuitem action="action_budget_amendment_dept_mger_addi" parent="menu_budget_amendment_dept_mgr" name="Budget Addition" id="menu_budget_amendment_dept_addition" sequence="100"/>
+
+
+
+
+
+
+    </data>
+</odoo>

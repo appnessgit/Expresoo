@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_employee_promotion,group_employee_promotion,model_employee_promotion,hr.group_hr_user,1,1,1,1
+access_employee_contract,group_employee_contract_promotion,hr_contract.model_hr_contract,hr.group_hr_user,1,0,0,0
+hr_grade_line_promotion_employee,Hr_grade_line_Promotion_employee_access,model_hr_grade_line_promotion,base.group_user,1,0,0,0
+hr_grade_line_promotion_admin,Hr_rade_line_Promotion_manager_access,model_hr_grade_line_promotion,hr.group_hr_manager,1,1,1,1
+hr_grade_line_promotion_officer,Hr_grade_line_Promotion_officer_access,model_hr_grade_line_promotion,hr.group_hr_manager,1,1,1,1
+hr_line_rotation_officer,Hr_line_rotation_officer_access,model_employee_rotation_line,hr.group_hr_manager,1,1,1,1

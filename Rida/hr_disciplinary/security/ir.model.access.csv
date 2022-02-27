@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_discipline,hr.discipline.employee,model_hr_employee_discipline,hr.group_hr_user,1,1,1,1
+access_hr_sanction_line,hr.sanction.line,model_hr_sanction_line,hr.group_hr_user,1,1,1,1
+access_hr_sanction,hr.sanction,model_hr_sanction,hr.group_hr_user,1,1,1,1
+access_hr_violation,hr.violation,model_hr_violation,hr.group_hr_user,1,1,1,1
+access_hr_violation_category,hr.violation.category,model_hr_violation_category,hr.group_hr_user,1,1,1,1

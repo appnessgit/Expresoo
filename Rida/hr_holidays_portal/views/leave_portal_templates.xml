@@ -1,0 +1,248 @@
+<odoo>
+    <data>
+        <template id="portal_my_home_menu_leave" name="Portal layout : leave menu entries" inherit_id="portal.portal_breadcrumbs" priority="25">
+
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+          <li t-if="page_name == 'leave' or leave" t-attf-class="breadcrumb-item #{'active ' if not purchase_order else ''}">
+            <a t-if="leave or leave_name" t-attf-href="/my/leave?{{ keep_query() }}">Leave Requests</a>
+            <t t-else="">Leave Requests</t>
+          </li>
+          <li t-if="leave" class="breadcrumb-item active">
+            <t t-esc="leave.name"/>
+          </li>
+        </xpath>
+      </template>
+
+        <template id="portal_my_home_leaves" name="Portal Home : leave entry" inherit_id="portal.portal_my_home" priority="25">
+            <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+                <t t-if="employee_id" t-call="portal.portal_docs_entry">
+                    <t t-set="title">Leave Requests</t>
+                    <t t-set="url" t-value="'/my/leave'"/>
+                    <t t-set="count" t-value="leave_count"/>
+                </t>
+            </xpath>
+        </template>
+
+        <template id="portal_my_home_leaves_icon" name="Portal Tray : leave entry" inherit_id="hr_portal.dashboard_icons" priority="25">
+            <xpath expr="//div[@id='icons']" position="inside">
+                <div class="col-sm-2 col-md-2">
+                  <div class="circle-tile ">
+                    <a href="/my/leave"><div class="circle-tile-heading dark-blue" style="background: #c6bc78"><i class="fa fa-calendar fa-fw fa-2x"></i></div></a>
+                    <div class="circle-tile-content dark-blue" style="background: #c6bc78">
+                      <div class="circle-tile-description text-faded"> Leaves</div>
+                      <div class="circle-tile-number text-faded "><span t-field="request.env.user.employee_ids[0].remaining_leaves"></span> Day(s)</div>
+                      <a class="circle-tile-footer" href="/my/leave">More Info <i class="fa fa-chevron-circle-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+            </xpath>
+        </template>
+
+        <!--Leaves List-->
+        <template id="portal_my_leaves" name="Leaves">
+        <t t-call="portal.portal_layout">
+          <t t-call="portal.portal_searchbar">
+            <t t-set="title">Leave Requests</t>
+          </t>
+           <t t-if="employee_id" >
+               <t t-call="hr_holidays_portal.portal_create_leaves"/>
+               <div class="row" style="margin: 20px;">
+                   <t t-foreach="type_allocations" t-as="a">
+                       <div class="o_timeoff_card flex-grow-1 d-flex flex-column ">
+                            <div class="mt-2">
+                                    <span class="o_timeoff_big o_timeoff_purple" t-esc="a.get('leaves_taken')"></span> / <span t-esc="a.get('max_leaves')"></span> Days
+                            </div>
+                            <b><span class="o_timeoff_name" t-esc="a.get('name')"></span></b>
+                            <span class="mb-4"><span class="mr-1 font-weight-bold o_timeoff_green" t-esc="a.get('remaining_leaves')"></span><span>remaining</span></span>
+                        </div>
+                   </t>
+               </div>
+               <div class="btn-group" style="float: right;">
+                   <button data-id="list-container" type="button" class="btn btn-primary view-switch disabled"><i class="fa fa-list"></i></button>
+                   <button data-id="calendar-container" type="button" class="btn btn-primary view-switch"><i class="fa fa-calendar"></i></button>
+               </div>
+               <br/>
+               <br/>
+
+               <div class="row">
+                <div class="col-lg-12">
+                  <div t-if="error_message" class="alert alert-danger" role="alert">
+                      <t t-foreach="error_message" t-as="err"><t t-esc="err"/><br /></t>
+                  </div>
+                </div>
+            </div>
+
+               <div class="view-container hidden" id='calendar-container'>
+                 <div id='calendar'></div>
+               </div>
+
+               <style>
+                   .action-button {
+                        padding: 0 5px;
+                    }
+               </style>
+                <div class="view-container" id="list-container">
+               <t  t-if="leaves" t-call="portal.portal_table">
+
+                <thead>
+                  <tr class="active">
+                      <th>Description</th>
+                      <th>Leave Type</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Number of Days</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <t t-foreach="leaves" t-as="leave">
+                    <tr class="leave-record">
+                        <td><a t-attf-href="/my/leave/#{leave.id}"><span t-esc="leave.display_name"/></a></td>
+                        <td><span t-field="leave.holiday_status_id"/></td>
+                      <td><span t-field="leave.date_from" t-options='{"widget": "date"}'/></td>
+                      <td><span t-field="leave.date_to" t-options='{"widget": "date"}'/></td>
+                      <td><span t-field="leave.number_of_days"/></td>
+                      <td>
+                          <span class="badge badge-info" t-field="leave.state"/>
+                      </td>
+                    </tr>
+                  </t>
+                </tbody>
+
+          </t>
+               </div>
+           </t>
+        </t>
+      </template>
+<!--        Create Modal-->
+        <template id="portal_create_leaves" name="Create Leave">
+            <a href="/my/leave/edit" class="btn btn-primary" style="margin-bottom: 10px;color: #fff;background-color: #00A09D;border-color: #00A09D;border-radius: 0;">New Request</a>
+            <br/>
+        </template>
+
+<!--        Single Leave-->
+        <template id="portal_my_leave" name="Leave">
+        <t t-call="portal.portal_layout">
+          <t t-set="leave" t-value="leave"/>
+          <div id="optional_placeholder"></div>
+          <div class="container">
+              <div class="card">
+                <div class="card-header">
+                  <div class="row no-gutters">
+                        <div class="col-md text-md-right">
+                            <small class="text-right">Status:</small>
+                            <span t-field="leave.state" class=" badge badge-pill badge-info" title="Current stage of this leave"/>
+                        </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                    <style>
+                        .table th, .table td{
+                            border-top: 0 !important;
+                        }
+                    </style>
+                    <table class="table table-condensed">
+                        <tbody>
+                            <tr>
+                                <td><strong>Leave Type</strong></td>
+                                <td><span t-field="leave.holiday_status_id"></span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Duration</strong></td>
+                                <td><span t-field="leave.number_of_days"></span> Days</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Period</strong></td>
+                                <td><span t-field="leave.date_from" t-options='{"widget": "date"}'></span> - <span t-field="leave.date_to" t-options='{"widget": "date"}'></span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Description</strong></td>
+                                <td><span t-field="leave.name"></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- chatter -->
+                    <div id="hr_leave_communication" class="mt-4">
+                        <h2>Communication</h2>
+                        <t t-call="portal.message_thread">
+                            <t t-set="object" t-value="leave"/>
+                        </t>
+                    </div>
+                </div>
+              </div>
+
+          </div>
+          <div class="oe_structure mb32"/>
+        </t>
+      </template>
+
+        <!--Edit Leave-->
+        <template id="edit_leave_details">
+        <t t-call="portal.portal_layout">
+            <t t-set="additional_title">Edit Leave Details</t>
+            <form action="/my/leave/edit" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <div class="row o_portal_details">
+                    <div class="col-lg-8">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <br/>
+                              <div t-if="error_message" class="alert alert-danger" role="alert">
+                                  <ul>
+                                      <t t-foreach="error_message" t-as="err"><li><t t-esc="err"/></li></t>
+                                  </ul>
+
+                              </div>
+
+                            </div>
+                            <div t-attf-class="form-group col-xl-6">
+                                <label class="col-form-label required" for="holiday_status_id">Leave Type</label>
+                                <select name="holiday_status_id" id="holiday_status_id" required="" t-attf-class="form-control">
+                                    <option value="">Leave Type...</option>
+                                    <t t-foreach="types or []" t-as="type">
+                                        <option t-att-value="type.get('id')" t-att-selected="type.get('id') == leave.holiday_status_id.id if leave else False">
+                                            <t t-esc="type.get('name')" />
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                             <div t-attf-class="form-group col-xl-6 hidden" style="display: none;">
+                                <label class="col-form-label" for="id">Leave</label>
+                                <input type="text" name="id" t-att-value="leave.id if leave else ''" t-attf-class="form-control" />
+                            </div>
+
+                            <div t-attf-class="form-group col-xl-6">
+                                <label class="col-form-label" for="name">Description</label>
+                                <input type="text" name="name" t-att-value="leave.name if leave else ''" t-attf-class="form-control" />
+                            </div>
+                            <div t-attf-class="form-group col-xl-6">
+                                <label class="col-form-label required" for="request_date_from">Start Date</label>
+                                <input required="" type="date" id="date_from" onchange="onchange_leave_dates()" t-att-value="leave.request_date_from if leave else ''" name="request_date_from" t-attf-class="form-control" />
+                            </div>
+                            <div t-attf-class="form-group col-xl-6">
+                                <label class="col-form-label required" for="request_date_to">End Date</label>
+                                <input required="" type="date" id="date_to" onchange="onchange_leave_dates()" t-att-value="leave.request_date_to if leave else ''" name="request_date_to" t-attf-class="form-control" />
+                            </div>
+
+                            <div t-attf-class="form-group col-xl-6">
+                                <label class="col-form-label" for="duration">Duration</label>
+                                <input required="" type="text" id="duration" disabled="1" value="0" name="" t-attf-class="form-control" />
+                            </div>
+
+                            <div class="clearfix" />
+                            <input type="hidden" name="redirect" t-att-value="redirect"/>
+                        </div>
+                        <div class="clearfix">
+                            <button type="submit" class="btn btn-primary float-right mb32 ">
+                                Submit
+                                <span class="fa fa-long-arrow-right" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </t>
+    </template>
+
+    </data>
+</odoo>

@@ -1,0 +1,235 @@
+<odoo>
+    <data>
+        <!--END OF SERVICE-->
+
+        <!-- Form -->
+      <record id="view_hr_eos_form" model="ir.ui.view">
+			<field name="name">hr.eos.form</field>
+			<field name="model">hr.end.service</field>
+			<field name="arch" type="xml">
+               <form string="End Of Service">
+                   <header>
+                       <button name="submit" type="object" string="Submit" states="draft" groups="hr.group_hr_user" class="btn-primary"/>
+                       <button name="create_payslip_button" type="object" string="Create Payslip" states="draft" groups="hr.group_hr_manager" class="btn-primary"/>
+                       <button name="confirm_button" type="object" string="Confirm" states="hrm" groups="hr.group_hr_manager" class="btn-primary"/>
+                       <button name="action_hrm_reject" type="object" string="Reject" states="hrm" groups="hr.group_hr_manager" />
+                       <button name="action_set_draft" type="object" string="Set To Draft" states="cancel" groups="hr.group_hr_user" />
+
+                       <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
+
+                   </header>
+                   <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button name="employee_payslip_button"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-money" groups="hr.group_hr_user">
+						<field name="payslip_count" widget="statinfo" string="Payroll"/>
+					</button>
+                    </div>
+
+                       <group col="4" colspan="4">
+                           <field name="employee_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                           <field name="eos_type" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                           <field name="company_id"/>
+                           <field name="contract_id"/>
+                           <field name="join_date"/>
+                           <field name="gross" groups="hr.group_hr_user,hr.group_hr_manager"/>
+                           <field name="emp_age"/>
+                            <field name="basic"/>
+                            <field name="end_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+
+                       </group>
+                       <group col="2" colspan="2">
+                           <group string="Service Time">
+                               <field name="years"/>
+                               <field name="months"/>
+                               <field name="days"/>
+                           </group>
+                           <group string="Total Amount">
+                               <field name="allow_total_amount"/>
+                               <field name="ded_total_amount"/>
+                               <field name="total_amount"/>
+                           </group>
+                       </group>
+
+                       <notebook>
+                           <page string="Leaves Settlement">
+                               <group colspan="4" col="4">
+                                  <field name="leave_days" />
+                                  <field name="leaves_amount" />
+                               </group>
+                           </page>
+
+                           <page string="Arbitrary Dismissal">
+                                <group>
+                                    <group name="gross_allowance_group">
+                                        <field name="gross_allowance"/>
+                                    </group>
+                                    
+                                </group>
+                           </page>
+
+                            <page string="Benefit">
+                                <group>
+                                    <group name="benfit">
+                                      <field name="gratuity_id"/>
+                                      <field name="benefit_amount" class="oe_subtotal_footer_separator"/>
+                                    </group>
+                                </group>
+                                <group>
+                                    <field name="benefit_line_ids" colspan="4" nolabel="1" force_save="1" readonly="1">
+                                        <tree>
+                                            <field name="name" force_save="1" readonly="1"/>
+                                            <field name="from_year" force_save="1" readonly="1"/>
+                                            <field name="to_year" force_save="1" readonly="1"/>
+                                            <field name="months" force_save="1" readonly="1"/>
+                                            <field name="percentage" force_save="1" readonly="1"/>
+                                            <field name="amount" force_save="1" readonly="1"/>
+                                        </tree>
+                                    </field>  
+                                    </group>
+                            </page>
+
+                            <page name="overtime" string="Overtime">
+                                <group>
+                                    <group name="overtime">
+                                        <field name="overtime" class="oe_subtotal_footer_separator"/>
+                                    </group>
+                                </group>
+                            </page>
+
+
+                           <page name="other_allowances" string="Other Allowances">
+                               <group col="2" colspan="2">
+                                <field name="total_allowances" class="oe_subtotal_footer_separator"/>
+                               </group>
+                               <group>
+                                    <field name="other_allowances_ids" colspan="4" nolabel="1" attrs="{'readonly':[('state','in',('confirm'))]}">
+                                        <tree string="Other Allowances" editable="bottom">
+                                            <field name="allowance_name" />
+                                            <field name="amount" />
+                                        </tree>
+                                    </field>                                    
+                               </group>
+                           </page>
+
+                           <page name="deductions" string="Other Deductions">
+                               <group col="2" colspan="2">
+                                <field name="total_deduction" class="oe_subtotal_footer_separator"/>
+                               </group>
+                               <group>
+                                    <field name="other_deductions_ids" colspan="4" nolabel="1" attrs="{'readonly':[('state','in',('confirm'))]}">
+                                        <tree string="Other Deductions" editable="bottom">
+                                            <field name="deduction_name"/>
+                                            <field name="amount"/>
+                                        </tree>
+                                    </field>                                    
+                               </group>
+                           </page>
+                       </notebook>
+                   </sheet>
+
+                   <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+               </form>
+            </field>
+        </record>
+
+        <!-- Tree -->
+        <record id="view_hr_eos_tree" model="ir.ui.view">
+			<field name="name">hr.eos.tree</field>
+			<field name="model">hr.end.service</field>
+			<field name="arch" type="xml">
+               <tree string="End Of Service">
+                   <field name="employee_id"/>
+                   <field name="date"/>
+                   <field name="state"/>
+                   <field name="company_id"/>
+               </tree>
+            </field>
+        </record>
+
+          <record model="ir.ui.view" id="view_employee_eos_kanban">
+            <field name="name">employee.eos.kanban</field>
+            <field name="model">hr.end.service</field>
+            <field name="arch" type="xml">
+                <kanban create="false" import="0" class="o_kanban_mobile">
+                    <field name="employee_id"/>
+                    <field name="eos_type"/>
+                    <field name="state"/>
+
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="o_kanban_record_top mb16">
+                                    <div class="o_kanban_record_headings mt4">
+                                        <strong class="o_kanban_record_title"><span><t t-esc="record.employee_id.value"/></span></strong>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                       <strong class="o_kanban_record_title"><span><t t-esc="record.eos_type.value"/></span></strong>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <field name="state" widget="label_selection"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+          </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_hr_eos" model="ir.actions.act_window">
+			<field name="name">End Of Service</field>
+			<field name="res_model">hr.end.service</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+        <record id="action_hr_eos_approval" model="ir.actions.act_window">
+			<field name="name">EOS To Approval </field>
+			<field name="res_model">hr.end.service</field>
+			<field name="view_mode">tree,form</field>
+            <field name="domain">[ ('state','!=', 'draft') ]</field>
+		</record>
+
+    <!-- Menu -->
+    <menuitem name="End Of Service"
+                id="menu_hr_eos_root"
+                web_icon="fa fa-archive,#FFFFFF,#273675"
+                groups="hr.group_hr_user"
+                sequence="95"/>
+
+        <menuitem name="End Of Service"
+                parent="menu_hr_eos_root"
+                id="menu_hr_eos"
+                groups="hr.group_hr_user"
+                sequence="1"/>
+
+         <menuitem name="EOS Request"
+                parent="menu_hr_eos"
+                id="menu_hr_eos_main"
+                action="action_hr_eos"
+                groups="hr.group_hr_user"/>
+
+        <menuitem name="EOS To Approve"
+                parent="menu_hr_eos_root"
+                id="menu_hr_eos_approval"
+                sequence="2"
+                action="action_hr_eos_approval"
+                groups="hr.group_hr_user"/>
+
+        <menuitem name="Configuration"
+                parent="menu_hr_eos_root"
+                id="menu_hr_eos_config"
+                sequence="3"
+                groups="hr.group_hr_user"/>
+
+
+    </data>
+</odoo>

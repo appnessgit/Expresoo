@@ -1,0 +1,63 @@
+<odoo>
+    <data>
+
+            <!--report of snaction-->
+
+         <report
+            id="hr_snaction_report_pdf"
+            model="hr.employee.discipline"
+            string="Discpline Report"
+            report_type="qweb-pdf"
+            name="hr_disciplinary.snaction_report"
+            file="hr_disciplinary.snaction_report"
+            attachment_use="True"
+            menu="True"
+        />
+
+
+
+         <report
+            id="hr_violation_report_id"
+            model="hr.employee.discipline"
+            string="Displine Violation Report"
+            report_type="qweb-pdf"
+            name="hr_disciplinary.displine_violation_template"
+            file="hr_disciplinary.displine_violation_template"
+            attachment_use="True"
+            menu="False"
+        />
+
+
+        <report
+           id="hr_displine_employee_report"
+           model="hr.employee.discipline"
+           string="displine report per employee"
+           report_type="qweb-pdf"
+           name="hr_disciplinary.displine_employee_template"
+           file="hr_disciplinary.displine_employee_template"
+           attachment_use="True"
+           menu="False"
+        />
+
+
+
+
+
+
+<!--<report-->
+    <!--id="hr_sanction_report"-->
+    <!--model="hr.sanction.line"-->
+    <!--string="displine report per date"-->
+    <!--report_type="qweb-pdf"-->
+    <!--name="hr_disciplinary.displine_sanction_report"-->
+    <!--file="hr_disciplinary.displine_sanction_report"-->
+    <!--attachment_use="True"-->
+
+        <!--/>-->
+
+
+    </data>
+</odoo>
+
+
+

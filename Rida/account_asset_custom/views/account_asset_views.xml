@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_asset_form_inherit" model="ir.ui.view">
+    <field name="name">account.asset.inherit.form</field>
+    <field name="model">account.asset</field>
+    <field name="inherit_id" ref="account_asset.view_account_asset_form"/>
+    <!-- <field name="mode">extension</field> -->
+    <field name="arch" type="xml">
+        <xpath expr="//header" position="inside">
+            <button name="action_asset_transfer" type="object" string="Asset Transfer" attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                
+        </xpath> 
+                <xpath expr="//div[@class='oe_title']" position="before">
+            <div>
+                <field name="code" placeholder="Asset Code" required="1"/>
+            </div>
+        </xpath>
+        <xpath expr="//field[@name='first_depreciation_date']" position="after">
+            <field name="responsile" />
+            <field name="asset_location" />
+            <field name="asset_type_category" />
+        </xpath>
+        <xpath expr="//div[@class='oe_chatter']" position="inside">
+            <field name="reson" />
+                
+        </xpath> 
+        </field>
+</record>
+</odoo>

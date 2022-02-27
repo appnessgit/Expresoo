@@ -1,0 +1,26 @@
+<odoo>
+    <data>
+
+    <record model="ir.ui.view" id="view_hr_eos_loan_form">
+        <field name="name">hr.end.service.form</field>
+        <field name="model">hr.end.service</field>
+        <field name="inherit_id" ref="hr_eos_main.view_hr_eos_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='other_allowances']" position="before">
+                <page name="loans" string="Loans">
+                    <group name="loan" col="2" colspan="2">
+                        <field name="total_loans" class="oe_subtotal_footer_separator"/>
+                    </group>
+                    <field name="loan_ids"  nolabel="1" attrs="{'readonly':[('state','in',('confirm','post'))]}">
+                        <tree string="Loans" editable="bottom">
+                            <field name="loan_config_id" style="width:30%;" /> 
+                            <field name="balance_amount" style="width:70%;"/>
+                        </tree>
+                    </field>    
+                </page>
+            </xpath>
+        </field>
+    </record>        
+
+    </data>
+</odoo>

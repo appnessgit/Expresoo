@@ -1,0 +1,12 @@
+<odoo>
+    <data>
+        <report
+            id="print_eos_request"
+            model="hr.end.service"
+            string="EOS Request"
+            report_type="qweb-pdf"
+            name="hr_eos_main.print_eos_request_report_pdf"
+            file="hr_eos_main.print_eos_request_report_pdf"
+        />
+    </data>
+</odoo>

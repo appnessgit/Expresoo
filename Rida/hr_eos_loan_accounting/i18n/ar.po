@@ -1,0 +1,428 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* end_service_nileBank
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-01-19 17:09+0000\n"
+"PO-Revision-Date: 2019-01-19 19:11+0200\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: ar\n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_gross_allowance
+msgid "6 Months Gross Allowance"
+msgstr "6 شهور اجمالي"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_age_end
+msgid "Age"
+msgstr "العمر"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_amount_allw
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_amount_ded
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_convention_amount
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_eos_loan_amount
+msgid "Amount"
+msgstr "المبلغ"
+
+#. module: end_service_nileBank
+#: selection:hr.end.service,eos_type:0
+msgid "Arbitrary Dismissal"
+msgstr "فصل تعسفي"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_company_id
+msgid "Branch"
+msgstr "الفرع"
+
+#. module: end_service_nileBank
+#: model:ir.ui.view,arch_db:end_service_nileBank.view_hr_eos_form
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: end_service_nileBank
+#: selection:hr.end.service,state:0
+msgid "Cancelled"
+msgstr "ملغي"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_eos_type
+msgid "Case"
+msgstr "الحالة"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_cash_allowance
+msgid "Cash Allowance Amount"
+msgstr "مبلغ البديل النقدي"
+
+#. module: end_service_nileBank
+#: model:ir.ui.view,arch_db:end_service_nileBank.view_hr_eos_form
+msgid "Confirm"
+msgstr "تأكيد"
+
+#. module: end_service_nileBank
+#: selection:hr.end.service,state:0
+msgid "Confirmed"
+msgstr "مؤكد"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_contract_id
+msgid "Contract"
+msgstr "العقد "
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_convention
+#: model:ir.ui.view,arch_db:end_service_nileBank.view_hr_eos_form
+msgid "Convention of 54"
+msgstr "اتفاقية 54"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_create_uid
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_eos_loan_create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_create_date
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_eos_loan_create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_date
+msgid "Date"
+msgstr "التاريخ"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_birthday
+msgid "Date of Birth"
+msgstr "تاريخ الميلاد"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_days
+msgid "Days"
+msgstr "الايام"
+
+#. module: end_service_nileBank
+#: selection:hr.end.service,eos_type:0
+msgid "Death"
+msgstr "وفاة"
+
+#. module: end_service_nileBank
+#: selection:hr.end.service,state:0
+#: model:ir.ui.view,arch_db:end_service_nileBank.view_hr_eos_form
+msgid "Direct Manager"
+msgstr "المدير المباشر"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_display_name
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_eos_loan_display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_employee_id
+msgid "Employee"
+msgstr "الموظف"
+
+#. module: end_service_nileBank
+#: model:ir.actions.act_window,name:end_service_nileBank.action_hr_eos
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_eos_loan_eos_id
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_payslip_eos_id
+#: model:ir.ui.menu,name:end_service_nileBank.menu_hr_eos
+#: model:ir.ui.menu,name:end_service_nileBank.menu_hr_eos_main
+#: model:ir.ui.menu,name:end_service_nileBank.menu_hr_eos_root
+#: model:ir.ui.view,arch_db:end_service_nileBank.view_hr_eos_form
+#: model:ir.ui.view,arch_db:end_service_nileBank.view_hr_eos_tree
+msgid "End Of Service"
+msgstr "نهاية الخدمة"
+
+#. module: end_service_nileBank
+#: model:ir.model,name:end_service_nileBank.model_hr_eos_loan
+msgid "End Of Service Loan"
+msgstr "السلفيات"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_end_date
+msgid "End Service Date"
+msgstr "تاريخ نهاية الخدمة"
+
+#. module: end_service_nileBank
+#: selection:hr.end.service,eos_type:0
+msgid "Ending Service"
+msgstr "نهاية الخدمة"
+
+#. module: end_service_nileBank
+#: selection:hr.end.service,state:0
+#: model:ir.ui.view,arch_db:end_service_nileBank.view_hr_eos_form
+msgid "General Manager"
+msgstr "المدير العام"
+
+#. module: end_service_nileBank
+#: model:ir.ui.view,arch_db:end_service_nileBank.view_hr_eos_form
+msgid "Get Loans"
+msgstr "السلفيات"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_grade
+msgid "Grade"
+msgstr "الدرجة"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_gross
+msgid "Gross"
+msgstr "اجمالي"
+
+#. module: end_service_nileBank
+#: model:ir.ui.view,arch_db:end_service_nileBank.view_hr_eos_form
+msgid "Gross Allowance"
+msgstr "اجمالي"
+
+#. module: end_service_nileBank
+#: selection:hr.end.service,state:0
+#: model:ir.ui.view,arch_db:end_service_nileBank.view_hr_eos_form
+msgid "HR"
+msgstr "تصديق الموارد البشرية"
+
+#. module: end_service_nileBank
+#: model:ir.model,name:end_service_nileBank.model_hr_end_service
+msgid "HR End Of Service"
+msgstr "نهاية الخدمة"
+
+#. module: end_service_nileBank
+#: selection:hr.end.service,state:0
+#: model:ir.ui.view,arch_db:end_service_nileBank.view_hr_eos_form
+msgid "HR Manager"
+msgstr "الموارد البشرية"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_id
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_eos_loan_id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_payslip_is_eos
+msgid "Is End Of Service"
+msgstr "نهاية الخدمة"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_join_date
+msgid "Join Date"
+msgstr "تاريخ التعيين"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service___last_update
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_eos_loan___last_update
+msgid "Last Modified on"
+msgstr "آخر تعديل في"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_write_uid
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_eos_loan_write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_write_date
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_eos_loan_write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,help:end_service_nileBank.field_hr_end_service_contract_id
+msgid "Latest contract of the employee"
+msgstr "اخر عقد للموظفين"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_leaves_a_amount
+msgid "Leaves Allowance Amount"
+msgstr "مبلغ بدل الاجازة"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_leave_a_days
+msgid "Leaves Allowance Days"
+msgstr "رصيد الاجازة"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_leaves_amount
+msgid "Leaves Amount"
+msgstr "مبلغ الاجازة"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_leaves_balance
+msgid "Leaves Balance"
+msgstr "رصيد الإجازة"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_leave_days
+msgid "Leaves Days"
+msgstr "أيام الاجازة"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_leaves_d_amount
+msgid "Leaves Deduction Amount"
+msgstr "مبلغ خصومات الاجازة"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_leave_d_days
+msgid "Leaves Deduction Days"
+msgstr "ايام الاجازة المخصومة"
+
+#. module: end_service_nileBank
+#: model:ir.ui.view,arch_db:end_service_nileBank.view_hr_eos_form
+msgid "Leaves Settlement"
+msgstr "تسوية الاجازة"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_level
+msgid "Level"
+msgstr "مستوى"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_loan_amount
+msgid "Loan Amount"
+msgstr "قيمة السلفية"
+
+#. module: end_service_nileBank
+#: model:ir.ui.view,arch_db:end_service_nileBank.view_hr_eos_form
+msgid "Loan Settlement"
+msgstr "تسوية السلفيات"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_eos_loan_loan_type_id
+msgid "Loan Type"
+msgstr "نوع السلفية"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_loan_line_ids
+msgid "Loans"
+msgstr "السلفيات"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_months
+msgid "Months"
+msgstr "الشهور"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_option_allw
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_option_ded
+msgid "Multiply By Gross"
+msgstr "X الاجمالي"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_net_salary
+msgid "Net Salary"
+msgstr "صافي المرتب"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_note
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_note_allw
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_note_ded
+#: model:ir.ui.view,arch_db:end_service_nileBank.view_hr_eos_form
+msgid "Note"
+msgstr "الملاحظة"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_salary_days
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_payslip_days
+msgid "Number Of Days"
+msgstr "عدد الأيام"
+
+#. module: end_service_nileBank
+#: code:addons/end_service_nileBank/model.py:274
+#: code:addons/end_service_nileBank/model.py:290
+#, python-format
+msgid "Only Direct Manager Of Employee Can Approve !"
+msgstr "فقط المدير المباشر يسمح له بالتصديق"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_other_allw
+msgid "Other Allowance"
+msgstr "بدلات أخرى"
+
+#. module: end_service_nileBank
+#: model:ir.ui.view,arch_db:end_service_nileBank.view_hr_eos_form
+msgid "Other Allowances"
+msgstr "بدلات اخرى"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_other_ded
+msgid "Other Deduction"
+msgstr "خصومات اخرى"
+
+#. module: end_service_nileBank
+#: model:ir.ui.view,arch_db:end_service_nileBank.view_hr_eos_form
+msgid "Other Deductions"
+msgstr "خصومات اخرى"
+
+#. module: end_service_nileBank
+#: model:ir.model,name:end_service_nileBank.model_hr_payslip
+msgid "Pay Slip"
+msgstr "المرتب"
+
+#. module: end_service_nileBank
+#: model:ir.ui.view,arch_db:end_service_nileBank.view_hr_eos_form
+msgid "Reject"
+msgstr "رفض"
+
+#. module: end_service_nileBank
+#: selection:hr.end.service,eos_type:0
+msgid "Resignations"
+msgstr "استقالة"
+
+#. module: end_service_nileBank
+#: selection:hr.end.service,eos_type:0
+msgid "Retirement"
+msgstr "تقاعد"
+
+#. module: end_service_nileBank
+#: model:ir.ui.view,arch_db:end_service_nileBank.view_hr_eos_form
+msgid "Salary"
+msgstr "المرتب"
+
+#. module: end_service_nileBank
+#: model:ir.ui.view,arch_db:end_service_nileBank.view_hr_eos_form
+msgid "Service Time"
+msgstr "مدة الخدمة"
+
+#. module: end_service_nileBank
+#: model:ir.ui.view,arch_db:end_service_nileBank.view_hr_eos_form
+msgid "Set To Draft"
+msgstr "الى مسودة"
+
+#. module: end_service_nileBank
+#: selection:hr.end.service,state:0
+msgid "To Confirm"
+msgstr "للتاكيد"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_total_amount
+#: model:ir.ui.view,arch_db:end_service_nileBank.view_hr_eos_form
+msgid "Total Amount"
+msgstr "المبلغ الكلي"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_years
+msgid "Years"
+msgstr "السنوات"
+
+#. module: end_service_nileBank
+#: selection:hr.end.service,state:0
+msgid "draft"
+msgstr "مسودة"
+
+#. module: end_service_nileBank
+#: model:ir.model.fields,field_description:end_service_nileBank.field_hr_end_service_state
+msgid "status"
+msgstr "الحاله "

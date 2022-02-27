@@ -1,0 +1,267 @@
+<odoo>
+    <data>
+        <template id="portal_my_home_menu_expense" name="Portal layout : expense menu entries" inherit_id="portal.portal_breadcrumbs" priority="25">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+          <li t-if="page_name == 'expense' or expense" t-attf-class="breadcrumb-item #{'active ' if not expense else ''}">
+            <a t-if="expense or expense_name" t-attf-href="/my/expense?{{ keep_query() }}">Expenses</a>
+            <t t-else="">Expenses</t>
+          </li>
+          <li t-if="expense" class="breadcrumb-item active">
+            <t t-esc="expense.name"/>
+          </li>
+        </xpath>
+      </template>
+
+        <template id="portal_my_home_expense" name="Portal Home : expense entry" inherit_id="portal.portal_my_home" priority="25">
+            <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+                <t t-if="employee_id" t-call="portal.portal_docs_entry">
+                    <t t-set="title">Expenses</t>
+                    <t t-set="url" t-value="'/my/expense'"/>
+                    <t t-set="count" t-value="expense_count"/>
+                </t>
+            </xpath>
+      </template>
+
+        <template id="portal_my_home_expenses_icon" name="Portal Tray : expense entry" inherit_id="hr_portal.dashboard_icons" priority="25">
+            <xpath expr="//div[@id='icons']" position="inside">
+                <div class="col-sm-2 col-md-2">
+                  <div class="circle-tile ">
+                    <a href="/my/expense"><div class="circle-tile-heading dark-blue" style="background: #737673;"><i class="fa fa-usd fa-fw fa-2x"></i></div></a>
+                    <div class="circle-tile-content dark-blue" style="background: #737673;">
+                      <div class="circle-tile-description text-faded"> Expenses</div>
+                      <div class="circle-tile-number text-faded "><span t-esc="request.env['hr.expense'].search_count([('employee_id', '=', request.env.user.employee_ids[0].id)])"></span></div>
+                      <a class="circle-tile-footer" href="/my/expense">Show <i class="fa fa-chevron-circle-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+            </xpath>
+        </template>
+
+
+<!--    Expenses List-->
+        <template id="portal_my_expenses" name="Expenses">
+        <t t-call="portal.portal_layout">
+          <t t-call="portal.portal_searchbar">
+            <t t-set="title">Expenses</t>
+          </t>
+           <t t-if="employee_id" >
+               <div class="row">
+                <div class="col-lg-12">
+                  <div t-if="error_message" class="alert alert-danger" role="alert">
+                      <t t-foreach="error_message" t-as="err"><t t-esc="err"/><br /></t>
+                  </div>
+                </div>
+            </div>
+               <style>
+                   .action-button {
+                        padding: 0 5px;
+                    }
+               </style>
+               <t t-call="hr_expense_portal.portal_create_expenses"/>
+               <t t-if="expenses" t-call="portal.portal_table">
+                <thead>
+                  <tr class="active">
+                        <th>Description</th>
+                        <th>Date</th>
+                        <th>Paid By</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <t t-foreach="expenses" t-as="expense">
+                    <tr>
+                        <td><a t-attf-href="/my/expense/#{expense.id}"><span t-esc="expense.name"/></a></td>
+                        <td><span t-field="expense.date"  t-options='{"widget": "date"}'/></td>
+                      <td><span t-field="expense.payment_mode"/></td>
+                      <td><span t-field="expense.total_amount"/></td>
+                      <td>
+                          <span class="badge badge-info" t-field="expense.state"/>
+                      </td>
+                    </tr>
+                  </t>
+                </tbody>
+          </t>
+           </t>
+        </t>
+      </template>
+
+<!--        Create Button-->
+        <template id="portal_create_expenses" name="Portal: Create Expense">
+            <a href="/my/expense/edit" class="btn btn-primary" style="margin-bottom: 10px;color: #fff;background-color: #00A09D; border-color: #00A09D;border-radius: 0;">New Request</a>
+            <br/>
+        </template>
+
+<!--        Single Expense-->
+        <template id="portal_my_expense" name="Expense">
+        <t t-call="portal.portal_layout">
+          <t t-set="expense" t-value="expense"/>
+          <div id="optional_placeholder"></div>
+          <div class="container">
+              <div class="card">
+                <div class="card-header">
+                  <div class="row no-gutters">
+                        <div class="col-md text-md-right">
+                            <small class="text-right">Status:</small>
+                            <span t-field="expense.state" class=" badge badge-pill badge-info" title="Current stage of this expense"/>
+                        </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                    <style>
+                        .table th, .table td {
+                            border-top: 0 !important;
+                        }
+                    </style>
+                    <table class="table table-condensed">
+                        <tbody>
+                            <tr>
+                                <td><strong>Date</strong></td>
+                                <td><span t-field="expense.date" t-options='{"widget": "date"}'></span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Description</strong></td>
+                                <td><span t-field="expense.name"></span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Product</strong></td>
+                                <td><span t-field="expense.product_id"></span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Unit Price</strong></td>
+                                <td><span t-field="expense.unit_amount"></span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Quantity</strong></td>
+                                <td><span t-field="expense.quantity"></span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Total</strong></td>
+                                <td><span t-field="expense.total_amount"></span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Bill Reference</strong></td>
+                                <td><span t-field="expense.reference"></span></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <div id="hr_expense_communication" class="mt-4">
+                        <h2>Communication</h2>
+                        <t t-call="portal.message_thread">
+                            <t t-set="object" t-value="expense"/>
+                        </t>
+                    </div>
+                </div>
+              </div>
+
+          </div>
+          <div class="oe_structure mb32"/>
+        </t>
+      </template>
+
+        <!--Edit Expense-->
+        <template id="edit_expense_details">
+        <t t-call="portal.portal_layout">
+            <t t-set="additional_title">Edit Expense Details</t>
+            <form action="/my/expense/edit" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <div class="row o_portal_details">
+                    <div class="col-lg-8">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <br/>
+                              <div t-if="error_message" class="alert alert-danger" role="alert">
+                                  <ul>
+                                      <t t-foreach="error_message" t-as="err"><li><t t-esc="err"/></li></t>
+                                  </ul>
+                              </div>
+                            </div>
+
+                            <div t-attf-class="form-group col-xl-6">
+                                <label class="col-form-label required" for="product_id">Product</label>
+                                <select name="product_id" id="expense_product_id" required="" t-attf-class="form-control searchable">
+                                    <option value="">Select a product...</option>
+                                    <t t-foreach="products or []" t-as="product">
+                                        <option t-att-value="product.id" t-att-data-unit_price="product.standard_price">
+                                            <t t-esc="product.display_name" />
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+
+                            <div t-attf-class="form-group col-xl-6">
+                                <label class="col-form-label required" for="name">Description</label>
+                                <input type="text" required="" id="expenseName" name="name" t-attf-class="form-control" />
+                            </div>
+
+                             <div t-attf-class="form-group col-xl-6 hidden" style="display: none;">
+                                <label class="col-form-label" for="id">Expense</label>
+                                <input type="text" name="id" t-att-value="expense.id if expense else ''" t-attf-class="form-control" />
+                            </div>
+
+                            <div t-attf-class="form-group col-xl-6">
+                                <label class="col-form-label required" for="unit_amount">Unit Price</label>
+                                <input required="" value="0.0" type="number" step="0.01" id="expense_unit_price" t-att-value="expense.unit_amount if expense else ''" name="unit_amount" t-attf-class="form-control" />
+                            </div>
+
+                            <div t-attf-class="form-group col-xl-6">
+                                <label class="col-form-label required" for="quantity">Quantity</label>
+                                <input required="" value="1.0" type="number"  step="0.01" name="quantity" t-attf-class="form-control" />
+                            </div>
+
+                            <div t-attf-class="form-group col-xl-6">
+                                <label class="col-form-label required" for="currency_id">Currency</label>
+                                <select name="currency_id" id="currency_id" required="" t-attf-class="form-control">
+                                    <t t-foreach="currencies or []" t-as="currency">
+                                        <option t-att-value="currency.id" t-att-selected="currency.id == company_currency.id">
+                                            <t t-esc="currency.name"/> (<t t-esc="currency.symbol"/>)
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+
+                            <div t-attf-class="form-group col-xl-6">
+                                <label class="col-form-label required" for="date">Date</label>
+                                <input required="" type="date" id="expense_date" name="date" t-attf-class="form-control" />
+                            </div>
+
+                            <div t-attf-class="form-group col-xl-6">
+                                <label class="col-form-label required" for="payment_mode">Paid By</label>
+                                <select name="payment_mode" id="payment_mode" required="" t-attf-class="form-control">
+                                    <option value="own_account">Employee (to reimburse)</option>
+                                    <option value="company_account">Company</option>
+                                </select>
+                            </div>
+
+                            <div t-attf-class="form-group col-xl-6">
+                                <label class="col-form-label" for="reference">Bill Reference</label>
+                                <input type="text" t-att-value="expense.reference if expense else ''" name="reference" t-attf-class="form-control" />
+                            </div>
+
+                            <div t-attf-class="form-group col-xl-12">
+                                <br/>
+                                <textarea name="description" placeholder="Notes" rows="4" style="width:100%; padding: 10px;"/>
+                            </div>
+
+                            <div t-attf-class="form-group col-xl-6">
+                                <label class="col-form-label required" for="attachment">Attachment</label>
+                                <input type="file" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" id="attachment" name="attachment" />
+                            </div>
+
+                            <div class="clearfix" />
+                            <input type="hidden" name="redirect" t-att-value="redirect"/>
+                        </div>
+                        <div class="clearfix">
+                            <button type="submit" class="btn btn-primary float-right mb32 ">
+                                Submit
+                                <span class="fa fa-long-arrow-right" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </t>
+    </template>
+    </data>
+</odoo>

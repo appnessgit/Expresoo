@@ -1,0 +1,37 @@
+<odoo>
+    <data>
+        <record id="hr_payslips_report_cofig" model="ir.ui.view">
+            <field name="name">hr.payslips.form.config</field>
+            <field name="model">payslip.report.config</field>
+            <field name="arch" type="xml">
+             <form>
+               <sheet>
+                 <group colspan='2' col='2'>
+                     <field name="name" string="Name" required="1"/>
+                  </group>
+                  <group>
+                       <field name="paper_format" string="Format"/>
+                  </group>
+                 <field name="rule_ids" required="1" widget="one2many_tags"/>
+               </sheet>
+             </form>
+            </field>
+      </record>
+     
+        <record id="payroll_reprort_config_action" model="ir.actions.act_window">
+            <field name="name">Payroll Report Configuration</field>
+            <field name="res_model">payslip.report.config</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+       
+         <menuitem name="Payroll Report Configurations"
+              id="payroll_report_config_menu"
+              parent="hr_work_entry_contract_enterprise.menu_hr_payroll_configuration"
+              sequence="20"
+              action="payroll_reprort_config_action"
+              groups="hr_payroll.group_hr_payroll_user"
+    />
+
+    </data>
+</odoo>

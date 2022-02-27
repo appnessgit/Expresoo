@@ -1,0 +1,128 @@
+<odoo>
+  <data>
+
+    <record id="seq_pyment_request" model="ir.sequence">
+      <field name="name">Payment Request</field>
+      <field name="code">payment.request.sequence</field>
+      <field name="prefix">PR-</field>
+      <field name="padding">3</field>
+      <field name="company_id" eval="False"/>
+    </record>
+    <record id="payment_request_view_form" model="ir.ui.view">
+      <field name="name">Payment Request</field>
+      <field name="model">payment.request</field>
+      <field name="arch" type="xml">
+        <form >
+          <header>
+            <field name="state" widget="statusbar"/>
+            <!-- <button name="button_submit" string="Submit" states="user_department" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'user_department')]}"/>
+            <button name="button_to_buyer" string="Confirm" states="procurement_manger" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'procurement_manger')]}"/>
+            <button name="button_confirm" string="Confirm" states="buyer" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'buyer')]}"/>
+            <button name="button_approve" string="Approve" states="managing_director" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'managing_director')]}"/>
+            <button name="action_reject" string="Reject" type="object" attrs="{'invisible': [('state','not in', ('procurement_manger', 'managing_director'))]}"/> -->
+
+          </header>
+          <sheet>
+            <div class="oe_edit_only">
+              <label for="name" class="oe_inline"/>
+          </div>
+          <h1>
+              <!--<field name="name" class="oe_inline" attrs="{'readonly': [('is_editable','=', False)]}"/>-->
+              <field name="name" readonly="1"/>
+              <!--<label for="space" name="Space" string="-"/>-->
+          </h1>
+            <group col="4" colspan="4">
+              <!-- Add your fields here -->
+              <field name="contract_number" />
+              <field name="vendor_id" attrs="{'readonly': [('state', '!=', 'user_department')]}"/>
+              <field name="date" attrs="{'readonly': [('state', '!=', 'user_department')]}"/>
+              <!-- <field name="buyer" attrs="{'readonly': [('state', '!=', 'procurement_manger')]}"/> -->
+              <!-- <field name="portion_of_agreement_affected" attrs="{'readonly': [('state', '!=', 'user_department')]}"/> -->
+              <field name="contract_duration" attrs="{'readonly': [('state', '!=', 'user_department')]}"/>
+              <field name="start_date" attrs="{'readonly': [('state', '!=', 'user_department')]}"/>
+              <field name="description" attrs="{'readonly': [('state', '!=', 'user_department')]}"/>
+              <field name="end_date" attrs="{'readonly': [('state', '!=', 'user_department')]}"/>
+              <!-- <field name="contract_type" attrs="{'readonly': [('state', '!=', 'user_department')]}"/> -->
+              <field name="terms_note" attrs="{'readonly': [('state', '!=', 'user_department')]}"/>
+              <!-- <field name="scope_of_work" attrs="{'readonly': [('state', '!=', 'user_department')]}"/> -->
+              <field name="terms_and_conditions" attrs="{'readonly': [('state', '!=', 'user_department')]}"/>
+              <field name="type_of_change" invisible="1"/>
+            </group>
+            <group col="4" colspan="4">
+                  <field name="this_claim"/>
+                  <field name="address"/>
+                  <field name="fax_number"/>
+                  <field name="telephone_number"/>
+                  <field name="email"/>
+              </group>
+
+            <!-- <notebook>
+              <page string="Contract Lines">
+                <field name="contract_ids" attrs="{'readonly': [('state', '!=', 'user_department')]}">
+                  <tree editable="bottom">
+                    <field name="product_id" />
+                    <field name="description"/>
+                    <field name="quantity"/>
+                    <field name="unit_price" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                    <field name="currency_id"/>
+
+                  </tree>
+                </field>
+              </page>
+
+              <page string="Reasons for change">
+                <group>
+                  <field name="reason_for_change" attrs="{'readonly': [('state', '!=', 'user_department')]}"/>
+                </group>
+              </page>
+            </notebook>
+            <group class="oe_subtotal_footer oe_right">
+              <field name="total" widget="monetary" options="{'currency_field': 'currency_id'}" nolabel="0" class="oe_subtotal_footer_separator" />
+            </group> -->
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_follower_ids" widget="mail_followers"/>
+            <field name="message_ids" widget="mail_thread"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+    <record id="model_name_view_tree" model="ir.ui.view">
+      <field name="name">Payment Request</field>
+      <field name="model">payment.request</field>
+      <field name="arch" type="xml">
+        <tree >
+          <!-- Add your fields here -->
+          <field name="name"/>
+          <field name="vendor_id"/>
+          <field name="contract_number"/>
+          <field name="date"/>
+          <field name="type_of_change"/>
+          <field name="reason_for_change"/>
+          <field name="state"/>
+        </tree>
+      </field>
+    </record>
+    <record id="payment_request_action" model="ir.actions.act_window">
+      <field name="name">Payment Request</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">payment.request</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+            Here is list of payment requests.
+        </p>
+        <p>
+          <!-- More details ayout what a user can do with this object will be OK -->
+        </p>
+      </field>
+    </record>
+    <!-- This Menu Item must have a parent and an action -->
+    <!-- <menuitem id="contract_menu_act" name="Contracts" parent="purchase.menu_purchase_root" sequence="17" groups="purchase_custom.group_contract_specialist,purchase_custom.group_supply_chain_specific"/> -->
+    <menuitem id="payment_request" name="Payment Request" parent="contract_menu_act" action="payment_request_action" sequence="3"/>
+
+    <!-- <menuitem id="change_contract_menu_act" name="Change in contracts" parent="contract_menu_act" action="change_contract_action" sequence="18"/> -->
+
+  </data>
+</odoo>

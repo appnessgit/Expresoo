@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_hr_portal_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.hr.portal.form</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="25"/>
+            <field name="inherit_id" ref="hr.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@data-key='hr']" position="inside">
+                    <t>
+                        <h2>Employee Self Service</h2>
+                        <div class="row mt16 o_settings_container">
+
+                            <!--Leaves-->
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field name="module_hr_holidays_portal"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="module_hr_holidays_portal"/>
+                                    <div class="text-muted" attrs="{'invisible': [('module_hr_holidays_portal', '=', True)]}">
+                                        This feature requires Leaves module.
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Expenses-->
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field name="module_hr_expense_portal"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="module_hr_expense_portal"/>
+                                    <div class="text-muted" attrs="{'invisible': [('module_hr_expense_portal', '=', True)]}">
+                                        This feature requires Expenses module.
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Attendance-->
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field name="module_hr_attendance_portal"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="module_hr_attendance_portal"/>
+                                    <div class="text-muted" attrs="{'invisible': [('module_hr_attendance_portal', '=', True)]}">
+                                        This feature requires Leaves module.
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Payslip-->
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field name="module_hr_payslip_portal"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="module_hr_payslip_portal"/>
+                                        <span class="badge badge-primary oe_inline o_enterprise_label">Enterprise</span>
+                                    <div class="text-muted" attrs="{'invisible': [('module_hr_payslip_portal', '=', True)]}">
+                                        This feature requires Payroll module.
+                                    </div>
+                                </div>
+                            </div>
+
+                         </div>
+                        <div class="row mt16 o_settings_container">
+                            <span class="alert alert-warning" attrs="{'invisible': [('module_hr_holidays_portal', '=', True),('module_hr_attendance_portal', '=', True),('module_hr_expense_portal', '=', True),('module_hr_payslip_portal', '=', True)]}">
+                                Required modules will be automatically installed!
+                            </span>
+                        </div>
+
+                    </t>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

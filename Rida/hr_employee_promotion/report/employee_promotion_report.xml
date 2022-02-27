@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_employee_promotion">
+     <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <div class="col-xs-12">
+                        <p><strong>Reference:</strong> <span t-field="o.name"/></p>
+                        <p><strong>Date:</strong><span t-field="o.date"/></p>
+                        <br/>
+                        <p><strong>name:</strong> <span t-field="o.employee_id.name"/></p>
+                        <p><strong>Employee No:</strong> <span t-field="o.employee_id.id"/></p>
+                        <br/>
+                        <p><strong>Subject:</strong>Promotion Letter</p>
+                    </div>
+                    <div class="col-xs-12">
+                        <p>
+                            We take this opportunity to congratulate you, and express our appreciation for your valuable contribution in achieving company objectives. Management is pleased to revise your terms of employment with effect from <strong><span t-field="o.date"/></strong>. Your new Gross Salary will be ‘ <strong><span t-esc="o.n_wage"/></strong>OMR ’ with a total increase of ’ <strong><span t-esc="o.n_wage - o.wage"/></strong> OMR ’ from the previous.
+                        </p>
+
+                    </div>
+                       <div class="col-xs-8">
+                       <table class="table-bordered" style="width:80%;margin-left:50px;">
+                           <thead>
+                            <tr>
+                                <td></td>
+                                <td class="text-center"><strong>Current</strong></td>
+                                <td class="text-center"><strong>Revised</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Job Title</strong></td>
+                                <td class="text-center"><span t-esc="o.job_id.name"/></td>
+                                <td class="text-center"><span t-esc="o.n_job_id.name"/></td>
+                            </tr> 
+                            <tr>
+                                <td><strong>Grade</strong></td>
+                                <td class="text-center"><span t-esc="o.grade_id.name"/></td>
+                                <td class="text-center"><span t-esc="o.n_grade_id.name"/></td>
+                            </tr> 
+                            <tr>
+                                <td><strong>Salary Components</strong></td>
+                                <td class="text-center">null</td>
+                                <td class="text-center">null</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Basic Salary</strong></td>
+                                <td class="text-center"> <span t-esc="o.wage"/></td>
+                                <td class="text-center"><span t-esc="o.n_wage"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Housing</strong></td>
+                                <td class="text-center"><span t-esc="o.accommodation"/></td>
+                                <td class="text-center"><span t-esc="o.n_accommodation"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Water</strong></td>
+                                <td class="text-center"><span t-esc="o.water"/></td>
+                                <td class="text-center"><span t-esc="o.n_water"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Telephone</strong></td>
+                                <td class="text-center"><span t-esc="o.telephone"/></td>
+                                <td class="text-center"><span t-esc="o.n_telephone"/></td>
+                            </tr>
+                             <tr>
+                                <td><strong>Transport</strong></td>
+                                <td class="text-center"><span t-esc="o.transport"/></td>
+                                <td class="text-center"><span t-esc="o.n_transport"/></td>
+                            </tr> 
+                             <tr>
+                                <td><strong>Cost of living</strong></td>
+                                <td class="text-center"><span t-esc="o.cost_living"/></td>
+                                <td class="text-center"><span t-esc="o.n_cost_living"/></td>
+                            </tr> 
+                            <tr>
+                                <td><strong>Other Allowances</strong></td>
+                                <td class="text-center"><span t-esc="o.other_allw"/></td>
+                                <td class="text-center"><span t-esc="o.n_other_allw"/></td>
+                            </tr>
+                            <tr>
+                                <td><storng>Total Salary</storng> (OMR) per month</td>
+                                <td class="text-center"><span t-esc="o.total_salary"/></td>
+                                <td class="text-center"><span t-esc="o.n_total_salary"/></td>
+                            </tr>
+
+                              
+                            </thead>
+                           
+                       </table>
+                    </div>
+                    <br/>
+                    <div class="col-xs-12">
+                        <p>
+                           All other terms and conditions of your employment as stipulated in your appointment letter or subsequent modifications thereof remain unchanged and will be governed by the company’s HR Policies prevalent at the time. 
+                        </p>
+                        <strong><p>
+Confidentiality:<br/> 
+This letter and its contents are highly confidential, contain sensitive information about you is part of your private information therefore we encourage you to not disclose it to the public and to any OPC employee. Any breach of this confidentiality will lead to disciplinary action.
+                        </p></strong>
+                        <p>We are confident that you will continue the good work in the same spirit of commitment and sincerity and grow with our organization.</p>
+                    </div>
+                    <div class="col-xs-12">
+                       <table class="table-bordered" >
+                           <thead>
+                               <td style="width:50%;">
+                                    <p >
+                                        <strong>With best wishes! For Oman Post Company SAOC</strong>
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        <p>Human Resource Manager (Acting)</p>
+                                    </p>
+                                </td>
+                               <td style="width:50%;">
+                                    <p>
+                                        <strong>Employee Name:</strong>
+                                        <ol style="margin-left=-25px;">
+                                            <li> I have read the contents of this letter and accept the revised terms and conditions mentioned above.</li>
+                                            <li> I hereby willfully declare to waive out any previous, existing or future lawsuits, cases or claims against Oman Post Company of whatsoever nature. </li>
+                                        </ol>
+                                        <p><storng>Sign:</storng></p>
+                                        <p><storng>date:</storng><span style="padding:40px;">/</span><span style="padding:20px;">/</span></p>
+                                    </p>
+                                </td>
+                            </thead>
+                       </table>
+
+                    </div>
+
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+</odoo>

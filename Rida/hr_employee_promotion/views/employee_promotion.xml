@@ -1,0 +1,218 @@
+<odoo>
+    <data>
+        <!-- Rotation-->
+        <!-- Form -->
+        <record id="view_employee_promotion_form" model="ir.ui.view">
+			<field name="name">employee.promotion.form</field>
+			<field name="model">employee.promotion</field>
+			<field name="arch" type="xml">
+               <form string="Employee Promotion/Upgrading">
+                   <header>
+                       <button name="submit" type="object" string="Submit To Manager" groups="hr.group_hr_user" states="draft" class="oe_highlight"/>
+                       <button name="hr_manager_approve" type="object" string="Approve" groups="hr.group_hr_manager" states="hr_manager_approve" class="oe_highlight"/>
+                       <button name="reject_button" type="object" string="Reject" confirm="Are you sure to Reject this Promotion ?" groups="hr.group_hr_manager" states="hr_manager_approve"/>
+                       <button name="reset_button" type="object" string="Set To Draft" groups="hr.group_hr_manager" states="reject"/>
+                       <field name="state" widget="statusbar" statusbar_visible="draft"/>
+                   </header>
+                   <sheet>
+                       <group>
+                          <group>
+                             <field name="name" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                             <field name="date" attrs="{'readonly': [('state', 'not in', ['draft'])]}"/>
+                             <field name="employee_id" attrs="{'readonly': [('state', 'not in', ['draft'])]}" options="{'no_create': True}"/>
+                             <field name="company_id" readonly="1"/>
+                             <field name="promotion_document"/>
+                          </group>
+                         <group>
+                              <field name="grade_id" readonly="1" force_save="1"/>
+                              <field name="n_grade_id" attrs="{'readonly':[('state','=','approve')]}"/>
+                              <field name="is_salary_promotion"/>
+                              <button name="onchange_n_grade_id" type="object" string="Update" class="oe_link"/>
+                          </group>
+                         
+                          
+                        </group>
+                        <notebook>
+                          <page string="Position Information"> 
+                          <group>
+                           <group>
+                                <field name="department_id" readonly="1" force_save="1"/>
+                                <field name="n_department_id" attrs="{'readonly': [('state', 'not in', ['draft'])]}" options="{'no_create': True ,'no_open':True}"/>
+                           </group>
+                           
+                           <group >
+                                <field name="job_id" readonly="1" force_save="1"/>
+                                <field name="n_job_id" attrs="{'readonly': [('state', 'not in', ['draft'])]}" options="{'no_create': True ,'no_open':True}"/>
+                           </group>
+                        </group>
+
+                          </page>
+                          <page string="Salary Information" attrs="{'invisible':[('is_salary_promotion','=',False)]}">
+                             <group col="2">
+                            <group string="Current Salary">
+                                    <field name="basic" force_save="1"/>
+                                    <field name="total_allowances" force_save="1"/>
+                            </group>
+                            <group>
+                              <field name="grade_line_id" nolabel="1">
+                                 <tree editable="top" create="false" delete="false">
+                                    <field name="name" readonly="1" force_save="1"/>
+                                    <field name="code" readonly="1" force_save="1"/>
+                                    <field name="type" readonly="1" force_save="1"/>
+                                    <field name="percentage" attrs="{'readonly':[('type','=','fixed')]}" force_save="1"/>
+                                    <field name="amount" attrs="{'readonly':[('type','!=','fixed')]}" force_save="1"/>
+                                 </tree>
+                              </field>
+                            </group>
+                            <group string="New Salary Information">
+                              <field name="new_basic" attrs="{'readonly':[('state','=','approve')]}"/>
+                              <field name="new_total_allowances" readonly="1"/>
+                            </group>
+                            <group>
+                              <field name="grade_line_id_promotion" nolabel="1">
+                                 <tree editable="top" create="false" delete="false">
+                                    <field name="name" readonly="1" force_save="1"/>
+                                    <field name="code" readonly="1" force_save="1"/>
+                                    <field name="type" readonly="1" force_save="1"/>
+                                    <field name="percentage" attrs="{'readonly':[('type','=','fixed')]}" force_save="1"/>
+                                    <field name="amount" attrs="{'readonly':[('type','!=','fixed')]}" force_save="1" />
+                                 </tree>
+                              </field>
+                            </group>
+                       </group>
+                       </page>
+                        <page string="Movements">
+                             <field name="rotation_ids" readonly="1" force_save='1'>
+                                <tree>
+                                    <field name="employee_id"/>
+                                    <field name="department_id"/>
+                                    <field name="job_id"/>
+                                    <field name="company_id"/>
+                                    <field name="new_company"/>
+                                    <field name="n_department_id"/>
+                                    <field name="n_job_id"/>
+
+                                </tree>
+                             </field>
+                       </page>
+                       <page string="Salary Increase">
+                             <field name="salary_increase_ids" readonly="1">
+                                <tree>
+                                  <field name="employee_id"/>
+                                   <field name="basic"/>
+                                  <field name="new_basic"/>
+                                </tree>
+                             </field>
+                       </page>
+                        </notebook>
+                           
+                        <group>
+                           <field name="note"/>
+                       </group>
+                   </sheet>
+
+                   <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+
+
+
+               </form>
+            </field>
+        </record>
+
+        <!-- Tree -->
+        <record id="view_employee_promotion_tree" model="ir.ui.view">
+			<field name="name">employee.promotion.tree</field>
+			<field name="model">employee.promotion</field>
+			<field name="arch" type="xml">
+               <tree string="Employee Promotion/Upgrading">
+                   <field name="date"/>
+                  <field name="employee_id"/>
+                  <field name="company_id"/>
+                   <field name="department_id"/>
+                   <field name="job_id"/>
+                   <field name="n_department_id"/>
+                   <field name="n_job_id"/>
+                   <field name="basic"/>
+                   <field name="new_basic"/>
+                   <field name="note"/>
+                   <field name="state"/>
+               </tree>
+            </field>
+        </record>
+
+        <!--kanban-->
+        <record model="ir.ui.view" id="view_employee_promotion_kanban">
+            <field name="name">employee.promotion.kanban</field>
+            <field name="model">employee.promotion</field>
+            <field name="arch" type="xml">
+                <kanban create="false" import="0" class="o_kanban_mobile">
+                    <field name="date"/>
+                    <field name="employee_id"/>
+                    <field name="state"/>
+
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="o_kanban_record_top mb16">
+                                    <div class="o_kanban_record_headings mt4">
+                                        <strong class="o_kanban_record_title"><span><t t-esc="record.date.value"/></span></strong>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                       <strong class="o_kanban_record_title"><span><t t-esc="record.employee_id.value"/></span></strong>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <field name="state" widget="label_selection"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+          </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_employee_promotion" model="ir.actions.act_window">
+			<field name="name">Employee Promotion/Upgrading</field>
+			<field name="res_model">employee.promotion</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+    <menuitem name="Employee Promotion/Upgrading"
+                parent="hr.menu_hr_root"
+                id="menu_employee_promotion"
+                sequence="5"
+                action="action_employee_promotion"/>
+
+   <!-- Smart Button -->
+   <record id="view_employee_form_smart_button_promotion" model="ir.ui.view">
+      <field name="name">view_employee.form.promotion</field>
+      <field name="model">hr.employee</field>
+      <field name="inherit_id" ref="hr.view_employee_form"/>
+      <field name="arch" type="xml">
+         <div name="button_box" position="inside">
+            <button class="oe_stat_button" type="object" name="get_promotion"
+                  icon="fa-certificate">
+               <field string="Promotion" name="promotion_count" widget="statinfo"/>
+            </button>
+         </div>
+      </field>
+    </record>
+
+   <!-- multi company rule -->
+    <record id="employee_promotion_comp_rule" model="ir.rule">
+        <field name="name">employee promotion multi-company</field>
+        <field name="model_id" ref="model_employee_promotion"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force"> ['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        <field name="active" eval="True"/>
+    </record>
+
+
+</data>
+</odoo>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="payroll_bank_report_temp">
+    <t t-call="web.report_layout">
+    <t t-call="web.external_layout">
+      <style>
+        .img-logo{
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 10%;
+        }
+        .header-font{
+          text-align: center;
+          margin:0px;
+        }
+        .body-font{
+          margin:0px;
+        }
+
+      </style>
+      <div class="page">
+      <table class="table table-condensed">
+        <thead>
+          <th>Sr</th>
+          <th>Staff Name</th>
+          <th>Account #</th>
+          <th>Bank Branch</th>
+          <th>Salary amount</th>
+        </thead>
+        <tbody>
+          <t t-foreach="report_data" t-as="bank">
+              <t t-set="c" t-value="0"/>
+              <t t-foreach="report_data[bank]['payslips']" t-as="payslip">
+                <t t-set="c" t-value="c+1"/>
+                <tr>
+                  <td><t t-esc="c"/></td>
+                  <td><t t-esc="payslip.employee_id.name"/></td>
+                  <td><t t-esc="payslip.employee_id.bank_account_id.acc_number"/></td>
+                  <td><t t-esc="payslip.employee_id.bank_account_id.branch"/></td>
+                  <td><t t-esc="round(payslip.net_amount , 2)"/></td>
+                </tr>
+              </t>
+              <tr>
+                <td></td>
+                <td><span style="font-weight:bold;">Total <t t-esc="bank"/></span></td>
+                <td></td>
+                <td></td>
+                <td><span style="font-weight: bolder"><t t-esc="report_data[bank]['total']"/></span><span style="font-weight: bolder"> OMR</span></td>
+              </tr>
+          </t>
+        </tbody>
+      </table>
+        <br/>
+      <!--<p style="font-weight:bold;">Gross total amount is RO <span t-esc="grand_total_text"/></p>-->
+
+      <br/>
+
+    </div>
+    <!-- Sec 2 -->
+    <div class="page">
+      <br/>
+      <p></p>
+      <p style="margin-bottom:70px">Yours faithfully,</p>
+      <div class="container">
+        <div class="row">
+          <div class="col-6">
+            <p style="margin:0px;"  class="text-left">__________________________</p>
+            <p style="margin:0px;"  class="text-left">CEO</p>
+          </div>
+          <div class="col-6">
+            <p style="margin:0px;" class="text-right">__________________________</p>
+            <p style="margin:0px;" class="text-right">Finance</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    </t>
+    </t>
+</template>
+</odoo>

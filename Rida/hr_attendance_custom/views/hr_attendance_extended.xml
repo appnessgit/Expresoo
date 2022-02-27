@@ -1,0 +1,48 @@
+<odoo>
+  <data>
+
+    <record id="hr_attendance_extended" model="ir.ui.view">
+      <field name="name">Attendance extension</field>
+      <field name="model">hr.attendance</field>
+      <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='check_in']" position="before">
+          <field name="default_check_in" invisible="1"/>
+        </xpath>
+        <xpath expr="//field[@name='default_check_in']" position="before">
+          <field name="color_bool" invisible="1"/>
+        </xpath>
+        <xpath expr="//field[@name='check_out']" position="before">
+          <field name="default_check_out" invisible="1"/>
+        </xpath>
+        <xpath expr="//tree[1]" position="attributes">
+          <attribute name="decoration-danger">color_bool==False</attribute>
+      </xpath>
+      <!-- <xpath expr="//field[@name='worked_hours']" position="after">
+        <field name="work_hours_week" />
+      </xpath> -->
+
+      </field>
+    </record>
+    <!--
+        <template id="listing">
+          <ul>
+            <li t-foreach="objects" t-as="object">
+              <a t-attf-href="#{ root }/objects/#{ object.id }">
+                <t t-esc="object.display_name"/>
+              </a>
+            </li>
+          </ul>
+        </template>
+        <template id="object">
+          <h1><t t-esc="object.display_name"/></h1>
+          <dl>
+            <t t-foreach="object._fields" t-as="field">
+              <dt><t t-esc="field"/></dt>
+              <dd><t t-esc="object[field]"/></dd>
+            </t>
+          </dl>
+        </template>
+-->
+  </data>
+</odoo>

@@ -1,0 +1,27 @@
+<odoo>
+    <record id="employee_promotion_extension_view" model="ir.ui.view">
+        <field name="name">employee promotion extended</field>
+        <field name="model">employee.promotion</field>
+        <field name="inherit_id" ref="hr_employee_promotion.view_employee_promotion_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form//notebook/page[4]" position="after">
+                <page string="Requirements for promotion">
+                    <sheet>
+                        <group>
+                            <field name="qualifications"/> 
+                            <field name="experience" /> 
+                            <field name="competencies" /> 
+                        </group>
+                    </sheet>
+                </page>
+            </xpath>
+
+            <xpath expr="//field[@name='n_grade_id']" position="after">
+                <field name="old_band"/>
+                <field name="new_band"/>
+            </xpath>
+
+
+        </field>
+    </record>
+</odoo>

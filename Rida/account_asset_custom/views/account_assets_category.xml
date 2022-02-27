@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="account_assets_type_form_view" model="ir.ui.view">
+    <field name="name">account.assets.category.form</field>
+    <field name="model">account.assets.category</field>
+    <field name="arch" type="xml">
+        <form string="Aassets Categories">
+            <sheet>
+                <group>
+                    <field name="name"/>
+                    <field name="parent_id"/>
+                </group>
+                <group>
+                    <field name="description"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </group>
+            </sheet>
+        </form>
+    </field>
+    </record>
+
+    <record id="account_asset_category_tree_view" model="ir.ui.view">
+        <field name="name">account.assets.category.tree</field>
+        <field name="model">account.assets.category</field>
+        <field name="arch" type="xml">
+            <tree string="Assets Categories">
+                <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="account_assets_category_action" model="ir.actions.act_window">
+        <field name="name">Assets Categories</field>
+        <field name="res_model">account.assets.category</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+            Click to add a new asset category.
+        </p>
+        <p>
+            This allows you to classify your assets categories.
+        </p>
+        </field>
+    </record>
+
+    <menuitem parent="account.account_management_menu" sequence="2" id="account_assets_categories_menu" name="Assets Categories" action="account_assets_category_action" groups="account.group_account_manager" />
+</odoo>

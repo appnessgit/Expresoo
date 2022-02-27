@@ -1,0 +1,211 @@
+<odoo>
+    <data>
+        <template id="portal_my_home_menu_resignation" name="Portal layout : resignation menu entries" inherit_id="portal.portal_breadcrumbs" priority="25">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+          <li t-if="page_name == 'resignation' or resignation" t-attf-class="breadcrumb-item #{'active ' if not resignation else ''}">
+            <a t-if="resignation or resignation_name" t-attf-href="/my/resignation?{{ keep_query() }}">Resignations</a>
+            <t t-else="">Resignations</t>
+          </li>
+          <li t-if="resignation" class="breadcrumb-item active">
+            <t t-esc="resignation.name"/>
+          </li>
+        </xpath>
+      </template>
+
+        <template id="portal_my_home_resignation" name="Portal Home : resignation entry" inherit_id="portal.portal_my_home" priority="25">
+            <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+                <t t-if="employee_id" t-call="portal.portal_docs_entry">
+                    <t t-set="title">resignations</t>
+                    <t t-set="url" t-value="'/my/resignation'"/>
+                    <t t-set="count" t-value="resignation_count"/>
+                </t>
+            </xpath>
+      </template>
+
+        <template id="portal_my_home_resignations_icon" name="Portal Tray : resignation entry" inherit_id="hr_portal.dashboard_icons" priority="25">
+            <xpath expr="//div[@id='icons']" position="inside">
+                <div class="col-sm-2 col-md-2">
+                  <div class="circle-tile ">
+                    <a href="/my/resignation"><div class="circle-tile-heading dark-blue" style="background: #273675;"><i class="fa fa-archive fa-fw fa-2x"></i></div></a>
+                    <div class="circle-tile-content dark-blue" style="background: #273675;">
+                      <div class="circle-tile-description text-faded"> Resignations</div>
+                      <div class="circle-tile-number text-faded "><span t-esc="request.env['hr.resignation'].search_count([('employee_id', '=', request.env.user.employee_ids[0].id)])"></span></div>
+                      <a class="circle-tile-footer" href="/my/resignation">Show <i class="fa fa-chevron-circle-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+            </xpath>
+        </template>
+
+
+<!--    resignations List-->
+        <template id="portal_my_resignations" name="resignations">
+        <t t-call="portal.portal_layout">
+          <t t-call="portal.portal_searchbar">
+            <t t-set="title">Resignations</t>
+          </t>
+           <t t-if="employee_id" >
+               <div class="row">
+                <div class="col-lg-12">
+                  <div t-if="error_message" class="alert alert-danger" role="alert">
+                      <t t-foreach="error_message" t-as="err"><t t-esc="err"/><br /></t>
+                  </div>
+                </div>
+            </div>
+               <style>
+                   .action-button {
+                        padding: 0 5px;
+                    }
+               </style>
+               <t t-call="hr_resignation_portal.portal_create_resignations"/>
+               <t t-if="resignations" t-call="portal.portal_table">
+                <thead>
+                  <tr class="active">
+                        <th>Reference</th>
+                        <th>Date</th>
+                        <th>Last Day</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <t t-foreach="resignations" t-as="resignation">
+                    <tr>
+                        <td><a t-attf-href="/my/resignation/#{resignation.id}"><span t-esc="resignation.name"/></a></td>
+                        <td><span t-field="resignation.request_date"  t-options='{"widget": "date"}'/></td>
+                      <td><span t-field="resignation.expected_revealing_date"/></td>
+                      <td><span t-field="resignation.resignation_type"/></td>
+                      <td>
+                          <span class="badge badge-info" t-field="resignation.state"/>
+                      </td>
+                    </tr>
+                  </t>
+                </tbody>
+          </t>
+           </t>
+        </t>
+      </template>
+
+<!--        Create Button-->
+        <template id="portal_create_resignations" name="Portal: Create resignation">
+            <a href="/my/resignation/edit" class="btn btn-primary" style="margin-bottom: 10px;color: #fff;background-color: #00A09D; border-color: #00A09D;border-radius: 0;">New Request</a>
+            <br/>
+        </template>
+
+<!--        Single resignation-->
+        <template id="portal_my_resignation" name="resignation">
+        <t t-call="portal.portal_layout">
+          <t t-set="resignation" t-value="resignation"/>
+          <div id="optional_placeholder"></div>
+          <div class="container">
+              <div class="card">
+                <div class="card-header">
+                  <div class="row no-gutters">
+                        <div class="col-md text-md-right">
+                            <small class="text-right">Status:</small>
+                            <span t-field="resignation.state" class=" badge badge-pill badge-info" title="Current stage of this resignation"/>
+                        </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                    <style>
+                        .table th, .table td {
+                            border-top: 0 !important;
+                        }
+                    </style>
+                    <table class="table table-condensed">
+                        <tbody>
+                            <tr>
+                                <td><strong>Reference</strong></td>
+                                <td><span t-field="resignation.name"></span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Request Date</strong></td>
+                                <td><span t-field="resignation.request_date" t-options='{"widget": "date"}'></span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Last Day</strong></td>
+                                <td><span t-field="resignation.expected_revealing_date" t-options='{"widget": "date"}'></span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Type</strong></td>
+                                <td><span t-field="resignation.resignation_type"></span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Reason</strong></td>
+                                <td><span t-field="resignation.reason"></span></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <div id="hr_resignation_communication" class="mt-4">
+                        <h2>Communication</h2>
+                        <t t-call="portal.message_thread">
+                            <t t-set="object" t-value="resignation"/>
+                        </t>
+                    </div>
+                </div>
+              </div>
+
+          </div>
+          <div class="oe_structure mb32"/>
+        </t>
+      </template>
+
+        <!--Edit resignation-->
+        <template id="edit_resignation_details">
+        <t t-call="portal.portal_layout">
+            <t t-set="additional_title">Edit Resignation Details</t>
+            <form action="/my/resignation/edit" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <div class="row o_portal_details">
+                    <div class="col-lg-8">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <br/>
+                              <div t-if="error_message" class="alert alert-danger" role="alert">
+                                  <ul>
+                                      <t t-foreach="error_message" t-as="err"><li><t t-esc="err"/></li></t>
+                                  </ul>
+                              </div>
+                            </div>
+
+                            <div t-attf-class="form-group col-xl-6">
+                                <label class="col-form-label required" for="date">Request Date</label>
+                                <input required="" type="date" id="resignation_date" name="request_date" t-attf-class="form-control" />
+                            </div>
+
+                            <div t-attf-class="form-group col-xl-6">
+                                <label class="col-form-label required" for="date">Last Day</label>
+                                <input required="" type="date" id="expected_revealing_date" name="expected_revealing_date" t-attf-class="form-control" />
+                            </div>
+                
+                            <div t-attf-class="form-group col-xl-6">
+                                <label class="col-form-label required" for="currency_id">Type</label>
+                                <select name="resignation_type" id="resignation_type" required="" t-attf-class="form-control">
+                                        <option value="resigned">Normal Resignation</option>
+                                        <option value="fired">Terminated by Company</option>
+                                </select>
+                            </div>
+
+                            <div t-attf-class="form-group col-xl-6">
+                                <label class="col-form-label required" for="date">Reason</label>
+                                <textarea name="reason" class="form-control" id="reason" cols="30" rows="10"></textarea>
+                            </div>
+
+                            <div class="clearfix" />
+                            <input type="hidden" name="redirect" t-att-value="redirect"/>
+                        </div>
+                        <div class="clearfix">
+                            <button type="submit" class="btn btn-primary float-right mb32 ">
+                                Submit
+                                <span class="fa fa-long-arrow-right" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </t>
+    </template>
+    </data>
+</odoo>

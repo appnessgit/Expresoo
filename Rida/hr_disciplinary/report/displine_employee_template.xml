@@ -1,0 +1,103 @@
+
+<openerp>
+    <data>
+      <template id="displine_employee_template">
+           <t t-call="web.html_container">
+            <!-- <t t-foreach="docs" t-as="o"> -->
+            <t t-call="web.internal_layout">
+                <div class="page">
+	 		      <p align="center">Employee Violation Report</p>
+				      
+							 <div>
+                    <!-- <t t-if="employee">
+                        <p><b>Employee:</b> <span t-esc="docs.employee_id.name"></span></p>
+                    </t> -->
+                </div>
+
+							 <div class="col-xs-12">
+               <div>
+                    <t t-if="date_from">
+                        <p><b>From:</b> <span t-esc="date_from"></span></p>
+                    </t>
+                </div>
+                <div>
+                      <t t-if="date_to">
+                          <p><b>To:</b> <span t-esc="date_to"></span></p>
+                      </t>
+                </div>
+              </div>
+
+					      <table class="table table-bordered" >
+<!--                     <t t-if="'confirm' in o.state" >
+ -->                   <t t-foreach="emp_list" t-as="s">
+                    <tr style="background-color:#D3D3D3">
+                        <th align="center"><b>Employee</b></th>
+                       <td><span t-esc="s.employee_id.name"/></td>
+                        <th align="center"><b>Violation</b></th>
+                        <td><span t-esc="s.violation_id.name"/></td>
+                        <th align="center"><b>Date</b></th>
+                         <td><span t-esc="s.violation_date"/></td>
+                    </tr>
+                    <br/>
+                    <tr>
+                        <td><b>Penalties</b></td>
+                        <td><b>Date</b></td>
+                        <td><b>Deduction</b></td>
+                        <td><b>State</b></td>
+                    </tr>
+                    <t t-foreach="s.line_ids" t-as="line">
+                    <!-- <t t-if="'confirm' in line.state" > -->
+                      <tr>
+                          <td><span t-esc="line.sanction_id.name" /></td>
+                          <td><span t-esc="line.date"/> </td>
+                          <td><span t-esc="line.amount"/> </td>
+                          <td><span t-esc="line.state"/></td>
+                      </tr>
+                    <!-- </t> -->
+<!--                     </t>
+ -->								    </t>
+			              </t>
+					     </table>
+						   <br></br>
+							 <br></br>
+                           <!--<p><strong>HR department Signature: . . . . . . . . . . . . . . . . . . . . . . .</strong> </p>-->
+                           <!--<p><strong>HR department Signature: . . . . . . . . . . . . . . . . . . . . . . .</strong> </p>-->
+                           <!--<p><strong>HR department Signature: . . . . . . . . . . . . . . . . . . . . . . .</strong> </p>-->
+
+                       <!--  <div class="row" style="margin-top:20px;">
+
+                            <div class="col-xs-4">
+                                   <p><strong>Employee Name</strong></p>
+                                    <br></br>
+                                    <p>....................................</p>
+                            </div>
+
+                            <div class="col-xs-4">
+                                  <p><strong>Direct Manager</strong></p>
+                                   <br></br>
+                                   <p>....................................</p>
+                            </div>
+
+
+                            <div class="col-xs-4">
+                                    <p><strong>HR Manager</strong></p>
+                                    <br></br>
+                                    <p>....................................</p>
+                            </div>
+
+
+
+                          </div>
+
+ -->
+                   </div>
+                </t>
+                </t>
+
+
+<!--                 </t>
+ -->        </template>
+    </data>
+</openerp>
+
+

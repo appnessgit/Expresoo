@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="hr_payroll_workflow_inherit_hr_payroll" model="ir.ui.view">
+    <field name="name">hr payroll extended</field>
+    <field name="model">hr.payslip</field>
+    <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//header" position="replace">
+        <header>
+          <!-- <header> -->
+          <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+
+          <button string="Submit" type="object" name="submit_draft_state" groups="hr.group_hr_user" states="draft" class="oe_highlight" />
+
+          <button string="HR Director Approve" type="object" name="director_approve_state" groups="base_rida.rida_group_hr_director" attrs="{'invisible': [('state','not in','director_approve')]}" class="oe_highlight"/>
+
+          <button string="CCSO Approve" type="object" name="ccso_approve_state" groups="base_rida.rida_group_CCSO" attrs="{'invisible': [('state','not in','ccso_approve')]}" class="oe_highlight"/>
+
+          <button string="finance Approve" name="action_payslip_done" type="object" states="verify" class="oe_highlight" context="{'payslip_generate_pdf': True}"/>
+
+          <button string="Compute Sheet" type="object" name="compute_sheet" groups="hr.group_hr_user" attrs="{'invisible': [('state','not in','draft')]}" class="oe_highlight" title="Recompute the payslip lines"/>
+
+          <button string="Refund" name="refund_sheet" states="done" type="object"/>
+
+          <button string="Set to Draft" name="action_payslip_draft" type="object" states="cancel"/>
+
+          <button string="Cancel Payslip" name="action_payslip_cancel" type="object" attrs="{'invisible': [('state','=','cancel')]}"/>
+
+          <button string="Recompute Worked Days" name="action_refresh_from_work_entries" type="object" title="Recompute the worked days lines and the payslip lines, in case you modified the work entries" attrs="{'invisible': ['|', ('state', 'not in', ['draft', 'director_approve']), ('employee_id', '=', False)]}"/>
+
+          <button string="Print" name="action_print_payslip" type="object"/>
+
+          <button string="Export Payslip" name="action_export_payslip" type="object" attrs="{'invisible': [('is_superuser', '=', False)]}"/>
+
+
+        </header>
+      </xpath>
+      <!-- <xpath expr="//field[@name='name']" position="after"> -->
+        <xpath expr="//field[@name='wage_type']" position="after">
+          <!-- Add your fields here -->
+        <field name="salary_currency"/>
+    </xpath>
+    </field>
+  </record>
+
+  <record id="hr_payroll_workflow_inherit_hr_payroll_run_form" model="ir.ui.view">
+    <field name="name">hr payroll extended</field>
+    <field name="model">hr.payslip.run</field>
+    <field name="inherit_id" ref="hr_payroll.hr_payslip_run_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//header" position="inside">
+
+        <button string="Submit" type="object" name="set_to_submit_state_batch" groups="hr.group_hr_user" states="draft" class="oe_highlight"/>
+
+        <button string="HR Director Approve" type="object" name="set_to_director_approve_state_batch" groups="base_rida.rida_group_hr_director" states="director_approve" class="oe_highlight" />
+
+        <button string="CCSO Approve" type="object" name="set_to_ccso_approve_state_batch" groups="base_rida.rida_group_CCSO" states="ccso_approve" class="oe_highlight"/>
+
+        <button string="Set to Draft" name="action_draft" type="object" states="close" invisible="1"/>
+      </xpath>
+
+      <xpath expr="//field[@name='state']" position="replace">
+        <field name="state" widget="statusbar" statusbar_visible = "draft,close"/>
+      </xpath>
+      <xpath expr="//field[@name='credit_note']" position="after">
+        <field name="currency_id" />
+        <field name="structure_id" />
+      </xpath>
+
+    </field>
+
+  </record>
+
+
+
+  <record id="hr_payroll.hr_payslip_action_view_to_pay" model="ir.actions.act_window">
+    <field name="domain">[('state', 'in', ['draft', 'verify','director_approve','ccso_approve','close'])]</field>
+  </record>
+
+
+
+  <!-- Contract Form Inherit -->
+  <record id="inherited_contract_view_id" model="ir.ui.view">
+    <field name="name">contract.currency.inherit.view.form</field>
+    <field name="model">hr.contract</field>
+    <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+    <field name="arch" type="xml">
+      <!-- Add your xpath here -->
+      <xpath expr="//field[@name='name']" position="after">
+        <!-- Add your fields here -->
+        <field name="salary_currency"/>
+      </xpath>
+    </field>
+  </record>
+
+</odoo>

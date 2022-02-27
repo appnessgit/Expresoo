@@ -1,0 +1,34 @@
+<odoo>
+    <data>
+
+    <record model="ir.ui.view" id="view_hr_eos_custody_form">
+        <field name="name">hr.end.service.form</field>
+        <field name="model">hr.end.service</field>
+        <field name="inherit_id" ref="hr_eos_main.view_hr_eos_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='overtime']" position="after">
+                <page name="custodies" string="Custodies">
+                    <group>
+                        <group col="2" colspan="2">
+                            <field name="total_custodies" class="oe_subtotal_footer_separator"/>
+                        </group>
+                    </group>
+                    <group >
+                        <field name="custody_ids" colspan="4" nolabel="1" attrs="{'readonly':[('state','in',('confirm','post'))]}">
+                            <tree string="Custodies" editable="bottom">
+                                <field name="name" readonly="1"/>
+                                <field name="date" readonly="1"/>
+                                <field name="state"/>
+                                <field name="clear_date"/> 
+                                <field name="amount"/>
+                            </tree>
+                        </field>    
+                    </group>
+                    <!-- <button type="object" name="_get_custody" string="Compute" icon="fa-gears" colspan="2"/> -->
+                </page>
+            </xpath>
+        </field>
+    </record>        
+
+    </data>
+</odoo>

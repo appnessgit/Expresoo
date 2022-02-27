@@ -1,0 +1,199 @@
+<odoo>
+    <data>
+        <template id="portal_my_home_menu_salary_advance" name="Portal layout : salary_advance menu entries" inherit_id="portal.portal_breadcrumbs" priority="25">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+          <li t-if="page_name == 'salary_advance' or salary_advance" t-attf-class="breadcrumb-item #{'active ' if not salary_advance else ''}">
+            <a t-if="salary_advance or salary_advance_name" t-attf-href="/my/salary_advance?{{ keep_query() }}">Salary Advance</a>
+            <t t-else="">Salary Advance</t>
+          </li>
+          <li t-if="salary_advance" class="breadcrumb-item active">
+            <t t-esc="salary_advance.name"/>
+          </li>
+        </xpath>
+      </template>
+
+        <template id="portal_my_home_salary_advance" name="Portal Home : salary_advance entry" inherit_id="portal.portal_my_home" priority="25">
+            <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+                <t t-if="employee_id" t-call="portal.portal_docs_entry">
+                    <t t-set="title">Salary Advance</t>
+                    <t t-set="url" t-value="'/my/salary_advance'"/>
+                    <t t-set="count" t-value="salary_advance_count"/>
+                </t>
+            </xpath>
+      </template>
+
+        <template id="portal_my_home_salary_advances_icon" name="Portal Tray : salary_advance entry" inherit_id="hr_portal.dashboard_icons" priority="25">
+            <xpath expr="//div[@id='icons']" position="inside">
+                <div class="col-sm-2 col-md-2">
+                  <div class="circle-tile ">
+                    <a href="/my/salary_advance"><div class="circle-tile-heading dark-blue" style="background: #e08356;"><i class="fa fa-money fa-fw fa-2x"></i></div></a>
+                    <div class="circle-tile-content dark-blue" style="background: #e08356;">
+                      <div class="circle-tile-description text-faded"> Salary Advance</div>
+                      <div class="circle-tile-number text-faded "><span t-esc="request.env['salary.advance'].search_count([('employee_id', '=', request.env.user.employee_ids[0].id)])"></span></div>
+                      <a class="circle-tile-footer" href="/my/salary_advance">Show <i class="fa fa-chevron-circle-right"></i></a>
+                    </div>
+                  </div>
+                </div>
+            </xpath>
+        </template>
+
+
+<!--    salary_advances List-->
+        <template id="portal_my_salary_advances" name="salary_advances">
+        <t t-call="portal.portal_layout">
+          <t t-call="portal.portal_searchbar">
+            <t t-set="title">Salary Advance</t>
+          </t>
+           <t t-if="employee_id" >
+               <div class="row">
+                <div class="col-lg-12">
+                  <div t-if="error_message" class="alert alert-danger" role="alert">
+                      <t t-foreach="error_message" t-as="err"><t t-esc="err"/><br /></t>
+                  </div>
+                </div>
+            </div>
+               <style>
+                   .action-button {
+                        padding: 0 5px;
+                    }
+               </style>
+               <t t-call="hr_salary_advance_portal.portal_create_salary_advances"/>
+               <t t-if="salary_advances" t-call="portal.portal_table">
+                <thead>
+                  <tr class="active">
+                        <th>Reference</th>
+                        <th>Date</th>
+                        <th>Advance</th>
+                        <th>Reason</th>
+                        <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <t t-foreach="salary_advances" t-as="salary_advance">
+                    <tr>
+                        <td><a t-attf-href="/my/salary_advance/#{salary_advance.id}"><span t-esc="salary_advance.name"/></a></td>
+                        <td><span t-field="salary_advance.date"  t-options='{"widget": "date"}'/></td>
+                      <td><span t-field="salary_advance.advance"/></td>
+                      <td><span t-field="salary_advance.reason"/></td>
+                      <td>
+                          <span class="badge badge-info" t-field="salary_advance.state"/>
+                      </td>
+                    </tr>
+                  </t>
+                </tbody>
+          </t>
+           </t>
+        </t>
+      </template>
+
+<!--        Create Button-->
+        <template id="portal_create_salary_advances" name="Portal: Create salary_advance">
+            <a href="/my/salary_advance/edit" class="btn btn-primary" style="margin-bottom: 10px;color: #fff;background-color: #00A09D; border-color: #00A09D;border-radius: 0;">New Request</a>
+            <br/>
+        </template>
+
+<!--        Single salary_advance-->
+        <template id="portal_my_salary_advance" name="salary_advance">
+        <t t-call="portal.portal_layout">
+          <t t-set="salary_advance" t-value="salary_advance"/>
+          <div id="optional_placeholder"></div>
+          <div class="container">
+              <div class="card">
+                <div class="card-header">
+                  <div class="row no-gutters">
+                        <div class="col-md text-md-right">
+                            <small class="text-right">Status:</small>
+                            <span t-field="salary_advance.state" class=" badge badge-pill badge-info" title="Current stage of this salary_advance"/>
+                        </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                    <style>
+                        .table th, .table td {
+                            border-top: 0 !important;
+                        }
+                    </style>
+                    <table class="table table-condensed">
+                        <tbody>
+                            <tr>
+                                <td><strong>Reference</strong></td>
+                                <td><span t-field="salary_advance.name"></span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Date</strong></td>
+                                <td><span t-field="salary_advance.date" t-options='{"widget": "date"}'></span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Advance</strong></td>
+                                <td><span t-field="salary_advance.advance"></span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Reason</strong></td>
+                                <td><span t-field="salary_advance.reason"></span></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <div id="hr_salary_advance_communication" class="mt-4">
+                        <h2>Communication</h2>
+                        <t t-call="portal.message_thread">
+                            <t t-set="object" t-value="salary_advance"/>
+                        </t>
+                    </div>
+                </div>
+              </div>
+
+          </div>
+          <div class="oe_structure mb32"/>
+        </t>
+      </template>
+
+        <!--Edit salary_advance-->
+        <template id="edit_salary_advance_details">
+        <t t-call="portal.portal_layout">
+            <t t-set="additional_title">Edit Salary Advance Details</t>
+            <form action="/my/salary_advance/edit" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <div class="row o_portal_details">
+                    <div class="col-lg-8">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <br/>
+                              <div t-if="error_message" class="alert alert-danger" role="alert">
+                                  <ul>
+                                      <t t-foreach="error_message" t-as="err"><li><t t-esc="err"/></li></t>
+                                  </ul>
+                              </div>
+                            </div>
+
+                            <div t-attf-class="form-group col-xl-6">
+                                <label class="col-form-label required" for="date">Date</label>
+                                <input required="" type="date" id="salary_advance_date" name="date" t-attf-class="form-control" />
+                            </div>
+
+                            <div t-attf-class="form-group col-xl-6">
+                                <label class="col-form-label required" for="date">Advance</label>
+                                <input required="" type="number" id="advance" name="advance" t-attf-class="form-control" />
+                            </div>
+
+                            <div t-attf-class="form-group col-xl-6">
+                                <label class="col-form-label required" for="date">Reason</label>
+                                <textarea name="reason" class="form-control" id="reason" cols="30" rows="10"></textarea>
+                            </div>
+
+                            <div class="clearfix" />
+                            <input type="hidden" name="redirect" t-att-value="redirect"/>
+                        </div>
+                        <div class="clearfix">
+                            <button type="submit" class="btn btn-primary float-right mb32 ">
+                                Submit
+                                <span class="fa fa-long-arrow-right" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </t>
+    </template>
+    </data>
+</odoo>

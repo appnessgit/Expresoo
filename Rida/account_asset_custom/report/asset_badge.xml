@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="asset_print_badge" model="ir.actions.report">
+        <field name="name">Print Badge</field>
+        <field name="model">account.asset</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">account_asset_custom.print_asset_badge</field>
+        <field name="report_file">account_custom.print_asset_badge</field>
+        <field name="print_report_name">'Print Badge - %s' % (object.name).replace('/', '')</field>
+        <field name="binding_model_id" ref="account_asset_custom.model_account_asset"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="print_asset_badge">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <t t-foreach="docs" t-as="asset">
+                    <div class="col-md-6">
+                        <table style="width:243pt; height:153pt; border: 1pt solid black; border-collapse:separate; border-radius:8pt; margin:5pt">
+                            <td style="width:33%;" valign="center">
+                                <table style="width:77pt; height:150pt">
+                                    <tr class="text-center">
+                                        <th class="mb32">Name:</th>
+                                    </tr>
+                                    <tr class="text-center">
+                                        <th>Code:</th>
+                                    </tr>
+                                    <tr class="text-center">
+                                        <th class="mb32">Location:</th>
+                                    </tr>
+                                        
+                                </table>
+                            </td>
+                            <td style="width:67%;" valign="center">
+                                <table style="width:77pt; height:150pt">
+                                    <tr><th><t t-esc="asset.name"/></th></tr>
+                                    <tr><th><t t-esc="asset.code"/></th></tr>
+                                    <tr><th><t t-esc="asset.asset_location.name"/></th></tr>
+                                </table>
+                            </td>
+                        </table>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="budget_hr_department_inherit_form" model="ir.ui.view">
+	        <field name="name">Department Inherit</field>
+	        <field name="model">hr.department</field>
+	        <field name="inherit_id" ref="hr.view_department_form"/>
+	        <field name="arch" type="xml">
+	        			<!-- Department Form - adding new fields -->
+	          		<!-- Change name label on form according to type -->
+	          	<xpath expr="//form/sheet/group[1]" position="replace">
+	          		<group>
+	          			<group>
+		        			<field name="dep_type" invisible="1"/>
+					            <div class="o_form_label">
+					                <label for="name" string="Department" attrs="{'invisible': [('dep_type', '!=', 'department')]}" style="font-weight:bold;"/>
+					                <label for="name" string="Section" attrs="{'invisible': [('dep_type', '!=', 'section')]}" style="font-weight:bold;"/>
+					                <label for="name" string="Business Unit" attrs="{'invisible': [('dep_type', '!=', 'business_unit')]}" style="font-weight:bold;"/>
+					            </div>
+					        <field name="name" nolabel="1"/>
+
+                            <!-- <field name="field_hq" /> -->
+                            <field name="manager_id" attrs="{'invisible':[('dep_type','!=','department')]}"/>
+                            <field name="analytic_account_id" string="Cost Center" groups="base.group_user"/>
+                            <field name="general_budget_id" invisible="1" groups="base.group_user"/>
+                            <field name="virtual_dep" attrs="{'invisible': [('dep_type', '!=', 'business_unit')]}"/>
+                            <field name="cont_budget_only" attrs="{'invisible': [('dep_type', '!=', 'business_unit')]}"/>
+                            <field name="section_head" attrs="{'invisible':[('dep_type','!=','section')]}"/>
+                            <field name="rig_manager" attrs="{'invisible':[('dep_type','!=','business_unit')]}"/>
+                            <field name="dep_type" invisible="1"/>
+          					<!-- <field name="location_id"/> -->
+		                </group>
+                        <group>
+                            <field name="parent_id" options="{'no_quick_create': True, 'no_create_edit' : True}" attrs="{'invisible':[('dep_type','not in',['section','department'])]}"/>
+                            <field name="section_parent_id" options="{'no_quick_create': True, 'no_create_edit' : True}" attrs="{'invisible':[('dep_type','!=','business_unit')]}"/>
+                            <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+	          	</xpath>
+				  
+	      	</field>
+		</record>
+
+        <!-- <record model="ir.ui.view" id="view_department_form_inherit">
+            <field name="name">hr.department.form.inherit</field>
+            <field name="model">hr.department</field>
+            <field name="inherit_id" ref="appness_custom_budget.nus_hr_department_inherit_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='manager_id']" position="after">
+                    <field name="analytic_account_id" string="Cost Center" groups="base.group_user"/>
+                    <field name="general_budget_id" invisible="1" groups="base.group_user"/>
+                    <field name="virtual_dep" attrs="{'invisible': [('dep_type', '!=', 'business_unit')]}"/>
+                    <field name="cont_budget_only" attrs="{'invisible': [('dep_type', '!=', 'business_unit')]}"/>
+                </xpath>
+            </field>
+        </record> -->
+    </data>
+</odoo>

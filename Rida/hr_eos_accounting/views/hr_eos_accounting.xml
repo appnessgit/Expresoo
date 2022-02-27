@@ -1,0 +1,81 @@
+<odoo>
+    <data>
+
+    <record model="ir.ui.view" id="view_hr_eos_accounting_form">
+        <field name="name">hr.end.service.form</field>
+        <field name="model">hr.end.service</field>
+        <field name="inherit_id" ref="hr_eos_main.view_hr_eos_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='create_payslip_button']" position="after">
+                <button name="action_fin2_approve" type="object" string="Confirm" states="fin2" groups="account.group_account_manager" class="btn-primary"/>
+                <button name="action_fin2_reject" type="object" string="Reject" states="fin2" groups="account.group_account_manager" />
+
+                <button name="action_paid" type="object" string="Payment" states="confirm" groups="account.group_account_manager" class="btn-primary"/>
+            </xpath>
+            
+
+            <xpath expr="//field[@name='total_amount']" position="after">
+                <field name="credit_acc" attrs="{'invisible':[('state','not in',('fin2','confirm','post'))],'readonly':[('state','not in',('fin2'))]}"/>
+                <field name="journal_id" attrs="{'invisible':[('state','not in',('fin2','confirm','post'))],'readonly':[('state','not in',('fin2'))]}"/>
+                <field name= "journal_entries" attrs="{'invisible':[('state','not in',('fin2','confirm','post'))]}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='leaves_amount']" position="after">
+                <field name="leave_sett_acc" attrs="{'invisible':[('state','not in',('fin2','confirm','post'))],'readonly':[('state','not in',('fin2'))]}"/>
+            </xpath>
+
+            <xpath expr="//group[@name='gross_allowance_group']" position="after">
+                <group>
+                    <field name="arbitrary_dismissal_acc" attrs="{'invisible':[('state','not in',('fin2','confirm','post'))],'readonly':[('state','not in',('fin2'))]}"/>
+                </group>
+            </xpath>
+
+            <xpath expr="//group[@name='benfit']" position="after">
+                <group>
+                    <field name="benfit_acc" attrs="{'invisible':[('state','not in',('fin2','confirm','post'))],'readonly':[('state','not in',('fin2'))]}" />
+                </group>
+            </xpath>
+
+
+            <xpath expr="//field[@name='other_allowances_ids']" position="replace">
+                <field name="other_allowances_ids" colspan="4" nolabel="1" attrs="{'readonly':[('state','in',('confirm','post'))]}">
+                    <tree string="Other Allowances" editable="bottom">
+                        <field name="allowance_name" />
+                        <field name="account_id"/>
+                        <field name="amount" />
+                    </tree>
+                </field>    
+            </xpath>
+
+            <xpath expr="//field[@name='other_deductions_ids']" position="replace">
+                <field name="other_deductions_ids" colspan="4" nolabel="1" attrs="{'readonly':[('state','in',('confirm','post'))]}">
+                    <tree string="Other Deductions" editable="bottom">
+                        <field name="deduction_name"/>
+                        <field name="account_id" />
+                        <field name="amount"/>
+                    </tree>
+                </field>
+            </xpath>
+
+            <xpath expr="//page[@name='deductions']" position="after">
+                <page string="Payment" attrs="{'invisible':[('state','not in',('confirm','post'))]}">
+                    <group>
+                        <group>
+                            <field name= "payment_method" domain="[('type', 'in', ['cash','bank'])]" attrs="{'invisible':[('state','not in',('confirm','post'))]}"/>
+                            <field name= "payment_date" attrs="{'invisible':[('state','not in',('confirm','post'))]}"/>
+                            <field name= "payment_entries" attrs="{'invisible':[('state','not in',('confirm','post'))]}"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+            
+        </field>
+    </record>        
+
+    <menuitem name="EOS To Approve"
+                parent="hr_eos_main.menu_hr_eos_root"
+                id="hr_eos_main.menu_hr_eos_approval" sequence="2" action="hr_eos_main.action_hr_eos_approval" 
+                groups="hr.group_hr_user,account.group_account_user,account.group_account_manager"/>
+                
+    </data>
+</odoo>

@@ -1,0 +1,59 @@
+<odoo>
+	<data>
+
+		<record model="ir.module.category" id="budget_category">
+			<field name="name">Budget</field>
+			<field name="sequence">12</field>
+		</record>
+
+
+
+		<!-- Department User -->
+	    <record id="group_budget_department_user" model="res.groups">
+	        <field name="name">Department User</field>
+	        <field name="category_id" ref="budget_category"/>
+	        <field name="implied_ids" eval="[(3, ref('account.group_account_invoice')), (4, ref('account.group_account_manager'))]"/>
+	    </record>
+
+	    	<!-- Section Head -->
+	    <record id="group_budget_department_section_head" model="res.groups">
+	        <field name="name">Section Head</field>
+	        <field name="category_id" ref="budget_category"/>
+	        <field name="implied_ids" eval="[(3, ref('appness_custom_budget.group_budget_department_user'))]"/>
+	    </record>
+
+	    <!-- Business Development -->
+	    <!-- <record id="group_budget_bd" model="res.groups">
+	        <field name="name">Business Develeopment</field>
+	        <field name="category_id" ref="budget_category"/>
+	        <field name="implied_ids" eval="[(3, ref('appness_custom_budget.group_budget_department_user'))]"/>
+	    </record> -->
+
+		<!-- Department Manager -->
+	    <record id="group_budget_department_manager" model="res.groups">
+	        <field name="name">Department Manager</field>
+	        <field name="category_id" ref="budget_category"/>
+	        <field name="implied_ids" eval="[(3, ref('appness_custom_budget.group_budget_department_user'))]"/>
+	    </record>
+		
+		<!-- Managing Director -->
+	   <!--  <record id="group_budget_md" model="res.groups">
+	        <field name="name">Managing Director</field>
+	        <field name="category_id" ref="budget_category"/>
+	    </record>
+ -->
+		<!-- Management Committe -->
+	    <record id="group_budget_mc" model="res.groups">
+	        <field name="name">Management Committe</field>
+	        <field name="category_id" ref="budget_category"/>
+	    </record>
+
+		<!-- Board of Directors -->
+	    <record id="group_budget_bod" model="res.groups">
+	        <field name="name">Board of Directors</field>
+	        <field name="category_id" ref="budget_category"/>
+	    </record>
+	
+
+	</data>
+</odoo>

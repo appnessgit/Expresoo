@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <data>
+      <!-- Inherit Form View to Modify it -->
+      <record id="hr_expense_sheet_view_form_inherit" model="ir.ui.view">
+         <field name="name">hr.expense.sheet.view.form.inherit</field>
+         <field name="model">hr.expense.sheet</field>
+         <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form"/>
+         <field name="arch" type="xml">
+            <xpath expr="//form/header" position="replace">
+               <header>
+                  <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                  <!-- draft state buttons for internal users-->
+                  <button string="Submit" name="submit" groups = "base.group_user" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}"></button>
+                  <!-- confirm state buttons for internal users-->
+                  <button string="Submit" name="submit" groups = "base.group_user" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'confirm')]}"></button>
+                  <button string="Cancel" name="cancel" groups = "base.group_user" type="object" attrs="{'invisible': [('state', '!=', 'confirm')]}"></button>
+                  <!-- line manager approval state buttons for lm-->
+                  <button string="Approve" name="lm_approve" groups = "base_rida.rida_group_line_manager" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'lm')]}"></button>
+                  <button string="Cancel" name="lm_approve_reject" groups = "base_rida.rida_group_line_manager" type="object" attrs="{'invisible': [('state', '!=', 'lm')]}"></button>
+                  <!-- hr officer state buttons for hr officer-->
+                  <button string="HR officer Approve" name="hr_approve" groups = "hr.group_hr_user" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'hr_officer')]}"></button>
+                  <button string="Cancel" name="hr_approve_reject" groups = "hr.group_hr_user" type="object" attrs="{'invisible': [('state', '!=', 'hr_officer')]}"></button>
+                  <!-- ccso approval buttons for ccso-->
+                  <button string="CCSO Approve" name="ccso_approve" groups = "base_rida.rida_group_CCSO" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'ccso')]}"></button>
+                  <button string="Cancel" name="ccso_approve_reject" groups = "base_rida.rida_group_CCSO" type="object" attrs="{'invisible': [('state', '!=', 'ccso')]}"></button>
+                  <!-- accountant approval buttons for accountant-->
+                  <button string="Paid" name="accountant_approve" groups = "account.group_account_user" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'accountant')]}"></button>
+                  <button string="Cancel" name="accountant_approve_reject" groups = "account.group_account_user" type="object" attrs="{'invisible': [('state', '!=', 'accountant')]}"></button>
+                  <!-- approve cancel buttons for hr manager-->
+                  <button string="Cancel" name="cancel" groups = "hr.group_hr_manager" type="object" attrs="{'invisible': [('state', '!=', 'done')]}"></button>
+                  <button string="Set TO Draft" name="set_to_draft" groups = "hr.group_hr_manager" type="object" attrs="{'invisible': [('state', '!=', 'cancel')]}"></button>
+               </header>
+            </xpath>
+         </field>
+      </record>
+   </data>
+</odoo>

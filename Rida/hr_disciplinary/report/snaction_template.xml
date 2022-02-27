@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <template id="snaction_report">
+           <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                       <div class="oe_structure"/>
+                       <div class="page-header"/>
+                       <t t-foreach="docs" t-as="o">
+                        <div class="col-xs-12 text-center">
+                        <p class="lead"><strong>EMPLOYEE DISCIPLINARY NOTICE</strong>
+                         </p>
+          
+                        </div>
+                           <!-- <table class="table table-bordered">
+                                <header>
+                                  <tr class="text-center col-xs-12"> <td>Employee Information</td>
+                              </tr>
+                                </header>
+                           </table> -->
+                        <div class="col-xs-12 text-center">
+                            <p><strong>Employee Information</strong>
+                          </p>
+        
+                        </div>               
+                      <table class="table table-bordered">
+                                <tr>
+                                     <th align="right"><b> Name:</b></th>
+                                     <td><span t-esc="o.employee_id.name"></span></td>
+                                     <th align="right"><b> Date:</b></th>
+                                     <td><span t-esc="o.violation_date"></span></td>
+                                </tr>
+                                <tr>
+				                        <th align="right"><b>Employee ID:</b></th>
+                                    <td><span t-esc="o.employee_id.emp_code"></span></td>
+                                <th align="right"><b>Job Title:</b></th>
+                                    <td><span t-esc="o.employee_id.job_id.name"></span></td>
+                                </tr>
+                                <tr>
+                                    <th align="right"><b>Department:</b></th>
+                                    <td><span t-esc="o.employee_id.department_id.name"></span></td>
+                                      <th align="right"></th>
+                                    <!-- <td></td> -->
+                                </tr>
+                                
+                                
+                           </table>
+                           <table class="table table-bordered">
+                             <tr>
+                               <td><strong><span>Type of Deciplinary:  </span></strong><spans t-esc="o.violation_type"/></td>
+                               <td><strong><span>Type of Violation:  </span></strong><spans t-esc="o.violation_id.name"/></td>
+                             </tr>
+
+                           </table>
+
+
+                           <br></br>
+                          <div class="col-xs-12 text-center">
+                            <p><strong>Details</strong>
+                          </p>
+        
+                        </div>   
+                        <table class="table table-bordered">
+                          <tr>
+                            <th style="width:40%"><b>Discription of Violation</b></th>
+                            <td><span t-esc="o.note"/></td>
+                          </tr>
+                          <tr>
+                            <th><b>Plan for Improvement:</b></th>
+                            <td><span t-esc="o.improve"/></td>
+                          </tr>
+                          <tr>
+                            <th><b>Consequences of Further Infractions::</b></th>
+                            <td><span t-esc="o.conseq"/></td>
+                          </tr>
+                          <tr>
+                            <th><b>Violation Deduction:</b></th>
+                            <td>
+                              <t t-set="amount" t-value="0"/>
+                              <t t-foreach="o.line_ids" t-as="line">
+                              <t t-set="amount" t-value="amount+line.amount"/>
+                              </t>
+                              <t t-esc="amount"/>
+                          </td>
+                          </tr>
+                        </table>
+                        <br/>
+                         <div class="col-xs-12 text-center">
+                            <p><strong>Acknowledgement of Receipt of Warning</strong>
+                          </p>
+                         </div> 
+                          <br/>
+                          <p>By signing this form, you confirm that you understand the information in this warning. You also confirm that you and your manager have discussed the warning and a plan for improvement</p>
+                          <table class="table">
+                            <tr>
+                              <th>Employee Signature :</th>
+                              <td></td> 
+                              <th>Date</th>
+                              <td></td> 
+                            </tr>
+                            <tr>
+                              <th>HR-In charge Signature:</th>
+                              <td></td> 
+                              <th>Date</th>
+                              <td></td> 
+                            </tr>
+                            <tr>
+                              <th>HR Director Signature:</th>
+                              <td></td> 
+                               <th>Date</th>
+                              <td></td> 
+                            </tr>
+                          </table>
+                        <!--     <t t-foreach ="docs" t-as="o">
+
+                               <tr>
+
+                                    <td align="right"><b> Violation:</b></td>
+
+                                    <td><span t-esc="o.violation_id.name"/></td>
+                               </tr>
+                            </t>
+
+                             <br></br>
+                           <br></br>
+
+                           <p class="lead"><strong>Violation Informations:</strong></p>
+                           <table class="table table-bordered">
+                               <tr>
+                                   <td><strong>Penalty</strong></td>
+                                   <td><strong>Date</strong></td>
+                                   <td><strong>Deduction</strong></td>
+                                   <td><strong>State</strong></td>
+                               </tr>
+                                <t t-foreach="o.line_ids" t-as="line">
+                                    <t t-if="line.printed">
+                                    <tr>
+                                        <td><span t-esc="line.sanction_id.name"/></td>
+                                        <td><span t-esc="line.date"/> </td>
+                                        <td><span t-esc="line.amount"/> </td>
+                                        <td><span t-esc="line.state"/></td>
+                                    </tr>
+                                         </t>
+                                </t>
+                           </table>
+                           <p class="lead"><strong>note: </strong><span t-esc="o.note"/></p>
+
+                           <br>
+                           </br> -->
+                       </t>
+                   </div>
+                </t>
+            </t>
+            </t>
+        </template>
+
+
+    </data>
+</openerp>

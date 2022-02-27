@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <template id="certificate_service_report_view">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="article">
+                        <div class="header">
+                            <div class = "text-center">
+                                <table class="table-bordered" style="width: 100%; hight:300px">
+                                    <colgroup>
+                                        <col style="width: 251px"/>
+                                        <col style="width: 170px"/>
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <div>
+                                                <th rowspan="5" style="width: 30%;">
+                                                    <img t-if="docs.company_id.logo" t-att-src="image_data_uri(docs.company_id.logo)" style="max-height: 45px; " alt="logo"/>
+                                                </th>
+                                                <th>
+                                                    <tr>
+                                                        <div>
+                                                            <td>EMPLOYEE SERVICE PROCEDURE</td>
+                                                        </div>
+                                                    </tr>
+                                                    <tr>
+                                                        <div>
+                                                            <td>HUMAN RESOURCES QUALITY PROCEDURE</td>
+                                                        </div>
+                                                    </tr>
+                                                </th>
+
+                                            </div>
+
+                                        </tr>
+
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+
+                        <center>
+
+                            <h5>
+                                <b> Certificate Of Service </b>
+                            </h5>
+                        </center>
+                        <div style='direction:rtl; margin-top: 40px; font-size:12; font-family: Arial, Helvetica, sans-serif;'>
+                            <p style='text-align:justify; text-justify:trim;'>
+                                <h5> Date:  <span t-esc="datetime.datetime.now().strftime('%Y-%m-%d')"></span>
+                                </h5>
+
+                            </p>
+                        </div>
+                        <div style='direction:ltr; margin-top: 40px; font-size:12; font-family: Arial, Helvetica, sans-serif;'>
+                            <p style='text-align:justify; text-justify:trim;'>
+                                <h5> Dear Sir/Madame</h5>
+                            </p>
+                        </div>
+                        <center>
+                            <h4>
+                                <u>
+                                    <b>Subject:</b> Service Certificate </u>
+                            </h4>
+                        </center>
+                        <div style='direction:ltr; margin-top: 40px; font-size:12; font-family: Arial, Helvetica, sans-serif;'>
+                            <p style='text-align:justify; text-justify:trim;'>
+
+                                <h5> This is to certify that Mr./Miss  <strong>
+                                    <span t-esc="doc.employee_id.name"></span>
+                                </strong> has been employed with <b> RIDA MINING COMPANY </b> -SUDAN as a  <strong>
+                                <span t-esc="doc.employee_id.job_id.name"></span>
+                            </strong> in the period from <span t-esc="doc.employee_id.contract_ids.date_start"></span> up to <span t-esc="doc.employee_id.contract_ids.date_end"></span>
+                        </h5>
+                        <br/>
+                        <br/>
+                        <h5> We wish him every success in his future. </h5>
+                        <br/>
+
+                        <h5> This certificate is being issued upon his request for whatever purpose it may serve. </h5>
+                        <br/>
+
+                    </p>
+                </div>
+                <p style="text-align:right;">
+                
+                        <b style='text-align:right;'>HR Manager Signature: </b>
+                        <br/>
+                        __________________________
+
+                </p>
+                <!-- <div style='text-align:left;'>
+                    <p style="text-align:left;">
+                        <h5>
+                            <b style='text-align:left;'>HR Manager Signature: </b>__________________________</h5>
+
+                    </p>
+
+                </div> -->
+            </div>
+         
+        </t>
+    </t>
+</template>
+</data>
+</odoo>

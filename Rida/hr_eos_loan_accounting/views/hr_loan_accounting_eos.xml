@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+
+    <record model="ir.ui.view" id="view_hr_eos_loan_form2">
+        <field name="name">hr.end.service.form</field>
+        <field name="model">hr.end.service</field>
+        <field name="inherit_id" ref="hr_eos_loan.view_hr_eos_loan_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='loan']" position="after">
+                <group>
+                    <field name="loan_acc" style="width:30%;" attrs="{'invisible':[('state','not in',('fin2','confirm','post'))],'readonly':[('state','not in',('fin2'))]}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>        
+
+    </data>
+</odoo>

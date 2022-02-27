@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="view_salary_advance_form_inherit" model="ir.ui.view">
+            <field name="name">view.salary.advance.form_inherit</field>
+            <field name="model">salary.advance</field>
+            <field name="inherit_id" ref="hr_salary_advance.view_salary_advance_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="replace">
+                    <header>
+                        <button name="action_submit" string="Submit" type="object" states="draft" class="oe_highlight" groups="hr.group_hr_user" />
+
+                        <button name="action_hr_manager" string="HR Manager Approve" type="object" states="hr_manager" class="oe_highlight" groups="hr.group_hr_manager"/>
+                        <button name="reject" string="Reject" type="object" states="hr_manager" groups="hr.group_hr_manager"/>
+
+                        <button name="approve_request_acc_dept" string="Finance Approve" type="object" states="finance" class="oe_highlight" groups="account.group_account_user"/>
+                        <button name="reject" string="Reject" type="object" states="finance" groups="hr.group_hr_manager,account.group_account_user"/>
+
+                        <button name="cancel" string="Cancel" type="object" states="draft" groups="hr.group_hr_manager"/>
+                        <button name="set_draft" string="Set To Draft" type="object" states="cancel,reject" groups="hr.group_hr_manager"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,hr_manager,finance,approve"/>
+                    </header>
+                </xpath>
+
+                <xpath expr="//group[@name='adv_info']" position="after">
+                    <!-- Add your fields or attributes here -->
+                    <group>
+
+                        <field name="credit"  attrs="{'invisible':[('state','not in',['finance','approve'])],'readonly':[('state','in',['approve','cancel','reject'])]}" groups="account.group_account_user"/>
+                        <field name="debit" attrs="{'invisible':[('state','not in',['finance','approve'])],'readonly':[('state','in',['approve','cancel','reject'])]}" groups="account.group_account_user"/>
+                        <field name="journal" attrs="{'invisible':[('state','not in',['finance','approve'])],'readonly':[('state','in',['approve','cancel','reject'])]}" groups="account.group_account_user"/>
+                        <field name="move_id" attrs="{'invisible':[('state','not in',['finance','approve'])],'readonly':[('state','in',['approve','finance','cancel','reject'])]}" groups="account.group_account_user"/>
+
+                    </group>
+                </xpath>
+
+            </field>
+        </record>
+
+
+         <record id="view_salary_advance_filter_inherit" model="ir.ui.view">
+              <field name="name">view.salary.advance.filter.inherit</field>
+              <field name="model">salary.advance</field>
+              <field name="inherit_id" ref="hr_salary_advance.view_salary_advance_filter"/>
+              <field name="arch" type="xml">
+                    <xpath expr="//filter[@name='submitted']" position="replace">
+                        <filter domain="[('state','in',['hr_officer','hr_manager','ceo','finance'])]" string="To Approve" name="submitted" help="Submitted Requests"/>
+                    </xpath>
+              </field>
+         </record>
+
+
+        <menuitem id="hr_salary_advance.menu_salary_advance" action="hr_salary_advance.action_salary_advance_to_approve" parent="hr_salary_advance.parent_menu_salary_advance" name="Salary Advance To Approve" sequence="3" groups="hr.group_hr_manager,hr.group_hr_user,account.group_account_user"/>
+
+    </data>
+</odoo>

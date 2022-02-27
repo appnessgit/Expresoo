@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_employee_appraisal_user,appraisal.user,model_employee_appraisal,,1,1,1,1
+
+

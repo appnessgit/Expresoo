@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<!-- <template id="website_assets" name="Self Service Assets" inherit_id="web.assets_frontend"> -->
+   	 <!-- <template id="assets_frontend" name="Self Service Assets" inherit_id="web.assets_frontend">
+		<xpath expr="." position="inside">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.full.min.js"></script>
+
+			<link href='/hr_portal/static/src/packages/core/main.css' rel='stylesheet' />
+			<link href='/hr_portal/static/src/packages/daygrid/main.css' rel='stylesheet' />
+			<link href='/hr_portal/static/src/packages/timegrid/main.css' rel='stylesheet' />
+			<link href='/hr_portal/static/src/packages/list/main.css' rel='stylesheet' />
+			<script src='/hr_portal/static/src/packages/core/main.js'></script>
+			<script src='/hr_portal/static/src/packages/interaction/main.js'></script>
+			<script src='/hr_portal/static/src/packages/daygrid/main.js'></script>
+			<script src='/hr_portal/static/src/packages/timegrid/main.js'></script>
+			<script src='/hr_portal/static/src/packages/list/main.js'></script>
+
+            <script type="text/javascript" src="/hr_portal/static/src/js/scripts.js"></script>
+			<link rel="stylesheet" type="text/css" href="/hr_portal/static/src/css/style.css" />
+   	 	</xpath>
+    </template> -->
+</odoo>

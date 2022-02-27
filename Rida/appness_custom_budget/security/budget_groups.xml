@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.module.category" id="nus_groups_category">
+            <field name="name">NUS Groups</field>
+        </record>
+
+        <record id="group_md" model="res.groups">
+            <field name="name">Managing Director</field>
+            <field name="category_id" ref="appness_custom_budget.nus_groups_category"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+        <record id="group_department_manager" model="res.groups">
+            <field name="name">Department Manager</field>
+            <field name="category_id" ref="appness_custom_budget.nus_groups_category"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+
+        </record>
+        <record id="group_bd" model="res.groups">
+            <field name="name">Business Development</field>
+            <field name="category_id" ref="appness_custom_budget.nus_groups_category"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+
+        </record>
+        <record id="group_accounting_dep_manager" model="res.groups">
+           <field name="name">Finance Manager</field>
+           <field name="category_id" ref="base.module_category_accounting_accounting"/>
+           <field name="implied_ids" eval="[(3, ref('account.group_account_invoice')), (4, ref('account.group_account_manager'))]"/>
+           <field name="users" eval="[(4, ref('base.user_root'))]"/>
+
+       </record>
+        <!-- <record id="group_allowances" model="res.groups">
+            <field name="name">Conditional Allowances</field>
+            <field name="category_id" ref="appness_custom_budget.nus_groups_category"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record> -->
+
+        <!-- <record id="group_hse" model="res.groups">
+            <field name="name">HSE</field>
+            <field name="category_id" ref="appness_custom_budget.nus_groups_category"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+
+        </record> -->
+        <!-- <record id="group_gs" model="res.groups">
+            <field name="name">General Services</field>
+            <field name="category_id" ref="appness_custom_budget.nus_groups_category"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+
+        </record> -->
+        <!-- <record id="group_it_manager" model="res.groups">
+            <field name="name">IT Manager</field>
+            <field name="category_id" ref="appness_custom_budget.nus_groups_category"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+
+        </record> -->
+         <!-- <record id="group_rig_manager" model="res.groups">
+            <field name="name">Rig Manager</field>
+            <field name="category_id" ref="appness_custom_budget.nus_groups_category"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+
+        </record> -->
+        <!-- <record id="group_field_manager" model="res.groups">
+            <field name="name">Field Manager</field>
+            <field name="category_id" ref="appness_custom_budget.nus_groups_category"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+
+        </record> -->
+        <!-- <record id="group_operation_manager" model="res.groups">
+            <field name="name">Operation Manager</field>
+            <field name="category_id" ref="appness_custom_budget.nus_groups_category"/>
+        </record> -->
+        <!-- <record id="group_administration_admin" model="res.groups">
+            <field name="name">Admin</field>
+            <field name="category_id" ref="appness_custom_budget.nus_groups_category"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+
+        </record> -->
+
+        <!-- <record id="group_bd_section_head" model="res.groups">
+            <field name="name"> BD Section Head</field>
+            <field name="category_id" ref="appness_custom_budget.nus_groups_category"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+
+	    </record> -->
+
+        <!-- Finance -->
+        
+       
+       <!-- <record id="group_account_section_head_treasury" model="res.groups">
+            <field name="name">Treasury - Head</field>
+            <field name="category_id" ref="base.module_category_accounting_accounting"/>
+            <field name="implied_ids" eval="[(4, ref('account.group_account_user'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+
+        </record> -->
+          <!-- <record id="group_account_section_head_ARAP" model="res.groups">
+            <field name="name">AP and AR - Head</field>
+            <field name="category_id" ref="base.module_category_accounting_accounting"/>
+            <field name="implied_ids" eval="[(4, ref('account.group_account_user'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+
+        </record> -->
+       <!-- <record id="group_account_section_head_general_ledger" model="res.groups">
+            <field name="name">General Ledger - Head</field>
+            <field name="category_id" ref="base.module_category_accounting_accounting"/>
+            <field name="implied_ids" eval="[(4, ref('account.group_account_user'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+
+        </record> -->
+
+       <!-- <record id="group_account_section_accountant_treasury" model="res.groups">
+            <field name="name">Treasury Accountant</field>
+            <field name="category_id" ref="base.module_category_accounting_accounting"/>
+            <field name="implied_ids" eval="[(4, ref('account.group_account_invoice'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+
+        </record> -->
+        <!-- <record id="group_account_section_accountant_AR" model="res.groups">
+            <field name="name">AR Accountant</field>
+            <field name="category_id" ref="base.module_category_accounting_accounting"/>
+            <field name="implied_ids" eval="[(4, ref('account.group_account_invoice'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+
+        </record> -->
+        <!-- <record id="group_account_section_accountant_AP" model="res.groups">
+            <field name="name">AP Accountant</field>
+            <field name="category_id" ref="base.module_category_accounting_accounting"/>
+            <field name="implied_ids" eval="[(4, ref('account.group_account_invoice'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+
+        </record> -->
+        <!-- <record id="group_account_section_accountant_general_ledger" model="res.groups">
+            <field name="name">General Ledger Accountant</field>
+            <field name="category_id" ref="base.module_category_accounting_accounting"/>
+            <field name="implied_ids" eval="[(4, ref('account.group_account_readonly'))]"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+
+    </record> -->
+
+
+	<!-- contract Section Head  -->
+	    <!-- <record id="group_contract_section_head" model="res.groups">
+		<field name="name"> Contract Section Head</field>
+		<field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+		<field name="category_id" ref="appness_custom_budget.nus_groups_category"/>
+        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+
+	    </record> -->
+	
+
+        <!-- MR Groups -->
+        <!-- <record id="group_department_user_procurement" model="res.groups">
+            <field name="name">Department User </field>
+            <field name="category_id" ref="appness_custom_budget.nus_groups_category"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+
+        </record> -->
+
+        <!-- <record id="group_material_request_mc" model="res.groups">
+            <field name="name">Material Controller</field>
+            <field name="implied_ids" eval="[(4, ref('group_department_user_procurement'))]"/>
+            <field name="category_id" ref="appness_custom_budget.nus_groups_category"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+
+        </record> -->
+
+        <!-- <record id="group_cost_control_procurement" model="res.groups">
+            <field name="name">Procurement Cost Control</field>
+            <field name="implied_ids" eval="[(4, ref('group_department_user_procurement'))]"/>
+            <field name="category_id" ref="appness_custom_budget.nus_groups_category"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+
+        </record> -->
+
+         <!-- <record id="group_contract_sh" model="res.groups">
+            <field name="name">Contract SH</field>
+            <field name="implied_ids" eval="[(4, ref('group_department_user_procurement'))]"/>
+            <field name="category_id" ref="appness_custom_budget.nus_groups_category"/>
+        </record> -->
+
+
+
+       
+
+
+    </data>
+</odoo>

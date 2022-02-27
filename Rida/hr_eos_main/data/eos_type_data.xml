@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="eos_type_data_re" model="hr.eos.type">
+            <field name="name">Resignations</field>
+            <field name="arbitrary_dismissal">False</field>
+        </record>
+
+        <record id="eos_type_data_d" model="hr.eos.type">
+            <field name="name">Death</field>
+            <field name="arbitrary_dismissal">False</field>
+        </record>
+
+        <record id="eos_type_data_ld" model="hr.eos.type">
+            <field name="name">Legal Dismissal</field>
+            <field name="arbitrary_dismissal">False</field>
+        </record>
+
+        <record id="eos_type_data_ad" model="hr.eos.type">
+            <field name="name">Arbitrary Dismissal</field>
+            <field name="arbitrary_dismissal">True</field>
+        </record>
+
+        <!-- Salary Structure -->
+
+         <!--<record id="eos_structure_base" model="hr.payroll.structure">-->
+            <!--<field name="code">EOS-SS</field>-->
+            <!--<field name="name">EOS Salary Structures</field>-->
+            <!--<field name="company_id" ref="base.main_company"/>-->
+        <!--</record>-->
+
+    </data>
+</odoo>

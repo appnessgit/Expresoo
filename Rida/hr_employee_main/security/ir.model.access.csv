@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_employee_custody_employee_user,hr employee custody user,model_hr_custody,base.group_user,1,0,0,0
+access_hr_employee_custody_hr_user,hr employee custody officer,model_hr_custody,hr.group_hr_user,1,1,1,1
+access_hr_employee_relative_employee_user,hr employee relative user,model_hr_employee_relative,base.group_user,1,0,0,0
+access_hr_employee_relative_officer,hr employee relative officer,model_hr_employee_relative,hr.group_hr_user,1,1,1,1
+access_hr_employee_relative_relation_employee_user,hr employee relative relation user,model_hr_employee_relative_relation,base.group_user,1,0,0,0
+access_hr_employee_relative_relation_officer,hr employee relative relation officer,model_hr_employee_relative_relation,hr.group_hr_user,1,1,1,1
+access_hr_employee_training_employee_user,hr employee training user,model_hr_training,base.group_user,1,0,0,0
+access_hr_employee_training_officer,hr employee training officer,model_hr_training,hr.group_hr_user,1,1,1,1

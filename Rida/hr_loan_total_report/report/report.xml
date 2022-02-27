@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+     <report
+            id="loan_report_pdf_id"
+            string="Loan Total Report"
+            model="hr.loan"
+            report_type="qweb-pdf"
+            file="hr_loan_total_report.loan_total_report_template"
+            name="hr_loan_total_report.loan_total_report_template"
+            menu = "False"
+        />
+    </data>
+</odoo>
